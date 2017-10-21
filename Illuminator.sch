@@ -214,7 +214,7 @@ F 1 "4.75" V 4650 1200 50  0000 C CNN
 F 2 "Resistors_SMD:R_0805_HandSoldering" V 4580 1200 50  0001 C CNN
 F 3 "" H 4650 1200 50  0001 C CNN
 	1    4650 1200
-	0    1    1    0   
+	0    1    -1   0   
 $EndComp
 $Comp
 L R R1
@@ -225,7 +225,7 @@ F 1 "4.75" V 4650 1600 50  0000 C CNN
 F 2 "Resistors_SMD:R_0805_HandSoldering" V 4580 1600 50  0001 C CNN
 F 3 "" H 4650 1600 50  0001 C CNN
 	1    4650 1600
-	0    1    1    0   
+	0    1    -1   0   
 $EndComp
 $Comp
 L R R2
@@ -236,7 +236,7 @@ F 1 "4.75" V 4650 2000 50  0000 C CNN
 F 2 "Resistors_SMD:R_0805_HandSoldering" V 4580 2000 50  0001 C CNN
 F 3 "" H 4650 2000 50  0001 C CNN
 	1    4650 2000
-	0    1    1    0   
+	0    1    -1   0   
 $EndComp
 Wire Wire Line
 	4300 1200 4500 1200

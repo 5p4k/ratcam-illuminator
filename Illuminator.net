@@ -1,7 +1,7 @@
 (export (version D)
   (design
     (source /Users/Spak/Desktop/RatcamIlluminator/Illuminator.sch)
-    (date "2017 October 13, Friday 23:52:52")
+    (date "2017 October 21, Saturday 18:37:33")
     (tool "Eeschema 4.0.7")
     (sheet (number 1) (name /) (tstamps /)
       (title_block
