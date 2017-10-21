@@ -37,7 +37,7 @@ class Illuminator(object):
                 yield (self.get_led_name(line_idx, led_idx), self.get_one_place(angle))
                 angle -= angle_step
 
-    def __init__(self, n_lines=3, n_leds_per_line=3, radius=30., place=Place(x=0., y=0., rot=0.)):
+    def __init__(self, n_lines=3, n_leds_per_line=3, radius=30., place=Place(x=100., y=100., rot=0.)):
         super(Illuminator, self).__init__()
         self.n_leds_per_line = n_leds_per_line
         self.n_lines = n_lines
