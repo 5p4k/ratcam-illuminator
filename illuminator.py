@@ -18,11 +18,11 @@ class Illuminator(object):
     def get_led_name(self, line_idx, led_idx):
         return 'LED%d' % (line_idx * self.n_leds_per_line + led_idx)
 
-    def get_one_place(self, angle):
+    def get_one_place(self, angle, orientation=0.):
         return Place(
-            x=self.place.x + self.radius * math.cos(angle + self.place.rot),
-            y=self.place.y + self.radius * math.sin(angle + self.place.rot),
-            rot=ortho(angle)
+            x=self.center.x + self.radius * math.cos(angle + self.center.rot),
+            y=self.center.y + self.radius * math.sin(angle + self.center.rot),
+            rot=ortho(angle) + orientation
         )
 
     def __call__(self):
@@ -34,15 +34,23 @@ class Illuminator(object):
             yield (self.get_resistor_name(line_idx), self.get_one_place(angle))
             angle -= angle_step
             for led_idx in range(self.n_leds_per_line):
-                yield (self.get_led_name(line_idx, led_idx), self.get_one_place(angle))
+                yield (self.get_led_name(line_idx, led_idx),
+                    self.get_one_place(angle, orientation=self.led_orientation))
                 angle -= angle_step
 
-    def __init__(self, n_lines=3, n_leds_per_line=3, radius=30., place=Place(x=100., y=100., rot=0.)):
+    def __init__(self,
+                n_lines=3,
+                n_leds_per_line=3,
+                radius=30.,
+                center=Place(x=100., y=100., rot=0.),
+                led_orientation=math.pi
+            ):
         super(Illuminator, self).__init__()
         self.n_leds_per_line = n_leds_per_line
         self.n_lines = n_lines
-        self.place = place
+        self.center = center
         self.radius = radius
+        self.led_orientation = led_orientation
 
 
 if __name__ == '__main__':
