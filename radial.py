@@ -10,7 +10,7 @@ def ortho(a):
     return a - math.pi / 2.
 
 
-def radial_segment(c, start, end, steps):
+def compute_radial_segment(c, start, end, steps):
     # Distances from the origin
     start_dx = start.x - c.x
     start_dy = start.y - c.y
@@ -38,7 +38,7 @@ def radial_segment(c, start, end, steps):
         yield (x, y)
 
 
-class Illuminator(object):
+class RadialPlacer(object):
 
     def get_resistor_name(self, line_idx):
         return 'R%d' % (line_idx)
@@ -73,7 +73,7 @@ class Illuminator(object):
                 center=Place(x=100., y=100., rot=0.),
                 led_orientation=math.pi
             ):
-        super(Illuminator, self).__init__()
+        super(RadialPlacer, self).__init__()
         self.n_leds_per_line = n_leds_per_line
         self.n_lines = n_lines
         self.center = center
@@ -82,6 +82,6 @@ class Illuminator(object):
 
 
 if __name__ == '__main__':
-    ill = Illuminator()
+    ill = RadialPlacer()
     for k, v in ill():
         print(k, v)

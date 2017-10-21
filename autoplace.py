@@ -1,14 +1,13 @@
 from __future__ import unicode_literals
-from illuminator import *
+from radial import RadialPlacer, Place, compute_radial_segment
 import math
 from collections import namedtuple
 
 import pcbnew as pcb
 
-
 Terminal = namedtuple('Terminal', ['module', 'pad'])
 
-class Autoplacer(object):
+class Illuminator(object):
 
     def get_two_terminal_nets_between_placed_modules(self):
         nets = {}
@@ -38,12 +37,12 @@ class Autoplacer(object):
             mod.SetPosition(pcb.wxPointMM(place.x, place.y))
             mod.SetOrientation(-math.degrees(place.rot) * 10.)
 
-    def place_all(self, *args, **kwargs):
-        ill = Illuminator(*args, **kwargs)
-        for name, place in ill():
+    def place(self, *args, **kwargs):
+        placer = RadialPlacer(*args, **kwargs)
+        for name, place in placer():
             print('Placing %s at %s.' % (name, str(place)))
             self.place_module(name, place)
-        self.center = pcb.wxPoint(pcb.FromMM(ill.center.x), pcb.FromMM(ill.center.y))
+        self.center = pcb.wxPoint(pcb.FromMM(placer.center.x), pcb.FromMM(placer.center.y))
 
     def make_track_segment(self, start, end, net_code):
         t = pcb.TRACK(self.board)
@@ -54,7 +53,7 @@ class Autoplacer(object):
         t.SetLayer(0)
         return t
 
-    def route_all(self):
+    def route(self):
         nets = self.get_two_terminal_nets_between_placed_modules()
         self.clear_tracks_in_nets(nets.keys())
         for net_code, (start, end) in nets.items():
@@ -65,18 +64,18 @@ class Autoplacer(object):
             start_pos = self.board.FindModule(start.module).FindPadByName(start.pad).GetPosition()
             end_pos = self.board.FindModule(end.module).FindPadByName(end.pad).GetPosition()
             last_pos = start_pos
-            for x, y in radial_segment(self.center, start_pos, end_pos, 10):
+            for x, y in compute_radial_segment(self.center, start_pos, end_pos, 10):
                 new_pos = pcb.wxPoint(x, y)
                 track_seg = self.make_track_segment(last_pos, new_pos, net_code)
                 last_pos = new_pos
 
     def __init__(self):
-        super(Autoplacer, self).__init__()
+        super(Illuminator, self).__init__()
         self.placed_modules = set()
         self.board = pcb.GetBoard()
         self.center = None
 
 if __name__ == '__main__':
-    a = Autoplacer()
-    a.place_all()
-    a.route_all()
+    a = Illuminator()
+    a.place()
+    a.route()
