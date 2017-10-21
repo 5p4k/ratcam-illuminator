@@ -10,12 +10,12 @@ def ortho(a):
     return a - math.pi / 2.
 
 
-def radial_segment(c_x, c_y, start_x, start_y, end_x, end_y, steps):
+def radial_segment(c, start, end, steps):
     # Distances from the origin
-    start_dx = start_x - c_x
-    start_dy = start_y - c_y
-    end_dx = end_x - c_x
-    end_dy = end_y - c_y
+    start_dx = start.x - c.x
+    start_dy = start.y - c.y
+    end_dx = end.x - c.x
+    end_dy = end.y - c.y
     start_r = math.sqrt(start_dx * start_dx + start_dy * start_dy)
     end_r = math.sqrt(end_dx * end_dx + end_dy * end_dy)
     # Angles
@@ -30,11 +30,11 @@ def radial_segment(c_x, c_y, start_x, start_y, end_x, end_y, steps):
         else:
             start_angle -= 2. * math.pi
     for i in range(steps):
-        frac = float(i) / float(steps)
+        frac = float(1 + i) / float(steps)
         angle = start_angle + frac * (end_angle - start_angle)
         r = start_r + frac * (end_r - start_r)
-        x = c_x + r * math.cos(angle)
-        y = c_y + r * math.sin(angle)
+        x = c.x + r * math.cos(angle)
+        y = c.y + r * math.sin(angle)
         yield (x, y)
 
 

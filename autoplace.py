@@ -1,34 +1,82 @@
 from __future__ import unicode_literals
 from illuminator import *
 import math
+from collections import namedtuple
 
-import pcbnew
+import pcbnew as pcb
 
+
+Terminal = namedtuple('Terminal', ['module', 'pad'])
 
 class Autoplacer(object):
 
-    @classmethod
-    def run(cls, *args, **kwargs):
-        cls()(*args, **kwargs)
+    def get_two_terminal_nets_between_placed_modules(self):
+        nets = {}
+        for mod_name in self.placed_modules:
+            mod = self.board.FindModule(mod_name)
+            for pad in mod.Pads():
+                net = pad.GetNet()
+                net_code = pad.GetNetCode()
+                if net_code not in nets:
+                    nets[net_code] = []
+                nets[net_code].append(Terminal(module=mod_name, pad=pad.GetPadName()))
+        return {net_code: entries for net_code, entries in nets.items()
+            if len(entries) == 2
+                and entries[0].module in self.placed_modules
+                and entries[1].module in self.placed_modules
+        }
 
-    def _get_modules(self):
-        for mod in self.board.GetModules():
-            self.modules[mod.GetReference().encode('utf-8')] = mod
+    def clear_tracks_in_nets(self, net_codes):
+        for track in self.board.GetTracks():
+            if track.GetNetCode() in net_codes:
+                self.board.Delete(track)
 
-    def place(self, name, place):
-        mod = self.modules.get(name, None)
+    def place_module(self, name, place):
+        mod = self.board.FindModule(name)
         if mod:
-            mod.SetPosition(pcbnew.wxPointMM(place.x, place.y))
+            self.placed_modules.add(name)
+            mod.SetPosition(pcb.wxPointMM(place.x, place.y))
             mod.SetOrientation(-math.degrees(place.rot) * 10.)
 
-    def __call__(self, *args, **kwargs):
+    def place_all(self, *args, **kwargs):
         ill = Illuminator(*args, **kwargs)
         for name, place in ill():
             print('Placing %s at %s.' % (name, str(place)))
-            self.place(name, place)
+            self.place_module(name, place)
+        self.center = pcb.wxPoint(pcb.FromMM(ill.center.x), pcb.FromMM(ill.center.y))
+
+    def make_track_segment(self, start, end, net_code):
+        t = pcb.TRACK(self.board)
+        self.board.Add(t)
+        t.SetStart(start)
+        t.SetEnd(end)
+        t.SetNetCode(net_code)
+        t.SetLayer(0)
+        return t
+
+    def route_all(self):
+        nets = self.get_two_terminal_nets_between_placed_modules()
+        self.clear_tracks_in_nets(nets.keys())
+        for net_code, (start, end) in nets.items():
+            print('Routing net %s (from %s, pad %s to %s, pad %s) with a radial segment.' %
+                (self.board.FindNet(net_code).GetNetname(),
+                    start.module, start.pad, end.module, end.pad))
+            # Get the offsetted position of the pads
+            start_pos = self.board.FindModule(start.module).FindPadByName(start.pad).GetPosition()
+            end_pos = self.board.FindModule(end.module).FindPadByName(end.pad).GetPosition()
+            last_pos = start_pos
+            for x, y in radial_segment(self.center, start_pos, end_pos, 10):
+                new_pos = pcb.wxPoint(x, y)
+                track_seg = self.make_track_segment(last_pos, new_pos, net_code)
+                last_pos = new_pos
 
     def __init__(self):
         super(Autoplacer, self).__init__()
-        self.board = pcbnew.GetBoard()
-        self.modules = {}
-        self._get_modules()
+        self.placed_modules = set()
+        self.board = pcb.GetBoard()
+        self.center = None
+
+if __name__ == '__main__':
+    a = Autoplacer()
+    a.place_all()
+    a.route_all()
