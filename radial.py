@@ -10,7 +10,7 @@ def ortho(a):
     return a - math.pi / 2.
 
 
-def compute_radial_segment(c, start, end, steps):
+def compute_radial_segment(c, start, end, steps=None, angular_resolution=None):
     # Distances from the origin
     start_dx = start.x - c.x
     start_dy = start.y - c.y
@@ -29,6 +29,9 @@ def compute_radial_segment(c, start, end, steps):
             end_angle -= 2. * math.pi
         else:
             start_angle -= 2. * math.pi
+    assert((steps is None) != (angular_resolution is None))
+    if steps is None:
+        steps = int(math.ceil(abs(end_angle - start_angle) / angular_resolution))
     for i in range(steps):
         frac = float(1 + i) / float(steps)
         angle = start_angle + frac * (end_angle - start_angle)
@@ -41,10 +44,10 @@ def compute_radial_segment(c, start, end, steps):
 class RadialPlacer(object):
 
     def get_resistor_name(self, line_idx):
-        return 'R%d' % (line_idx)
+        return '%s%d' % (self.resistor_prefix, line_idx)
 
     def get_led_name(self, line_idx, led_idx):
-        return 'LED%d' % (line_idx * self.n_leds_per_line + led_idx)
+        return '%s%d' % (self.led_prefix, line_idx * self.n_leds_per_line + led_idx)
 
     def get_one_place(self, angle, orientation=0.):
         return Place(
@@ -52,6 +55,17 @@ class RadialPlacer(object):
             y=self.center.y + self.radius * math.sin(angle + self.center.rot),
             rot=ortho(angle) + orientation
         )
+
+    def print_settings(self):
+        print('Settings:')
+        print('n_leds_per_line: %s' % str(self.n_leds_per_line))
+        print('n_lines: %s' % str(self.n_lines))
+        print('center: %s' % str(self.center))
+        print('radius: %s' % str(self.radius))
+        print('led_orientation: %s' % str(self.led_orientation))
+        print('led_prefix: %s' % str(self.led_prefix))
+        print('resistor_prefix: %s' % str(self.resistor_prefix))
+
 
     def __call__(self):
         # Total number of elements
@@ -69,9 +83,11 @@ class RadialPlacer(object):
     def __init__(self,
                 n_lines=3,
                 n_leds_per_line=3,
-                radius=30.,
-                center=Place(x=100., y=100., rot=0.),
-                led_orientation=math.pi
+                radius=1.,
+                center=Place(x=0., y=0., rot=0.),
+                led_orientation=math.pi,
+                led_prefix='LED',
+                resistor_prefix='R'
             ):
         super(RadialPlacer, self).__init__()
         self.n_leds_per_line = n_leds_per_line
@@ -79,6 +95,8 @@ class RadialPlacer(object):
         self.center = center
         self.radius = radius
         self.led_orientation = led_orientation
+        self.led_prefix = led_prefix
+        self.resistor_prefix = resistor_prefix
 
 
 if __name__ == '__main__':
