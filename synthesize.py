@@ -32,14 +32,18 @@ PWR_RING_FCU = True
 # True for having the ground ring on F.Cu (False resp. for B.Cu)
 GND_RING_FCU = True
 # Radial offset in mm for the power ring
-PWR_RING_DISP_MM = 5.
+PWR_RING_DISP_MM = 4.
 # Radial offset in mm for the ground ring
-GND_RING_DISP_MM = -5.
+GND_RING_DISP_MM = -4.
 # Extra portion of wire to add before connecting to a ring
 _ANG_DIST_BTW_MODS = 2. * math.pi / float((1 + N_LEDS_PER_LINE) * N_LINES)
 RING_OVERHANG_ANGLE = _ANG_DIST_BTW_MODS / 4.
 # If >0, routes the LED strips with a copper fill
 LED_FILL_WIDTH_MM = 4.
+DEFAULT_TRACK_WIDTH_MM=1.
+
+# _FILL_OVERHANG_ANGLE = math.asin(DEFAULT_TRACK_WIDTH_MM / (4. * RADIUS_MM))
+_FILL_OVERHANG_ANGLE = (_ANG_DIST_BTW_MODS - 2. * RING_OVERHANG_ANGLE) / 6.
 
 Terminal = namedtuple('Terminal', ['module', 'pad'])
 
@@ -97,6 +101,10 @@ class Illuminator(object):
         for track in self.board.GetTracks():
             if track.GetNetCode() in net_codes:
                 self.board.Delete(track)
+        for i in range(self.board.GetAreaCount()):
+            area = self.board.GetArea(i)
+            if area.GetNetCode() in net_codes:
+                self.board.Delete(area)
 
     def place_module(self, name, place):
         mod = self.board.FindModule(name)
@@ -141,6 +149,7 @@ class Illuminator(object):
         t.SetEnd(end)
         t.SetNetCode(net_code)
         t.SetLayer(layer)
+        t.SetWidth(pcb.FromMM(DEFAULT_TRACK_WIDTH_MM))
         return end
 
     def _make_track_arc_internal(self, start, net_code, layer, *args, **kwargs):
@@ -187,13 +196,13 @@ class Illuminator(object):
                 lower_arc_start,
                 shift_along_radius(self.center, end, -width / 2.),
                 angular_resolution=ANGULAR_RESOLUTION,
-                excess_angle=math.pi / 180.,
+                excess_angle=0.00001,
                 skip_start=False)) + \
             list(compute_radial_segment(self.center,
                 upper_arc_start,
                 shift_along_radius(self.center, start, width / 2.),
                 angular_resolution=ANGULAR_RESOLUTION,
-                excess_angle=math.pi / 180.,
+                excess_angle=0.00001,
                 skip_start=False))
         return self.make_fill_area(vertices, is_thermal, net_code, layer)
 
@@ -258,7 +267,11 @@ class Illuminator(object):
                     new_end_pt = shift_along_arc(self.center, term_ring_pt, ring_overhang)
                     self.make_track_arc_from_endpts(term_ring_pt, new_end_pt, net_code, LayerFCu)
                     if LED_FILL_WIDTH_MM != 0.:
-                        self.make_fill_arc(term_ring_pt, new_end_pt,
+                        # Some extra fill:
+                        overhand_angle = _FILL_OVERHANG_ANGLE * (1. if ring_overhang > 0. else -1.)
+                        fill_end_pt  = shift_along_arc(self.center,
+                            new_end_pt, overhand_angle)
+                        self.make_fill_arc(term_ring_pt, fill_end_pt,
                             pcb.FromMM(LED_FILL_WIDTH_MM),
                             False, net_code, LayerFCu)
                     term_ring_pt = new_end_pt
