@@ -44,7 +44,6 @@ RING_OVERHANG_ANGLE = _ANG_DIST_BTW_MODS / 4.
 LED_FILL_WIDTH_MM = 4.
 DEFAULT_TRACK_WIDTH_MM=1.
 
-MOSFET_PIN_PAD_MAP = {'1': '1', '2': '3'}
 MOSFET_ORIENTATION = 0.
 PIN_ORIENTATION = 0.
 
@@ -431,13 +430,34 @@ class Illuminator(object):
         if not self.fet.IsFlipped():
             self.fet.Flip(self.pin.GetPosition())
         print('Found pin and mosfet, placing them at opposite sides of the board.')
+        # Apply just the orientation
+        self.place_module(self.pin.GetReference(), Place(0., 0., PIN_ORIENTATION))
+        # Now find the rightmost pad
+        rightmost_pad = None
+        rightmost_pad_ofs = None
+        for pad in self.pin.Pads():
+            pad_ofs = pad.GetPosition() # - pin pos, which is 0, 0
+            if rightmost_pad_ofs is None or pad_ofs.x > rightmost_pad_ofs.x:
+                rightmost_pad = pad
+                rightmost_pad_ofs = pad_ofs
+        # Use that as reference
+        r = pcb.FromMM(RADIUS_MM + min([0., PWR_RING_DISP_MM, GND_RING_DISP_MM]))
+        x = -math.sqrt(r * r - rightmost_pad_ofs.y * rightmost_pad_ofs.y)
+        x -= rightmost_pad_ofs.x
+        x -= rightmost_pad.GetBoundingBox().GetWidth() / 2.
+        x += pcb.FromMM(DEFAULT_TRACK_WIDTH_MM / 2.)
         self.place_module(self.pin.GetReference(),
-            Place(self.center.x - pcb.FromMM(RADIUS_MM), self.center.y, PIN_ORIENTATION))
-        # Now the pad position for the pins of the pin
-        # header determines the pad position for the pads of the fet
-        fet_pad_name, pin_pad_name = MOSFET_PIN_PAD_MAP.items()[0]
-        pin_pad = self.pin.FindPadByName(pin_pad_name)
-        fet_pad = self.fet.FindPadByName(fet_pad_name)
+            Place(self.center.x + x, self.center.y, PIN_ORIENTATION))
+        # Now the pad position for the pins of the fet. Find two connected pads
+        pin_pad = None
+        fet_pad = None
+        for candidate_pin_pad in self.pin.Pads():
+            for candidate_fet_pad in self.fet.Pads():
+                if candidate_fet_pad.GetNetCode() == candidate_pin_pad.GetNetCode():
+                    pin_pad = candidate_pin_pad
+                    fet_pad = candidate_fet_pad
+                    break
+            if pin_pad is not None: break
         # Get the polar coordinates of the pin
         _, r = to_polar(self.center, pin_pad.GetPosition())
         fet_pad_pos_ofs = fet_pad.GetPosition() - self.fet.GetPosition()
@@ -453,52 +473,46 @@ class Illuminator(object):
         if self.pin is None or self.fet is None:
             return
         print('Found pin and mosfet, adding connection rings')
-        for fet_pad_name, pin_pad_name in MOSFET_PIN_PAD_MAP.items():
-            src_terminal = Terminal(self.fet.GetReference(), fet_pad_name)
-            trg_terminal = Terminal(self.pin.GetReference(), pin_pad_name)
-            net_code = self.fet.FindPadByName(fet_pad_name).GetNetCode()
-            self.clear_tracks_in_nets([net_code])
-            print('Adding ring from the mosfet pad %s (net %s)' % (fet_pad_name, self.get_net_name(net_code)))
-            self._route_arc(net_code, src_terminal, trg_terminal, LayerBCu)
+        routed_nets = set()
+        for pin_pad in self.pin.Pads():
+            for fet_pad in self.fet.Pads():
+                if fet_pad.GetNetCode() != pin_pad.GetNetCode(): continue
+                net_code = fet_pad.GetNetCode()
+                routed_nets.add(net_code)
+                self.clear_tracks_in_nets([net_code])
+                print('Adding ring from the mosfet pad %s (net %s)' % (
+                    fet_pad.GetName(), self.get_net_name(net_code)))
+                self.make_track_arc_from_endpts(
+                    fet_pad.GetPosition(), pin_pad.GetPosition(), net_code, LayerBCu)
         print('Adding missing vias to known nets.')
         # Find the third pad
-        fet_gnd_pad = None
         for pad in self.fet.Pads():
-            if pad.GetName() not in MOSFET_PIN_PAD_MAP.keys():
-                fet_gnd_pad = pad
-                break
-        if fet_gnd_pad is not None and self.ground_net is not None:
-            if fet_gnd_pad.GetNetCode() == self.ground_net:
-                print('Connecting pad %s of the mosfet to net %s' % (
-                    fet_gnd_pad.GetName(), self.get_net_name(self.ground_net)))
-                # We know there is a point in this net at theta = 0
-                # Drop a via from there
-                known_pt = to_cartesian(self.center, 0.,
-                    pcb.FromMM(RADIUS_MM + GND_RING_DISP_MM))
-                self.make_via(known_pt, self.ground_net)
-                # and then straight to this pad
-                self.make_track_segment(
-                    known_pt, fet_gnd_pad.GetPosition(),
-                    self.ground_net, LayerBCu)
+            if pad.GetNetCode() != self.ground_net: continue
+            print('Connecting pad %s of the mosfet to net %s' % (
+                pad.GetName(), self.get_net_name(self.ground_net)))
+            # We know there is a point in this net at theta = 0
+            # Drop a via from there
+            known_pt = to_cartesian(self.center, 0.,
+                pcb.FromMM(RADIUS_MM + GND_RING_DISP_MM))
+            self.make_via(known_pt, self.ground_net)
+            # and then straight to this pad
+            self.make_track_segment(
+                known_pt, pad.GetPosition(),
+                self.ground_net, LayerBCu)
         # Find the third pin
-        pin_pwr_pad = None
         for pad in self.pin.Pads():
-            if pad.GetName() not in MOSFET_PIN_PAD_MAP.values():
-                pin_pwr_pad = pad
-                break
-        if pin_pwr_pad is not None and self.power_net is not None:
-            if pin_pwr_pad.GetNetCode() == self.power_net:
-                print('Connecting pad %s of the mosfet to net %s' % (
-                    pin_pwr_pad.GetName(), self.get_net_name(self.power_net)))
-                # We know there is a point in this net at theta=180
-                # Drop a via from there
-                known_pt = to_cartesian(self.center, math.pi,
-                    pcb.FromMM(RADIUS_MM + PWR_RING_DISP_MM))
-                self.make_via(known_pt, self.power_net)
-                # and then straight to this pad
-                self.make_track_segment(
-                    known_pt, pin_pwr_pad.GetPosition(),
-                    self.power_net, LayerBCu)
+            if pad.GetNetCode() != self.power_net: continue
+            print('Connecting pad %s of the mosfet to net %s' % (
+                pad.GetName(), self.get_net_name(self.power_net)))
+            # We know there is a point in this net at theta=180
+            # Drop a via from there
+            known_pt = to_cartesian(self.center, math.pi,
+                pcb.FromMM(RADIUS_MM + PWR_RING_DISP_MM))
+            self.make_via(known_pt, self.power_net)
+            # and then straight to this pad
+            self.make_track_segment(
+                known_pt, pad.GetPosition(),
+                self.power_net, LayerBCu)
 
 
     def __init__(self):
