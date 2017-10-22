@@ -5,21 +5,39 @@ from collections import namedtuple
 
 import pcbnew as pcb
 
+# Leds will be named LED0, LED1...
 LED_PREFIX = 'LED'
+# Resistor driving LEDS will be named R0, R1, ...
 RESISTOR_PREFIX = 'R'
-RING_DIST_MM = -10.
+# Coordinated of the center in mm
 CENTER_X_MM = 100.
 CENTER_Y_MM = 100.
+# Radius of the circle where the center of the components
+# (leds and resistor) is placed
 RADIUS_MM = 30.
+# Number of lines of LED (= number of resistors)
 N_LINES = 3
+# Number of leds per line
 N_LEDS_PER_LINE = 3
+# Offset angle for the whole design
 ROTATION_OFS_RAD = 0.
+# Offset angle of the LEDs
 LED_ORIENTATION_OFS_RAD = math.pi
+# Offset angle of the resistors
+RESISTOR_ORIENTATION_OFS_RAD = 0.
+# Angular resolution for synthesizing arcs
 ANGULAR_RESOLUTION = math.pi / 40
+# True for having the power ring on F.Cu (False resp. for B.Cu)
 PWR_RING_FCU = True
+# True for having the ground ring on F.Cu (False resp. for B.Cu)
 GND_RING_FCU = True
+# Radial offset in mm for the power ring
 PWR_RING_DISP_MM = 5.
+# Radial offset in mm for the ground ring
 GND_RING_DISP_MM = -5.
+# Extra portion of wire to add before connecting to a ring
+_ANG_DIST_BTW_MODS = 2. * math.pi / float((1 + N_LEDS_PER_LINE) * N_LINES)
+RING_OVERHANG_ANGLE = _ANG_DIST_BTW_MODS / 4.
 
 Terminal = namedtuple('Terminal', ['module', 'pad'])
 
@@ -104,6 +122,7 @@ class Illuminator(object):
                 y=pcb.FromMM(CENTER_Y_MM),
                 rot=ROTATION_OFS_RAD),
             led_orientation=LED_ORIENTATION_OFS_RAD,
+            resistor_orientation=RESISTOR_ORIENTATION_OFS_RAD,
             led_prefix=LED_PREFIX,
             resistor_prefix=RESISTOR_PREFIX
         )
@@ -120,19 +139,25 @@ class Illuminator(object):
         t.SetEnd(end)
         t.SetNetCode(net_code)
         t.SetLayer(layer)
-        return t
+        return end
 
-    def make_track_arc(self, start, end, net_code, layer):
+    def _make_track_arc_internal(self, start, net_code, layer, *args, **kwargs):
         last = start
-        vertices = compute_radial_segment(
-            self.center, start, end,
-            angular_resolution=ANGULAR_RESOLUTION)
-        retval = []
-        for x, y in vertices:
+        for x, y in compute_radial_segment(self.center, start, *args, **kwargs):
             pt = pcb.wxPoint(x, y)
-            retval.append(self.make_track_segment(last, pt, net_code, layer))
+            self.make_track_segment(last, pt, net_code, layer)
             last = pt
-        return retval
+        return last
+
+    def make_track_arc_from_endpts(self, start, end, net_code, layer):
+        return self._make_track_arc_internal(
+            start, net_code, layer,
+            end=end, angular_resolution=ANGULAR_RESOLUTION)
+
+    def make_track_arc_from_angle(self, start, angle, net_code, layer):
+        return self._make_track_arc_internal(
+            start, net_code, layer,
+            angle=angle, angular_resolution=ANGULAR_RESOLUTION)
 
     def make_track_radial_segment(self, pos, displacement, net_code, layer):
         delta = pos - self.center
@@ -149,21 +174,21 @@ class Illuminator(object):
         v.SetViaType(pcb.VIA_THROUGH)
         v.SetLayerPair(LayerFCu, LayerBCu)
         v.SetNetCode(net_code)
-        return v
+        return position
 
     def _route_arc(self, net_code, start_terminal, end_terminal):
         print('Routing %s between %s and %s with a single arc.' % (
             self.get_net_name(net_code), start_terminal.module, end_terminal.module
         ))
         # Get the offsetted position of the pads
-        self.make_track_arc(
+        self.make_track_arc_from_endpts(
             self.get_terminal_position(start_terminal),
             self.get_terminal_position(end_terminal),
             net_code,
             LayerFCu
         )
 
-    def _route_ring(self, net_code, terminals, displacement, layer):
+    def _route_ring(self, net_code, terminals, displacement, ring_overhang, layer):
         log_msg = 'Routing %s between %s with' % (
             self.get_net_name(net_code), ', '.join([t.module for t in terminals])
         )
@@ -177,14 +202,11 @@ class Illuminator(object):
         for terminal in terminals:
             term_ring_pt = self.get_terminal_position(terminal)
             if displacement != 0.:
-                # The radial segment should be orthogonal to the module.
-                # Compute it at the center of the module and then move it
-                mod_pos = self.get_module_position(terminal.module)
-                track_seg = self.make_track_radial_segment(mod_pos,
-                    displacement, net_code, LayerFCu)
-                track_seg.Move(term_ring_pt - mod_pos)
-                # Get the position
-                term_ring_pt = track_seg.GetEnd()
+                if ring_overhang != 0.:
+                    term_ring_pt = self.make_track_arc_from_angle(
+                        term_ring_pt, ring_overhang, net_code, LayerFCu)
+                term_ring_pt = self.make_track_radial_segment(
+                    term_ring_pt, displacement, net_code, LayerFCu)
             # Now add the via and store the position
             if layer != LayerFCu:
                 self.make_via(term_ring_pt, net_code)
@@ -192,7 +214,7 @@ class Illuminator(object):
         # Connect the terminals with an arc
         last_pos = terminal_pos[-1]
         for pos in terminal_pos:
-            self.make_track_arc(last_pos, pos, net_code, layer)
+            self.make_track_arc_from_endpts(last_pos, pos, net_code, layer)
             last_pos = pos
 
     def route(self):
@@ -218,6 +240,7 @@ class Illuminator(object):
                 got_power = True
                 self._route_ring(net_code, terminals,
                     pcb.FromMM(PWR_RING_DISP_MM),
+                    RING_OVERHANG_ANGLE,
                     LayerFCu if PWR_RING_FCU else LayerBCu
                 )
             elif net_type == NetTypeGround:
@@ -225,6 +248,7 @@ class Illuminator(object):
                 got_ground = True
                 self._route_ring(net_code, terminals,
                     pcb.FromMM(GND_RING_DISP_MM),
+                    -RING_OVERHANG_ANGLE,
                     LayerFCu if GND_RING_FCU else LayerBCu
                 )
 

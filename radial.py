@@ -9,20 +9,25 @@ Place = namedtuple('Place', ['x', 'y', 'rot'])
 def ortho(a):
     return a - math.pi / 2.
 
-
-def compute_radial_segment(c, start, end, steps=None, angular_resolution=None):
-    # Distances from the origin
+def compute_radial_segment(c, start, end=None, angle=None, steps=None, angular_resolution=None):
+    assert((end is None) != (angle is None))
+    # Determine polar coordinates of start
     start_dx = start.x - c.x
     start_dy = start.y - c.y
-    end_dx = end.x - c.x
-    end_dy = end.y - c.y
     start_r = math.sqrt(start_dx * start_dx + start_dy * start_dy)
-    end_r = math.sqrt(end_dx * end_dx + end_dy * end_dy)
-    # Angles
     start_angle = math.acos(start_dx / start_r)
-    end_angle = math.acos(end_dx / end_r)
     if start_dy < 0.: start_angle = 2. * math.pi - start_angle
-    if end_dy < 0.: end_angle = 2. * math.pi - end_angle
+
+    if end is None:
+        end_r = start_r
+        end_angle = start_angle + angle
+    else:
+        end_dx = end.x - c.x
+        end_dy = end.y - c.y
+        end_r = math.sqrt(end_dx * end_dx + end_dy * end_dy)
+        end_angle = math.acos(end_dx / end_r)
+        if end_dy < 0.: end_angle = 2. * math.pi - end_angle
+
     # Choose the arc < 180 degrees
     if abs(end_angle - start_angle) > math.pi:
         if start_angle < end_angle:
@@ -73,7 +78,8 @@ class RadialPlacer(object):
         angle_step = 2. * math.pi / float(n_elm)
         angle = 0.
         for line_idx in range(self.n_lines):
-            yield (self.get_resistor_name(line_idx), self.get_one_place(angle))
+            yield (self.get_resistor_name(line_idx),
+                self.get_one_place(angle, orientation=self.resistor_orientation))
             angle -= angle_step
             for led_idx in range(self.n_leds_per_line):
                 yield (self.get_led_name(line_idx, led_idx),
@@ -86,6 +92,7 @@ class RadialPlacer(object):
                 radius=1.,
                 center=Place(x=0., y=0., rot=0.),
                 led_orientation=math.pi,
+                resistor_orientation=0.,
                 led_prefix='LED',
                 resistor_prefix='R'
             ):
@@ -95,6 +102,7 @@ class RadialPlacer(object):
         self.center = center
         self.radius = radius
         self.led_orientation = led_orientation
+        self.resistor_orientation = resistor_orientation
         self.led_prefix = led_prefix
         self.resistor_prefix = resistor_prefix
 
