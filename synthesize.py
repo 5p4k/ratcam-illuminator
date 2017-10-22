@@ -211,11 +211,13 @@ class Illuminator(object):
                 lower_arc_start,
                 shift_along_radius(self.center, end, -width / 2.),
                 angular_resolution=ANGULAR_RESOLUTION,
+                excess_angle=0.0001,
                 skip_start=False)) + \
             list(compute_radial_segment(self.center,
                 upper_arc_start,
                 shift_along_radius(self.center, start, width / 2.),
                 angular_resolution=ANGULAR_RESOLUTION,
+                excess_angle=0.0001,
                 skip_start=False))
         return self.make_fill_area(vertices, is_thermal, net_code, layer)
 
