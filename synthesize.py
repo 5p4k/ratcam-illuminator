@@ -15,8 +15,11 @@ N_LINES = 3
 N_LEDS_PER_LINE = 3
 ROTATION_OFS_RAD = 0.
 LED_ORIENTATION_OFS_RAD = math.pi
-ANGULAR_RESOLUTION = math.pi / 10
-RING_DISPLACEMENT_MM = -10.
+ANGULAR_RESOLUTION = math.pi / 40
+PWR_RING_FCU = True
+GND_RING_FCU = True
+PWR_RING_DISP_MM = 5.
+GND_RING_DISP_MM = -5.
 
 Terminal = namedtuple('Terminal', ['module', 'pad'])
 
@@ -85,6 +88,9 @@ class Illuminator(object):
     def get_terminal_position(self, terminal):
         return self.board.FindModule(terminal.module).FindPadByName(terminal.pad).GetPosition()
 
+    def get_module_position(self, module):
+        return self.board.FindModule(module).GetPosition()
+
     def get_net_name(self, net_code):
         return self.board.FindNet(net_code).GetNetname()
 
@@ -129,7 +135,7 @@ class Illuminator(object):
         return retval
 
     def make_track_radial_segment(self, pos, displacement, net_code, layer):
-        delta = self.center - pos
+        delta = pos - self.center
         radius = math.sqrt(delta.x * delta.x + delta.y * delta.y)
         scale_factor = float(displacement) / radius
         end_pos = pos + pcb.wxPoint(delta.x * scale_factor, delta.y * scale_factor)
@@ -157,33 +163,36 @@ class Illuminator(object):
             LayerFCu
         )
 
-    def _route_ring(self, net_code, terminals, displacement=None):
-        if displacement is None:
-            print('Routing %s between %s with a via and a full circular track.' % (
-                self.get_net_name(net_code), ', '.join([t.module for t in terminals])
-            ))
+    def _route_ring(self, net_code, terminals, displacement, layer):
+        log_msg = 'Routing %s between %s with' % (
+            self.get_net_name(net_code), ', '.join([t.module for t in terminals])
+        )
+        if layer != LayerFCu:
+            log_msg += ' a via and'
+        if displacement == 0.:
+            log_msg += ' a full circular track.'
         else:
-            print('Routing %s between %s with a via and a circular track offsetted by %f.' % (
-                self.get_net_name(net_code), ', '.join([t.module for t in terminals]),
-                displacement
-            ))
+            log_msg += ' a circular track offsetted by %f.' % displacement
         terminal_pos = []
         for terminal in terminals:
-            via_pos = self.get_terminal_position(terminal)
-            if displacement is not None:
-                # Radial segment and then drop a via
-                track_seg = self.make_track_radial_segment(
-                    self.get_terminal_position(terminal),
+            term_ring_pt = self.get_terminal_position(terminal)
+            if displacement != 0.:
+                # The radial segment should be orthogonal to the module.
+                # Compute it at the center of the module and then move it
+                mod_pos = self.get_module_position(terminal.module)
+                track_seg = self.make_track_radial_segment(mod_pos,
                     displacement, net_code, LayerFCu)
+                track_seg.Move(term_ring_pt - mod_pos)
                 # Get the position
-                via_pos = track_seg.GetEnd()
+                term_ring_pt = track_seg.GetEnd()
             # Now add the via and store the position
-            self.make_via(via_pos, net_code)
-            terminal_pos.append(via_pos)
+            if layer != LayerFCu:
+                self.make_via(term_ring_pt, net_code)
+            terminal_pos.append(term_ring_pt)
         # Connect the terminals with an arc
         last_pos = terminal_pos[-1]
         for pos in terminal_pos:
-            self.make_track_arc(last_pos, pos, net_code, LayerBCu)
+            self.make_track_arc(last_pos, pos, net_code, layer)
             last_pos = pos
 
     def route(self):
@@ -207,11 +216,17 @@ class Illuminator(object):
             elif net_type == NetTypePower:
                 assert(not got_power)
                 got_power = True
-                self._route_ring(net_code, terminals, pcb.FromMM(RING_DISPLACEMENT_MM))
+                self._route_ring(net_code, terminals,
+                    pcb.FromMM(PWR_RING_DISP_MM),
+                    LayerFCu if PWR_RING_FCU else LayerBCu
+                )
             elif net_type == NetTypeGround:
                 assert(not got_ground)
                 got_ground = True
-                self._route_ring(net_code, terminals, None)
+                self._route_ring(net_code, terminals,
+                    pcb.FromMM(GND_RING_DISP_MM),
+                    LayerFCu if GND_RING_FCU else LayerBCu
+                )
 
 
     def __init__(self):
