@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from radial import RadialPlacer, Place, compute_radial_segment, shift_along_radius, shift_along_arc
+from radial import *
 import math
 from collections import namedtuple
 
@@ -9,6 +9,9 @@ import pcbnew as pcb
 LED_PREFIX = 'LED'
 # Resistor driving LEDS will be named R0, R1, ...
 RESISTOR_PREFIX = 'R'
+# Other names
+MOSFET_NAME = 'Q0'
+PIN_NAME = 'J0'
 # Coordinated of the center in mm
 CENTER_X_MM = 100.
 CENTER_Y_MM = 100.
@@ -32,15 +35,19 @@ PWR_RING_FCU = True
 # True for having the ground ring on F.Cu (False resp. for B.Cu)
 GND_RING_FCU = True
 # Radial offset in mm for the power ring
-PWR_RING_DISP_MM = 4.
+PWR_RING_DISP_MM = -4.
 # Radial offset in mm for the ground ring
-GND_RING_DISP_MM = -4.
+GND_RING_DISP_MM = 4.
 # Extra portion of wire to add before connecting to a ring
 _ANG_DIST_BTW_MODS = 2. * math.pi / float((1 + N_LEDS_PER_LINE) * N_LINES)
 RING_OVERHANG_ANGLE = _ANG_DIST_BTW_MODS / 4.
 # If >0, routes the LED strips with a copper fill
 LED_FILL_WIDTH_MM = 4.
 DEFAULT_TRACK_WIDTH_MM=1.
+
+MOSFET_PIN_PAD_MAP = {'1': '1', '2': '3'}
+MOSFET_ORIENTATION = 0.
+PIN_ORIENTATION = 0.
 
 # _FILL_OVERHANG_ANGLE = math.asin(DEFAULT_TRACK_WIDTH_MM / (4. * RADIUS_MM))
 _FILL_OVERHANG_ANGLE = (_ANG_DIST_BTW_MODS - 2. * RING_OVERHANG_ANGLE) / 6.
@@ -101,15 +108,18 @@ class Illuminator(object):
         for track in self.board.GetTracks():
             if track.GetNetCode() in net_codes:
                 self.board.Delete(track)
+        to_delete = []
         for i in range(self.board.GetAreaCount()):
             area = self.board.GetArea(i)
             if area.GetNetCode() in net_codes:
-                self.board.Delete(area)
+                to_delete.append(area)
+        for area in to_delete:
+            self.board.Delete(area)
 
     def place_module(self, name, place):
         mod = self.board.FindModule(name)
         if mod:
-            self.placed_modules.add(name)
+            print('Placing %s at %s.' % (name, str(place)))
             mod.SetPosition(pcb.wxPoint(place.x, place.y))
             mod.SetOrientation(-math.degrees(place.rot) * 10.)
 
@@ -136,11 +146,11 @@ class Illuminator(object):
             led_prefix=LED_PREFIX,
             resistor_prefix=RESISTOR_PREFIX
         )
-        placer.print_settings()
         for name, place in placer():
-            print('Placing %s at %s.' % (name, str(place)))
             self.place_module(name, place)
+            self.placed_modules.add(name)
         self.center = pcb.wxPoint(placer.center.x, placer.center.y)
+        self._place_pin_and_fet()
 
     def make_track_segment(self, start, end, net_code, layer):
         t = pcb.TRACK(self.board)
@@ -175,7 +185,7 @@ class Illuminator(object):
 
     def make_fill_area(self, vertices, is_thermal, net_code, layer):
         area = self.board.InsertArea(net_code, self.board.GetAreaCount(), layer,
-            vertices[0].x, vertices[0].y, pcbnew.CPolyLine.DIAGONAL_EDGE)
+            vertices[0].x, vertices[0].y, pcb.CPolyLine.DIAGONAL_EDGE)
         if is_thermal:
             area.SetPadConnection(pcb.PAD_ZONE_CONN_THERMAL)
         else:
@@ -183,8 +193,13 @@ class Illuminator(object):
         # area.SetIsFilled(True)
         outline = area.Outline()
         for vertex in vertices[1:]:
-            outline.AppendCorner(vertex.x, vertex.y)
-        outline.CloseLastContour()
+            if getattr(outline, 'AppendCorner', None) is None:
+                # Kicad nightly
+                outline.Append(vertex.x, vertex.y)
+            else:
+                outline.AppendCorner(vertex.x, vertex.y)
+        if getattr(outline, 'CloseLastContour', None) is not None:
+            outline.CloseLastContour()
         area.BuildFilledSolidAreasPolygons(self.board)
         return area
 
@@ -196,13 +211,11 @@ class Illuminator(object):
                 lower_arc_start,
                 shift_along_radius(self.center, end, -width / 2.),
                 angular_resolution=ANGULAR_RESOLUTION,
-                excess_angle=0.00001,
                 skip_start=False)) + \
             list(compute_radial_segment(self.center,
                 upper_arc_start,
                 shift_along_radius(self.center, start, width / 2.),
                 angular_resolution=ANGULAR_RESOLUTION,
-                excess_angle=0.00001,
                 skip_start=False))
         return self.make_fill_area(vertices, is_thermal, net_code, layer)
 
@@ -213,9 +226,10 @@ class Illuminator(object):
         v.SetViaType(pcb.VIA_THROUGH)
         v.SetLayerPair(LayerFCu, LayerBCu)
         v.SetNetCode(net_code)
+        v.SetWidth(pcb.FromMM(DEFAULT_TRACK_WIDTH_MM))
         return position
 
-    def _route_arc(self, net_code, start_terminal, end_terminal):
+    def _route_arc(self, net_code, start_terminal, end_terminal, layer=LayerFCu):
         print('Routing %s between %s and %s with a single arc.' % (
             self.get_net_name(net_code), start_terminal.module, end_terminal.module
         ))
@@ -224,7 +238,7 @@ class Illuminator(object):
             self.get_terminal_position(start_terminal),
             self.get_terminal_position(end_terminal),
             net_code,
-            LayerFCu
+            layer
         )
 
     def _route_fill_arc(self, net_code, start_terminal, end_terminal):
@@ -281,15 +295,26 @@ class Illuminator(object):
             if layer != LayerFCu:
                 self.make_via(term_ring_pt, net_code)
             terminal_pos.append(term_ring_pt)
-        # Connect the terminals with an arc
-        last_pos = terminal_pos[-1]
-        for pos in terminal_pos:
-            self.make_track_arc_from_endpts(last_pos, pos, net_code, layer)
+        # Connect the terminals with an arc. Make sure
+        # that all the positions at 0 and 180 are covered
+        polar_term_pos = [to_polar(self.center, pos) for pos in terminal_pos]
+        polar_term_pos += [
+            (0, pcb.FromMM(RADIUS_MM) + displacement),
+            (math.pi, pcb.FromMM(RADIUS_MM) + displacement)
+        ]
+        polar_term_pos.sort()
+
+        # Now make the actual tracks. One more cartesian/polar conversion
+        # because I didn't really think this through
+        last_pos = polar_term_pos[-1]
+        for pos in polar_term_pos:
+            self.make_track_arc_from_endpts(
+                to_cartesian(self.center, *last_pos),
+                to_cartesian(self.center, *pos),
+                net_code, layer)
             last_pos = pos
 
     def route(self):
-        got_power = False
-        got_ground = False
         for net_code, terminals in self.get_nets_at_placed_modules().items():
             # Try to guess net type
             net_type = self.guess_net_type(terminals)
@@ -309,21 +334,102 @@ class Illuminator(object):
                 else:
                     self._route_arc(net_code, terminals[0], terminals[1])
             elif net_type == NetTypePower:
-                assert(not got_power)
-                got_power = True
+                assert(self.power_net is None)
+                self.power_net = net_code
                 self._route_ring(net_code, terminals,
                     pcb.FromMM(PWR_RING_DISP_MM),
                     RING_OVERHANG_ANGLE,
                     LayerFCu if PWR_RING_FCU else LayerBCu
                 )
             elif net_type == NetTypeGround:
-                assert(not got_ground)
-                got_ground = True
+                assert(self.ground_net is None)
+                self.ground_net = net_code
                 self._route_ring(net_code, terminals,
                     pcb.FromMM(GND_RING_DISP_MM),
                     -RING_OVERHANG_ANGLE,
                     LayerFCu if GND_RING_FCU else LayerBCu
                 )
+        self._route_pin_and_fet()
+
+    def _place_pin_and_fet(self):
+        self.pin = self.board.FindModule(PIN_NAME)
+        self.fet = self.board.FindModule(MOSFET_NAME)
+        if self.pin is None or self.fet is None:
+            return
+        # Ok place first the pin centered and rotated
+        if not self.pin.IsFlipped():
+            self.pin.Flip(self.pin.GetPosition())
+        if not self.fet.IsFlipped():
+            self.fet.Flip(self.pin.GetPosition())
+        print('Found pin and mosfet, placing them at opposite sides of the board.')
+        self.place_module(self.pin.GetReference(),
+            Place(self.center.x - pcb.FromMM(RADIUS_MM), self.center.y, PIN_ORIENTATION))
+        # Now the pad position for the pins of the pin
+        # header determines the pad position for the pads of the fet
+        fet_pad_name, pin_pad_name = MOSFET_PIN_PAD_MAP.items()[0]
+        pin_pad = self.pin.FindPadByName(pin_pad_name)
+        fet_pad = self.fet.FindPadByName(fet_pad_name)
+        # Get the polar coordinates of the pin
+        _, r = to_polar(self.center, pin_pad.GetPosition())
+        fet_pad_pos_ofs = fet_pad.GetPosition() - self.fet.GetPosition()
+        # Ok now we need to find a x such that the distance between the
+        # pad and the center is exacly r
+        x = math.sqrt(r * r - fet_pad_pos_ofs.y * fet_pad_pos_ofs.y) - fet_pad_pos_ofs.x
+        # This is the desired x for the mosfet
+        self.place_module(self.fet.GetReference(),
+            Place(self.center.x + x, self.center.y, MOSFET_ORIENTATION))
+
+
+    def _route_pin_and_fet(self):
+        if self.pin is None or self.fet is None:
+            return
+        print('Found pin and mosfet, adding connection rings')
+        for fet_pad_name, pin_pad_name in MOSFET_PIN_PAD_MAP.items():
+            src_terminal = Terminal(self.fet.GetReference(), fet_pad_name)
+            trg_terminal = Terminal(self.pin.GetReference(), pin_pad_name)
+            net_code = self.fet.FindPadByName(fet_pad_name).GetNetCode()
+            self.clear_tracks_in_nets([net_code])
+            print('Adding ring from the mosfet pad %s (net %s)' % (fet_pad_name, self.get_net_name(net_code)))
+            self._route_arc(net_code, src_terminal, trg_terminal, LayerBCu)
+        print('Adding missing vias to known nets.')
+        # Find the third pad
+        fet_gnd_pad = None
+        for pad in self.fet.Pads():
+            if pad.GetName() not in MOSFET_PIN_PAD_MAP.keys():
+                fet_gnd_pad = pad
+                break
+        if fet_gnd_pad is not None and self.ground_net is not None:
+            if fet_gnd_pad.GetNetCode() == self.ground_net:
+                print('Connecting pad %s of the mosfet to net %s' % (
+                    fet_gnd_pad.GetName(), self.get_net_name(self.ground_net)))
+                # We know there is a point in this net at theta = 0
+                # Drop a via from there
+                known_pt = to_cartesian(self.center, 0.,
+                    pcb.FromMM(RADIUS_MM + GND_RING_DISP_MM))
+                self.make_via(known_pt, self.ground_net)
+                # and then straight to this pad
+                self.make_track_segment(
+                    known_pt, fet_gnd_pad.GetPosition(),
+                    self.ground_net, LayerBCu)
+        # Find the third pin
+        pin_pwr_pad = None
+        for pad in self.pin.Pads():
+            if pad.GetName() not in MOSFET_PIN_PAD_MAP.values():
+                pin_pwr_pad = pad
+                break
+        if pin_pwr_pad is not None and self.power_net is not None:
+            if pin_pwr_pad.GetNetCode() == self.power_net:
+                print('Connecting pad %s of the mosfet to net %s' % (
+                    pin_pwr_pad.GetName(), self.get_net_name(self.power_net)))
+                # We know there is a point in this net at theta=180
+                # Drop a via from there
+                known_pt = to_cartesian(self.center, math.pi,
+                    pcb.FromMM(RADIUS_MM + PWR_RING_DISP_MM))
+                self.make_via(known_pt, self.power_net)
+                # and then straight to this pad
+                self.make_track_segment(
+                    known_pt, pin_pwr_pad.GetPosition(),
+                    self.power_net, LayerBCu)
 
 
     def __init__(self):
@@ -331,6 +437,10 @@ class Illuminator(object):
         self.placed_modules = set()
         self.board = pcb.GetBoard()
         self.center = None
+        self.pin = None
+        self.fet = None
+        self.ground_net = None
+        self.power_net = None
 
 if __name__ == '__main__':
     a = Illuminator()

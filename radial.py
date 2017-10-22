@@ -9,6 +9,17 @@ Place = namedtuple('Place', ['x', 'y', 'rot'])
 def ortho(a):
     return a - math.pi / 2.
 
+def to_cartesian(c, angle, r):
+    return c.__class__(c.x + r * math.cos(angle), c.y + r * math.sin(angle))
+
+def to_polar(c, pos):
+    pos_dx = pos.x - c.x
+    pos_dy = pos.y - c.y
+    r = math.sqrt(pos_dx * pos_dx + pos_dy * pos_dy)
+    angle = math.acos(pos_dx / r)
+    if pos_dy < 0.: angle = 2. * math.pi - angle
+    return (angle, r)
+
 def shift_along_radius(c, pos, shift):
     delta = pos - c
     radius = math.sqrt(delta.x * delta.x + delta.y * delta.y)
@@ -16,33 +27,19 @@ def shift_along_radius(c, pos, shift):
     return pos + pos.__class__(delta.x * scale_factor, delta.y * scale_factor)
 
 def shift_along_arc(c, pos, delta_angle):
-    pos_dx = pos.x - c.x
-    pos_dy = pos.y - c.y
-    r = math.sqrt(pos_dx * pos_dx + pos_dy * pos_dy)
-    angle = math.acos(pos_dx / r)
-    if pos_dy < 0.: angle = 2. * math.pi - angle
-    x = c.x + r * math.cos(angle + delta_angle)
-    y = c.y + r * math.sin(angle + delta_angle)
-    return pos.__class__(x, y)
+    angle, r = to_polar(c, pos)
+    return to_cartesian(c, angle + delta_angle, r)
 
 def compute_radial_segment(c, start, end=None, angle=None, steps=None, angular_resolution=None, excess_angle=0., skip_start=True):
     assert((end is None) != (angle is None))
     # Determine polar coordinates of start
-    start_dx = start.x - c.x
-    start_dy = start.y - c.y
-    start_r = math.sqrt(start_dx * start_dx + start_dy * start_dy)
-    start_angle = math.acos(start_dx / start_r)
-    if start_dy < 0.: start_angle = 2. * math.pi - start_angle
+    start_angle, start_r = to_polar(c, start)
 
     if end is None:
         end_r = start_r
         end_angle = start_angle + angle
     else:
-        end_dx = end.x - c.x
-        end_dy = end.y - c.y
-        end_r = math.sqrt(end_dx * end_dx + end_dy * end_dy)
-        end_angle = math.acos(end_dx / end_r)
-        if end_dy < 0.: end_angle = 2. * math.pi - end_angle
+        end_angle, end_r = to_polar(c, end)
 
     # Choose the arc < 180 degrees
     if abs(end_angle - start_angle) > math.pi:
@@ -64,10 +61,8 @@ def compute_radial_segment(c, start, end=None, angle=None, steps=None, angular_r
         frac = float(i) / float(steps)
         angle = start_angle + frac * (end_angle - start_angle)
         r = start_r + frac * (end_r - start_r)
-        x = c.x + r * math.cos(angle)
-        y = c.y + r * math.sin(angle)
         if i > 0 or not skip_start:
-            yield c.__class__(x, y)
+            yield to_cartesian(c, angle, r)
 
 
 class RadialPlacer(object):
@@ -84,17 +79,6 @@ class RadialPlacer(object):
             y=self.center.y + self.radius * math.sin(angle + self.center.rot),
             rot=ortho(angle + self.center.rot) + orientation
         )
-
-    def print_settings(self):
-        print('Settings:')
-        print('n_leds_per_line: %s' % str(self.n_leds_per_line))
-        print('n_lines: %s' % str(self.n_lines))
-        print('center: %s' % str(self.center))
-        print('radius: %s' % str(self.radius))
-        print('led_orientation: %s' % str(self.led_orientation))
-        print('led_prefix: %s' % str(self.led_prefix))
-        print('resistor_prefix: %s' % str(self.resistor_prefix))
-
 
     def __call__(self):
         # Total number of elements
