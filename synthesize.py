@@ -1,5 +1,4 @@
 from __future__ import unicode_literals
-from radial import *
 import math
 from collections import namedtuple
 
@@ -60,6 +59,69 @@ NetTypeLedStrip = 'led strip'
 NetTypePower = 'power'
 NetTypeGround = 'ground'
 NetTypeUnknown = '?'
+
+
+Place = namedtuple('Place', ['x', 'y', 'rot'])
+
+
+def ortho(a):
+    return a - math.pi / 2.
+
+def to_cartesian(c, angle, r):
+    return c.__class__(c.x + r * math.cos(angle), c.y + r * math.sin(angle))
+
+def to_polar(c, pos):
+    pos_dx = pos.x - c.x
+    pos_dy = pos.y - c.y
+    r = math.sqrt(pos_dx * pos_dx + pos_dy * pos_dy)
+    angle = math.acos(pos_dx / r)
+    if pos_dy < 0.: angle = 2. * math.pi - angle
+    return (angle, r)
+
+def shift_along_radius(c, pos, shift):
+    delta = pos - c
+    radius = math.sqrt(delta.x * delta.x + delta.y * delta.y)
+    scale_factor = float(shift) / radius
+    return pos + pos.__class__(delta.x * scale_factor, delta.y * scale_factor)
+
+def shift_along_arc(c, pos, delta_angle):
+    angle, r = to_polar(c, pos)
+    return to_cartesian(c, angle + delta_angle, r)
+
+def compute_radial_segment(c, start, end=None, angle=None, steps=None, angular_resolution=None, excess_angle=0., skip_start=True):
+    assert((end is None) != (angle is None))
+    # Determine polar coordinates of start
+    start_angle, start_r = to_polar(c, start)
+
+    if end is None:
+        end_r = start_r
+        end_angle = start_angle + angle
+    else:
+        end_angle, end_r = to_polar(c, end)
+
+    # Choose the arc < 180 degrees
+    if abs(end_angle - start_angle) > math.pi:
+        if start_angle < end_angle:
+            end_angle -= 2. * math.pi
+        else:
+            start_angle -= 2. * math.pi
+    assert((steps is None) != (angular_resolution is None))
+    if steps is None:
+        steps = int(math.ceil(abs(end_angle - start_angle) / angular_resolution))
+    if excess_angle != 0.:
+        if start_angle <= end_angle:
+            start_angle -= excess_angle
+            end_angle += excess_angle
+        else:
+            start_angle += excess_angle
+            end_angle -= excess_angle
+    for i in range(steps + 1):
+        frac = float(i) / float(steps)
+        angle = start_angle + frac * (end_angle - start_angle)
+        r = start_r + frac * (end_r - start_r)
+        if i > 0 or not skip_start:
+            yield to_cartesian(c, angle, r)
+
 
 class Illuminator(object):
 
@@ -132,24 +194,29 @@ class Illuminator(object):
     def get_net_name(self, net_code):
         return self.board.FindNet(net_code).GetNetname()
 
-    def place(self):
-        placer = RadialPlacer(
-            n_lines=N_LINES,
-            n_leds_per_line=N_LEDS_PER_LINE,
-            radius=pcb.FromMM(RADIUS_MM),
-            center=Place(
-                x=pcb.FromMM(CENTER_X_MM),
-                y=pcb.FromMM(CENTER_Y_MM),
-                rot=ROTATION_OFS_RAD),
-            led_orientation=LED_ORIENTATION_OFS_RAD,
-            resistor_orientation=RESISTOR_ORIENTATION_OFS_RAD,
-            led_prefix=LED_PREFIX,
-            resistor_prefix=RESISTOR_PREFIX
+    def _get_one_place(self, angle, orientation=0.):
+        return Place(
+            x=self.center.x + pcb.FromMM(RADIUS_MM) * math.cos(angle + ROTATION_OFS_RAD),
+            y=self.center.y + pcb.FromMM(RADIUS_MM) * math.sin(angle + ROTATION_OFS_RAD),
+            rot=ortho(angle + ROTATION_OFS_RAD) + orientation
         )
-        for name, place in placer():
-            self.place_module(name, place)
-            self.placed_modules.add(name)
-        self.center = pcb.wxPoint(placer.center.x, placer.center.y)
+
+    def place(self):
+        n_elm = N_LINES * (1 + N_LEDS_PER_LINE)
+        angle_step = 2. * math.pi / float(n_elm)
+        angle = 0.
+        for line_idx in range(N_LINES):
+            mod_name = RESISTOR_PREFIX + str(line_idx)
+            self.place_module(mod_name,
+                self._get_one_place(angle, RESISTOR_ORIENTATION_OFS_RAD))
+            angle -= angle_step
+            self.placed_modules.add(mod_name)
+            for led_idx in range(N_LEDS_PER_LINE):
+                mod_name = LED_PREFIX + str(line_idx * N_LEDS_PER_LINE + led_idx)
+                self.place_module(LED_PREFIX + str(line_idx * N_LEDS_PER_LINE + led_idx),
+                    self._get_one_place(angle, LED_ORIENTATION_OFS_RAD))
+                angle -= angle_step
+                self.placed_modules.add(mod_name)
         self._place_pin_and_fet()
 
     def make_track_segment(self, start, end, net_code, layer):
@@ -438,7 +505,7 @@ class Illuminator(object):
         super(Illuminator, self).__init__()
         self.placed_modules = set()
         self.board = pcb.GetBoard()
-        self.center = None
+        self.center = pcb.wxPoint(pcb.FromMM(CENTER_X_MM), pcb.FromMM(CENTER_Y_MM))
         self.pin = None
         self.fet = None
         self.ground_net = None
