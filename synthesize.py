@@ -20,7 +20,7 @@ N_LINES = 3
 # Number of leds per line
 N_LEDS_PER_LINE = 3
 # Offset angle for the whole design
-ROTATION_OFS_RAD = 0.
+ROTATION_OFS_RAD = -math.pi / 12.
 # Offset angle of the LEDs
 LED_ORIENTATION_OFS_RAD = math.pi
 # Offset angle of the resistors

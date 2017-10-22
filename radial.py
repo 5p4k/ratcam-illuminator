@@ -58,7 +58,7 @@ class RadialPlacer(object):
         return Place(
             x=self.center.x + self.radius * math.cos(angle + self.center.rot),
             y=self.center.y + self.radius * math.sin(angle + self.center.rot),
-            rot=ortho(angle) + orientation
+            rot=ortho(angle + self.center.rot) + orientation
         )
 
     def print_settings(self):
