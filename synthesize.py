@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from radial import RadialPlacer, Place, compute_radial_segment
+from radial import RadialPlacer, Place, compute_radial_segment, shift_along_radius, shift_along_arc
 import math
 from collections import namedtuple
 
@@ -38,6 +38,8 @@ GND_RING_DISP_MM = -5.
 # Extra portion of wire to add before connecting to a ring
 _ANG_DIST_BTW_MODS = 2. * math.pi / float((1 + N_LEDS_PER_LINE) * N_LINES)
 RING_OVERHANG_ANGLE = _ANG_DIST_BTW_MODS / 4.
+# If >0, routes the LED strips with a copper fill
+LED_FILL_WIDTH_MM = 4.
 
 Terminal = namedtuple('Terminal', ['module', 'pad'])
 
@@ -143,8 +145,7 @@ class Illuminator(object):
 
     def _make_track_arc_internal(self, start, net_code, layer, *args, **kwargs):
         last = start
-        for x, y in compute_radial_segment(self.center, start, *args, **kwargs):
-            pt = pcb.wxPoint(x, y)
+        for pt in compute_radial_segment(self.center, start, *args, **kwargs):
             self.make_track_segment(last, pt, net_code, layer)
             last = pt
         return last
@@ -160,12 +161,41 @@ class Illuminator(object):
             angle=angle, angular_resolution=ANGULAR_RESOLUTION)
 
     def make_track_radial_segment(self, pos, displacement, net_code, layer):
-        delta = pos - self.center
-        radius = math.sqrt(delta.x * delta.x + delta.y * delta.y)
-        scale_factor = float(displacement) / radius
-        end_pos = pos + pcb.wxPoint(delta.x * scale_factor, delta.y * scale_factor)
+        end_pos = shift_along_radius(self.center, pos, displacement)
         return self.make_track_segment(pos, end_pos, net_code, layer)
 
+    def make_fill_area(self, vertices, is_thermal, net_code, layer):
+        area = self.board.InsertArea(net_code, self.board.GetAreaCount(), layer,
+            vertices[0].x, vertices[0].y, pcbnew.CPolyLine.DIAGONAL_EDGE)
+        if is_thermal:
+            area.SetPadConnection(pcb.PAD_ZONE_CONN_THERMAL)
+        else:
+            area.SetPadConnection(pcb.PAD_ZONE_CONN_FULL)
+        # area.SetIsFilled(True)
+        outline = area.Outline()
+        for vertex in vertices[1:]:
+            outline.AppendCorner(vertex.x, vertex.y)
+        outline.CloseLastContour()
+        area.BuildFilledSolidAreasPolygons(self.board)
+        return area
+
+    def make_fill_arc(self, start, end, width, is_thermal, net_code, layer):
+        # Compute the vertices
+        lower_arc_start = shift_along_radius(self.center, start, -width / 2.)
+        upper_arc_start = shift_along_radius(self.center, end, width / 2.)
+        vertices = list(compute_radial_segment(self.center,
+                lower_arc_start,
+                shift_along_radius(self.center, end, -width / 2.),
+                angular_resolution=ANGULAR_RESOLUTION,
+                excess_angle=math.pi / 180.,
+                skip_start=False)) + \
+            list(compute_radial_segment(self.center,
+                upper_arc_start,
+                shift_along_radius(self.center, start, width / 2.),
+                angular_resolution=ANGULAR_RESOLUTION,
+                excess_angle=math.pi / 180.,
+                skip_start=False))
+        return self.make_fill_area(vertices, is_thermal, net_code, layer)
 
     def make_via(self, position, net_code):
         v = pcb.VIA(self.board)
@@ -188,6 +218,28 @@ class Illuminator(object):
             LayerFCu
         )
 
+    def _route_fill_arc(self, net_code, start_terminal, end_terminal):
+        print('Routing %s between %s and %s with filled arc region.' % (
+            self.get_net_name(net_code), start_terminal.module, end_terminal.module
+        ))
+        start_pos = self.get_terminal_position(start_terminal)
+        end_pos = self.get_terminal_position(end_terminal)
+        self.make_track_arc_from_endpts(
+            start_pos,
+            end_pos,
+            net_code,
+            LayerFCu
+        )
+        # Get the offsetted position of the pads
+        self.make_fill_arc(
+            start_pos,
+            end_pos,
+            pcb.FromMM(LED_FILL_WIDTH_MM),
+            False,
+            net_code,
+            LayerFCu
+        )
+
     def _route_ring(self, net_code, terminals, displacement, ring_overhang, layer):
         log_msg = 'Routing %s between %s with' % (
             self.get_net_name(net_code), ', '.join([t.module for t in terminals])
@@ -203,8 +255,13 @@ class Illuminator(object):
             term_ring_pt = self.get_terminal_position(terminal)
             if displacement != 0.:
                 if ring_overhang != 0.:
-                    term_ring_pt = self.make_track_arc_from_angle(
-                        term_ring_pt, ring_overhang, net_code, LayerFCu)
+                    new_end_pt = shift_along_arc(self.center, term_ring_pt, ring_overhang)
+                    self.make_track_arc_from_endpts(term_ring_pt, new_end_pt, net_code, LayerFCu)
+                    if LED_FILL_WIDTH_MM != 0.:
+                        self.make_fill_arc(term_ring_pt, new_end_pt,
+                            pcb.FromMM(LED_FILL_WIDTH_MM),
+                            False, net_code, LayerFCu)
+                    term_ring_pt = new_end_pt
                 term_ring_pt = self.make_track_radial_segment(
                     term_ring_pt, displacement, net_code, LayerFCu)
             # Now add the via and store the position
@@ -234,7 +291,10 @@ class Illuminator(object):
             self.clear_tracks_in_nets([net_code])
             if net_type == NetTypeLedStrip:
                 assert(len(terminals) == 2)
-                self._route_arc(net_code, terminals[0], terminals[1])
+                if LED_FILL_WIDTH_MM > 0.:
+                    self._route_fill_arc(net_code, terminals[0], terminals[1])
+                else:
+                    self._route_arc(net_code, terminals[0], terminals[1])
             elif net_type == NetTypePower:
                 assert(not got_power)
                 got_power = True

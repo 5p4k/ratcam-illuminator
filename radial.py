@@ -9,7 +9,23 @@ Place = namedtuple('Place', ['x', 'y', 'rot'])
 def ortho(a):
     return a - math.pi / 2.
 
-def compute_radial_segment(c, start, end=None, angle=None, steps=None, angular_resolution=None):
+def shift_along_radius(c, pos, shift):
+    delta = pos - c
+    radius = math.sqrt(delta.x * delta.x + delta.y * delta.y)
+    scale_factor = float(shift) / radius
+    return pos + pos.__class__(delta.x * scale_factor, delta.y * scale_factor)
+
+def shift_along_arc(c, pos, delta_angle):
+    pos_dx = pos.x - c.x
+    pos_dy = pos.y - c.y
+    r = math.sqrt(pos_dx * pos_dx + pos_dy * pos_dy)
+    angle = math.acos(pos_dx / r)
+    if pos_dy < 0.: angle = 2. * math.pi - angle
+    x = c.x + r * math.cos(angle + delta_angle)
+    y = c.y + r * math.sin(angle + delta_angle)
+    return pos.__class__(x, y)
+
+def compute_radial_segment(c, start, end=None, angle=None, steps=None, angular_resolution=None, excess_angle=0., skip_start=True):
     assert((end is None) != (angle is None))
     # Determine polar coordinates of start
     start_dx = start.x - c.x
@@ -37,13 +53,21 @@ def compute_radial_segment(c, start, end=None, angle=None, steps=None, angular_r
     assert((steps is None) != (angular_resolution is None))
     if steps is None:
         steps = int(math.ceil(abs(end_angle - start_angle) / angular_resolution))
-    for i in range(steps):
-        frac = float(1 + i) / float(steps)
+    if excess_angle != 0.:
+        if start_angle <= end_angle:
+            start_angle -= excess_angle
+            end_angle += excess_angle
+        else:
+            start_angle += excess_angle
+            end_angle -= excess_angle
+    for i in range(steps + 1):
+        frac = float(i) / float(steps)
         angle = start_angle + frac * (end_angle - start_angle)
         r = start_r + frac * (end_r - start_r)
         x = c.x + r * math.cos(angle)
         y = c.y + r * math.sin(angle)
-        yield (x, y)
+        if i > 0 or not skip_start:
+            yield c.__class__(x, y)
 
 
 class RadialPlacer(object):
