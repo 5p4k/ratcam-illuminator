@@ -274,6 +274,8 @@ class Illuminator(object):
                 outline.AppendCorner(vertex.x, vertex.y)
         if getattr(outline, 'CloseLastContour', None) is not None:
             outline.CloseLastContour()
+        area.SetCornerRadius(pcbnew.FromMM(DEFAULT_TRACK_WIDTH_MM / 2.))
+        area.SetCornerSmoothingType(pcb.ZONE_SETTINGS.SMOOTHING_FILLET)
         area.BuildFilledSolidAreasPolygons(self.board)
         return area
 
