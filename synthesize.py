@@ -39,7 +39,7 @@ PWR_RING_DISP_MM = -4.
 GND_RING_DISP_MM = 4.
 # Extra portion of wire to add before connecting to a ring
 _ANG_DIST_BTW_MODS = 2. * math.pi / float((1 + N_LEDS_PER_LINE) * N_LINES)
-RING_OVERHANG_ANGLE = _ANG_DIST_BTW_MODS / 4.
+RING_OVERHANG_ANGLE = _ANG_DIST_BTW_MODS / 3.
 # If >0, routes the LED strips with a copper fill
 LED_FILL_WIDTH_MM = 4.
 DEFAULT_TRACK_WIDTH_MM=1.
@@ -47,8 +47,9 @@ DEFAULT_TRACK_WIDTH_MM=1.
 MOSFET_ORIENTATION = 0.
 PIN_ORIENTATION = 0.
 
-# _FILL_OVERHANG_ANGLE = math.asin(DEFAULT_TRACK_WIDTH_MM / (4. * RADIUS_MM))
-_FILL_OVERHANG_ANGLE = (_ANG_DIST_BTW_MODS - 2. * RING_OVERHANG_ANGLE) / 6.
+_RESIDUAL_ANGLE = (_ANG_DIST_BTW_MODS - 2. * RING_OVERHANG_ANGLE)
+_TARGET_REMAINING_ANGLE = 2. * math.asin((-min(PWR_RING_DISP_MM, GND_RING_DISP_MM) - LED_FILL_WIDTH_MM / 2. - DEFAULT_TRACK_WIDTH_MM / 2.) / (2. * RADIUS_MM))
+_FILL_OVERHANG_ANGLE = (_RESIDUAL_ANGLE - _TARGET_REMAINING_ANGLE) / 2.
 
 Terminal = namedtuple('Terminal', ['module', 'pad'])
 
@@ -107,6 +108,7 @@ def compute_radial_segment(c, start, end=None, angle=None, steps=None, angular_r
     assert((steps is None) != (angular_resolution is None))
     if steps is None:
         steps = int(math.ceil(abs(end_angle - start_angle) / angular_resolution))
+    steps = max(1, steps)
     if excess_angle != 0.:
         if start_angle <= end_angle:
             start_angle -= excess_angle
@@ -350,15 +352,19 @@ class Illuminator(object):
         terminal_pos = []
         for terminal in terminals:
             term_ring_pt = self.get_terminal_position(terminal)
+            _, term_ring_pt_r = to_polar(self.center, term_ring_pt)
             if displacement != 0.:
                 if ring_overhang != 0.:
-                    new_end_pt = shift_along_arc(self.center, term_ring_pt, ring_overhang)
+                    mod_pos_angle, _ = to_polar(self.center,
+                        self.get_module_position(terminal.module))
+                    new_end_pt = to_cartesian(self.center,
+                        mod_pos_angle + ring_overhang, term_ring_pt_r)
                     self.make_track_arc_from_endpts(term_ring_pt, new_end_pt, net_code, LayerFCu)
                     if LED_FILL_WIDTH_MM != 0.:
                         # Some extra fill:
-                        overhand_angle = _FILL_OVERHANG_ANGLE * (1. if ring_overhang > 0. else -1.)
+                        overhang_angle = _FILL_OVERHANG_ANGLE * (1. if ring_overhang > 0. else -1.)
                         fill_end_pt  = shift_along_arc(self.center,
-                            new_end_pt, overhand_angle)
+                            new_end_pt, overhang_angle)
                         self.make_fill_arc(term_ring_pt, fill_end_pt,
                             pcb.FromMM(LED_FILL_WIDTH_MM),
                             False, net_code, LayerFCu)
