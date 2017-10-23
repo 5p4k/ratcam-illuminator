@@ -228,6 +228,12 @@ class Illuminator(object):
         t.SetWidth(pcb.FromMM(DEFAULT_TRACK_WIDTH_MM))
         return end
 
+    def make_track_horizontal_segment_to_radius(self, start, radius, net_code, layer):
+        angle = math.asin(float(start.y - self.center.y) / radius)
+        if start.x < self.center.x: angle = math.pi - angle
+        end = pcb.wxPoint(self.center.x + radius * math.cos(angle), start.y)
+        return self.make_track_segment(start, end, net_code, layer)
+
     def _make_track_arc_internal(self, start, net_code, layer, *args, **kwargs):
         last = start
         for pt in compute_radial_segment(self.center, start, *args, **kwargs):
@@ -430,44 +436,10 @@ class Illuminator(object):
         if not self.fet.IsFlipped():
             self.fet.Flip(self.pin.GetPosition())
         print('Found pin and mosfet, placing them at opposite sides of the board.')
-        # Apply just the orientation
-        self.place_module(self.pin.GetReference(), Place(0., 0., PIN_ORIENTATION))
-        # Now find the rightmost pad
-        rightmost_pad = None
-        rightmost_pad_ofs = None
-        for pad in self.pin.Pads():
-            pad_ofs = pad.GetPosition() # - pin pos, which is 0, 0
-            if rightmost_pad_ofs is None or pad_ofs.x > rightmost_pad_ofs.x:
-                rightmost_pad = pad
-                rightmost_pad_ofs = pad_ofs
-        # Use that as reference
-        r = pcb.FromMM(RADIUS_MM + min([0., PWR_RING_DISP_MM, GND_RING_DISP_MM]))
-        x = -math.sqrt(r * r - rightmost_pad_ofs.y * rightmost_pad_ofs.y)
-        x -= rightmost_pad_ofs.x
-        x -= rightmost_pad.GetBoundingBox().GetWidth() / 2.
-        x += pcb.FromMM(DEFAULT_TRACK_WIDTH_MM / 2.)
         self.place_module(self.pin.GetReference(),
-            Place(self.center.x + x, self.center.y, PIN_ORIENTATION))
-        # Now the pad position for the pins of the fet. Find two connected pads
-        pin_pad = None
-        fet_pad = None
-        for candidate_pin_pad in self.pin.Pads():
-            for candidate_fet_pad in self.fet.Pads():
-                if candidate_fet_pad.GetNetCode() == candidate_pin_pad.GetNetCode():
-                    pin_pad = candidate_pin_pad
-                    fet_pad = candidate_fet_pad
-                    break
-            if pin_pad is not None: break
-        # Get the polar coordinates of the pin
-        _, r = to_polar(self.center, pin_pad.GetPosition())
-        fet_pad_pos_ofs = fet_pad.GetPosition() - self.fet.GetPosition()
-        # Ok now we need to find a x such that the distance between the
-        # pad and the center is exacly r
-        x = math.sqrt(r * r - fet_pad_pos_ofs.y * fet_pad_pos_ofs.y) - fet_pad_pos_ofs.x
-        # This is the desired x for the mosfet
+            Place(self.center.x - pcb.FromMM(RADIUS_MM), self.center.y, PIN_ORIENTATION))
         self.place_module(self.fet.GetReference(),
-            Place(self.center.x + x, self.center.y, MOSFET_ORIENTATION))
-
+            Place(self.center.x + pcb.FromMM(RADIUS_MM), self.center.y, MOSFET_ORIENTATION))
 
     def _route_pin_and_fet(self):
         if self.pin is None or self.fet is None:
@@ -480,10 +452,14 @@ class Illuminator(object):
                 net_code = fet_pad.GetNetCode()
                 routed_nets.add(net_code)
                 self.clear_tracks_in_nets([net_code])
+                # Make a horizontal segment to the right radius
+                fet_pt = self.make_track_horizontal_segment_to_radius(
+                    fet_pad.GetPosition(), pcb.FromMM(RADIUS_MM), net_code, LayerBCu)
+                pin_pt = self.make_track_horizontal_segment_to_radius(
+                    pin_pad.GetPosition(), pcb.FromMM(RADIUS_MM), net_code, LayerBCu)
                 print('Adding ring from the mosfet pad %s (net %s)' % (
                     fet_pad.GetName(), self.get_net_name(net_code)))
-                self.make_track_arc_from_endpts(
-                    fet_pad.GetPosition(), pin_pad.GetPosition(), net_code, LayerBCu)
+                self.make_track_arc_from_endpts(fet_pt, pin_pt, net_code, LayerBCu)
         print('Adding missing vias to known nets.')
         # Find the third pad
         for pad in self.fet.Pads():
