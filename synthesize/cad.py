@@ -83,6 +83,9 @@ class Board(object):
         for n in self.netlist.values():
             n.assign_connections(self)
 
+    def __repr__(self):
+        return 'Board(%s, %s)' % (repr(self.components), repr(self.netlist))
+
     def __init__(self):
         self.components = {}
         self.netlist = {}
