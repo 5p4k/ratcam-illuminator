@@ -1,4 +1,5 @@
 from __future__ import unicode_literals
+import math
 
 
 class Terminal(object):
@@ -70,8 +71,42 @@ class Component(object):
     def __str__(self):
         return str(self.name)
 
-    def __init__(self, name, pads):
+    def get_pad_position(self, pad):
+        if isinstance(pad, unicode) or isinstance(pad, str):
+            pad = self.pads[pad]
+        pad_pol = pad.offset.to_polar()
+        pad_pol.a += self.orientation
+        return self.position + pad_pol.to_point().to_vector()
+
+    def get_two_pads_distance(self):
+        if len(self.pads) != 2:
+            return None
+        pad_a, pad_b = self.pads.values()
+        return (pad_a.offset - pad_b.offset).l2()
+
+    def align_pads_to_chord(self, chord, pads=None):
+        assert(chord.length == self.get_two_pads_distance())
+        if pads is None:
+            pads = self.pads.values()
+            pads.sort(key=lambda p: -p.offset.x)
+        if len(pads) != 2:
+            raise ValueError()
+        rpad, lpad = pads
+        if isinstance(rpad, str) or isinstance(rpad, str):
+            rpad = self.pads.get(rpad, None)
+        if isinstance(lpad, str) or isinstance(lpad, str):
+            lpad = self.pads.get(lpad, None)
+        if lpad is None or rpad is None:
+            raise ValueError()
+        # Ok now let's get serious
+        lpad_angle = (lpad.offset - rpad.offset).to_polar().a
+        self.orientation = chord.declination + lpad_angle - math.pi
+        self.position = chord.endpoints[0] - rpad.offset
+
+    def __init__(self, name, pads, position=None, orientation=None):
         self.name = name
+        self.position = position
+        self.orientation = orientation
         if isinstance(pads, dict):
             self.pads = pads
         else:
