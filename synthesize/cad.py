@@ -1,5 +1,35 @@
 from __future__ import unicode_literals
 import math
+from polar import Polar, Chord, Point, apx_arc_through_polars
+from enum import Enum
+
+
+class Layer(Enum):
+    F_Cu = 0
+    B_Cu = 31
+
+
+class Via(object):
+    def __repr__(self):
+        return 'Via(%s)' % repr(self.position)
+
+    def __str__(self):
+        return repr(self)
+
+    def __init__(self, position):
+        self.position = position
+
+
+class Track(object):
+    def __repr__(self):
+        return 'Track(%s, %s)' % (repr(self.points), repr(self.layer))
+
+    def __str__(self):
+        return 'Track(%s)' % str(self.points)
+
+    def __init__(self, points, layer=Layer.F_Cu):
+        self.points = list(points)
+        self.layer = layer
 
 
 class Terminal(object):
@@ -8,6 +38,10 @@ class Terminal(object):
             self.component = board.components.get(self.component, self.component)
         if isinstance(self.component, Component) and (isinstance(self.pad, str) or isinstance(self.pad, unicode)):
             self.pad = self.component.pads.get(self.pad, self.pad)
+
+    @property
+    def position(self):
+        return self.component.get_pad_position(self.pad)
 
     def __repr__(self):
         return 'Terminal(%s, %s)' % (repr(self.component), repr(self.pad))
@@ -38,6 +72,20 @@ class Net(object):
     def other_terminals(self, pad):
         return [t for t in self.terminals if t.pad is not pad]
 
+    def route_arc(self, center=Point(0., 0.), **kwargs):
+        if len(self.terminals) != 2:
+            raise RuntimeError()
+        s = (self.terminals[0].position - center).to_polar()
+        t = (self.terminals[1].position - center).to_polar()
+        kwargs['skip_start'] = False
+        kwargs['include_end'] = True
+        self.tracks.append(Track(apx_arc_through_polars(s, t, **kwargs)))
+
+    def route_straight(self):
+        if len(self.terminals) != 2:
+            raise RuntimeError()
+        self.tracks.append(Track([self.terminals[0].position, self.terminals[1].position]))
+
     def __repr__(self):
         return 'Net(%s, %s, %s)' % (repr(self.name), repr(self.code), repr(self.terminals))
 
@@ -48,6 +96,7 @@ class Net(object):
         self.name = name
         self.code = code
         self.terminals = terminals
+        self.tracks = []
 
 
 class Pad(object):
@@ -71,42 +120,60 @@ class Component(object):
     def __str__(self):
         return str(self.name)
 
+    def _pad(self, pad):
+        if isinstance(pad, str) or isinstance(pad, unicode):
+            return self.pads[pad]
+        else:
+            if pad not in self.pads.values():
+                raise ValueError()
+            return pad
+
+    def _two_pads(self, pad1, pad2):
+        if (pad1 is None) != (pad2 is None):
+            raise ValueError()
+        if pad1 is None and pad2 is None:
+            if len(self.pads) != 2:
+                raise RuntimeError()
+            else:
+                pad1, pad2 = self.pads.values()
+        else:
+            pad1 = self._pad(pad1)
+            pad2 = self._pad(pad2)
+        return pad1, pad2
+
     def get_pad_position(self, pad):
-        if isinstance(pad, unicode) or isinstance(pad, str):
-            pad = self.pads[pad]
+        pad = self._pad(pad)
         pad_pol = pad.offset.to_polar()
         pad_pol.a += self.orientation
         return self.position + pad_pol.to_point().to_vector()
 
-    def get_two_pads_distance(self):
-        if len(self.pads) != 2:
-            return None
-        pad_a, pad_b = self.pads.values()
-        return (pad_a.offset - pad_b.offset).l2()
+    def place_radial(self, angle, radius, orientation=0.):
+        self.orientation = orientation + angle - math.pi / 2.
+        self.position = Polar(angle, radius).to_point()
 
-    def align_pads_to_chord(self, chord, pads=None):
-        assert(abs(chord.length - self.get_two_pads_distance()) < 0.001)
-        if pads is None:
-            pads = self.pads.values()
-            pads.sort(key=lambda p: -p.offset.dx)
-        if len(pads) != 2:
-            raise ValueError()
-        rpad, lpad = pads
-        if isinstance(rpad, str) or isinstance(rpad, str):
-            rpad = self.pads.get(rpad, None)
-        if isinstance(lpad, str) or isinstance(lpad, str):
-            lpad = self.pads.get(lpad, None)
-        if lpad is None or rpad is None:
-            raise ValueError()
+    def place_pads_on_circ(self, angle, radius, pad1=None, pad2=None, orientation=0.):
+        pad1, pad2 = self._two_pads(pad1, pad2)
+        chord = Chord(radius, 0., angle).with_length(self.get_pads_distance(pad1, pad2))
+        self.align_pads_to_chord(chord)
+        self.orientation += orientation
+
+    def get_pads_distance(self, pad1=None, pad2=None):
+        pad1, pad2 = self._two_pads(pad1, pad2)
+        return (pad1.offset - pad2.offset).l2()
+
+    def align_pads_to_chord(self, chord, pad1=None, pad2=None):
+        pad1, pad2 = self._two_pads(pad1, pad2)
+        assert(abs(chord.length - self.get_pads_distance(pad1, pad2)) < 0.001)
         # Ok now let's get serious
-        lpad_angle = (lpad.offset - rpad.offset).to_polar().a
-        self.orientation = chord.declination + lpad_angle - 3. * math.pi / 2.
-        self.position = chord.endpoints[0].to_point() - rpad.offset
+        pad1_angle = (pad1.offset - pad2.offset).to_polar().a
+        self.orientation = chord.declination + pad1_angle - 3. * math.pi / 2.
+        self.position = chord.endpoints[0].to_point() - pad2.offset
 
-    def __init__(self, name, pads, position=None, orientation=None):
+    def __init__(self, name, pads, position=None, orientation=None, flipped=False):
         self.name = name
         self.position = position
         self.orientation = orientation
+        self.flipped = flipped
         if isinstance(pads, dict):
             self.pads = pads
         else:

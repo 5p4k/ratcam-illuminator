@@ -1,54 +1,63 @@
 from __future__ import unicode_literals
-from polar import *
 from pcb import ToPCB, FromPCB
+from cad import Component
 import math
 import pcbnew
 
-_OPTIONS = {
-    'lines': 3,
-    'leds_per_line': 3,
-    'led_ref': lambda line_idx, led_idx: 'LED%d' % (line_idx * OPT('leds_per_line') + led_idx),
-    'res_ref': lambda line_idx: 'R%d' % line_idx,
-    'init_angle': 0.,
-    'led_orient': 0.,
-    'res_orient': math.pi,
-    'radius': pcbnew.FromMM(30.),
-    'lines_pad_on_circ': True
-}
+# Thanks https://stackoverflow.com/a/23689767/1749822
+class dotdict(dict):
+    __getattr__ = dict.get
+    __setattr__ = dict.__setitem__
+    __delattr__ = dict.__delitem__
 
 
-def OPT(k, default=None):
-    global _OPTIONS
-    return _OPTIONS.get(k, default)
+OPT = dotdict(
+    lines=dotdict(
+        n=3,
+        leds=3,
+        led_ref=lambda line_idx, led_idx: 'LED%d' % (line_idx * OPT.lines.leds + led_idx),
+        res_ref=lambda line_idx: 'R%d' % line_idx,
+        init_angle=0.,
+        led_orient=0.,
+        res_orient=math.pi,
+        radius=pcbnew.FromMM(30.),
+        pad_on_circ=True
+    )
+)
 
 
-def place_one_2comp(comp, angle, radius, orient=0.):
-    if OPT('lines_pad_on_circ'):
-        chord = Chord(radius, 0., angle).with_length(comp.get_two_pads_distance())
-        comp.align_pads_to_chord(chord)
-        comp.orientation += orient
-    else:
-        comp.orientation = orient + angle - math.pi / 2.
-        comp.position = Polar(angle, radius).to_point()
+def get_lines(board):
+    for line_idx in range(OPT.lines.n):
+        yield board.components[OPT.lines.res_ref(line_idx)], False
+        for led_idx in range(OPT.lines.leds):
+            yield board.components[OPT.lines.led_ref(line_idx, led_idx)], True
 
 
-def place_led_lines(board):
-    n_comps = OPT('lines') * (OPT('leds_per_line') + 1)
+def place_lines(board):
+    n_comps = OPT.lines.n * (OPT.lines.leds + 1)
     angle_step = 2. * math.pi / float(n_comps)
-    angle = OPT('init_angle')
-    for line_idx in range(OPT('lines')):
-        place_one_2comp(board.components[OPT('res_ref')(line_idx)],
-                        angle, OPT('radius'), OPT('res_orient'))
+    angle = OPT.lines.init_angle
+    place = Component.place_pads_on_circ if OPT.lines.pad_on_circ else Component.place_radial
+    for comp, is_led in get_lines(board):
+        place(comp, angle, OPT.lines.radius, orientation=OPT.lines.led_orient if is_led else OPT.lines.res_orient)
         angle += angle_step
-        for led_idx in range(OPT('leds_per_line')):
-            place_one_2comp(board.components[OPT('led_ref')(line_idx, led_idx)],
-                            angle, OPT('radius'), OPT('led_orient'))
-            angle += angle_step
+
+
+def route_led_lines(board):
+    lines_comps = list(get_lines(board))
+    for net in board.netlist.values():
+        if len(net.terminals) != 2:
+            continue
+        if net.terminals[0] not in lines_comps or net.terminals[1] not in lines_comps:
+            continue
+        del net.tracks[:]
+        net.route_arc()
 
 
 def main():
     board = FromPCB.populate()
-    place_led_lines(board)
+    place_lines(board)
+    route_led_lines(board)
     ToPCB.apply(board)
 
 
