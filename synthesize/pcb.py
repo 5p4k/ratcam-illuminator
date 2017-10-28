@@ -105,8 +105,9 @@ class ToPCB(object):
             t.SetEnd(ToPCB._conv_point(pt))
             t.SetNetCode(net_code)
             t.SetLayer(track.layer)
-            pcb.GetBoard().Add(t)
             # t.SetWidth(pcb.FromMM(DEFAULT_TRACK_WIDTH_MM))
+            pcb.GetBoard().Add(t)
+            old_pt = pt
 
     @staticmethod
     def _conv_via(via, net_code):

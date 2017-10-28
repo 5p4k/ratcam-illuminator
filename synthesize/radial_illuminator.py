@@ -26,11 +26,13 @@ OPT = dotdict(
 )
 
 
-def get_lines(board):
+def get_lines(board, component_only):
     for line_idx in range(OPT.lines.n):
-        yield board.components[OPT.lines.res_ref(line_idx)], False
+        comp = board.components[OPT.lines.res_ref(line_idx)]
+        yield comp if component_only else (comp, False)
         for led_idx in range(OPT.lines.leds):
-            yield board.components[OPT.lines.led_ref(line_idx, led_idx)], True
+            comp = board.components[OPT.lines.led_ref(line_idx, led_idx)]
+            yield comp if component_only else (comp, True)
 
 
 def place_lines(board):
@@ -38,17 +40,17 @@ def place_lines(board):
     angle_step = 2. * math.pi / float(n_comps)
     angle = OPT.lines.init_angle
     place = Component.place_pads_on_circ if OPT.lines.pad_on_circ else Component.place_radial
-    for comp, is_led in get_lines(board):
+    for comp, is_led in get_lines(board, False):
         place(comp, angle, OPT.lines.radius, orientation=OPT.lines.led_orient if is_led else OPT.lines.res_orient)
         angle += angle_step
 
 
 def route_led_lines(board):
-    lines_comps = list(get_lines(board))
+    lines_comps = list(get_lines(board, True))
     for net in board.netlist.values():
         if len(net.terminals) != 2:
             continue
-        if net.terminals[0] not in lines_comps or net.terminals[1] not in lines_comps:
+        if net.terminals[0].component not in lines_comps or net.terminals[1].component not in lines_comps:
             continue
         del net.tracks[:]
         net.route_arc()

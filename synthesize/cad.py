@@ -79,7 +79,8 @@ class Net(object):
         t = (self.terminals[1].position - center).to_polar()
         kwargs['skip_start'] = False
         kwargs['include_end'] = True
-        self.tracks.append(Track(apx_arc_through_polars(s, t, **kwargs)))
+        self.tracks.append(Track(map(lambda pol: center + pol.to_point().to_vector(),
+                                     apx_arc_through_polars(s, t, **kwargs))))
 
     def route_straight(self):
         if len(self.terminals) != 2:
