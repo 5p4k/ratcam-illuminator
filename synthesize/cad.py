@@ -100,7 +100,7 @@ class Component(object):
             raise ValueError()
         # Ok now let's get serious
         lpad_angle = (lpad.offset - rpad.offset).to_polar().a
-        self.orientation = chord.declination + lpad_angle - math.pi
+        self.orientation = chord.declination + lpad_angle - 3. * math.pi / 2.
         self.position = chord.endpoints[0].to_point() - rpad.offset
 
     def __init__(self, name, pads, position=None, orientation=None):

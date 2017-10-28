@@ -15,11 +15,7 @@ ORIGIN = Point(pcb.FromMM(100.), pcb.FromMM(100.))
 class FromPCB(object):
     @staticmethod
     def _conv_angle(angle):
-        return -math.radians(float(angle) / 10.)
-
-    @staticmethod
-    def _conv_orientation(angle):
-        return FromPCB._conv_angle(angle) + math.pi / 2.
+        return math.radians(float(angle) / 10.)
 
     @staticmethod
     def _conv_point(pt):
@@ -44,7 +40,7 @@ class FromPCB(object):
         orientation = modu.GetOrientation()
         pads = map(FromPCB._conv_pad, modu.Pads())
         return cad.Component(reference, pads, position=FromPCB._conv_point(position),
-                             orientation=FromPCB._conv_orientation(orientation))
+                             orientation=FromPCB._conv_angle(orientation))
 
     @staticmethod
     def populate():
@@ -68,11 +64,8 @@ class FromPCB(object):
 class ToPCB(object):
     @staticmethod
     def _conv_angle(angle):
-        return -math.degrees(float(angle)) * 10.
+        return math.degrees(float(angle)) * 10.
 
-    @staticmethod
-    def _conv_orientation(angle):
-        return ToPCB._conv_angle(angle - math.pi / 2.)
 
     @staticmethod
     def _conv_point(pt):
@@ -86,7 +79,7 @@ class ToPCB(object):
     def place_component(comp):
         modu = pcb.GetBoard().FindModule(comp.name)
         modu.SetPosition(ToPCB._conv_point(comp.position))
-        modu.SetOrientation(ToPCB._conv_orientation(comp.orientation))
+        modu.SetOrientation(ToPCB._conv_angle(comp.orientation))
 
     @staticmethod
     def apply(board):
