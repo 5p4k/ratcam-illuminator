@@ -186,7 +186,6 @@ class Polar(object):
     def __str__(self):
         return repr(self)
 
-
     def _normalize(self):
         if self.r < 0.:
             self.a += math.pi
@@ -227,7 +226,7 @@ class Chord(object):
                 Polar(self.declination + self._half_aperture, self.radius))
 
     def with_length(self, length):
-        return Chord(self.radius, abs(math.asin(length / (2. * self.radius))), self.declination)
+        return Chord(self.radius, 2. * abs(math.asin(length / (2. * self.radius))), self.declination)
 
     def with_radius(self, radius):
         return Chord(radius, 0., self.declination).with_length(self.length)

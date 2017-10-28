@@ -85,10 +85,10 @@ class Component(object):
         return (pad_a.offset - pad_b.offset).l2()
 
     def align_pads_to_chord(self, chord, pads=None):
-        assert(chord.length == self.get_two_pads_distance())
+        assert(abs(chord.length - self.get_two_pads_distance()) < 0.001)
         if pads is None:
             pads = self.pads.values()
-            pads.sort(key=lambda p: -p.offset.x)
+            pads.sort(key=lambda p: -p.offset.dx)
         if len(pads) != 2:
             raise ValueError()
         rpad, lpad = pads
@@ -101,7 +101,7 @@ class Component(object):
         # Ok now let's get serious
         lpad_angle = (lpad.offset - rpad.offset).to_polar().a
         self.orientation = chord.declination + lpad_angle - math.pi
-        self.position = chord.endpoints[0] - rpad.offset
+        self.position = chord.endpoints[0].to_point() - rpad.offset
 
     def __init__(self, name, pads, position=None, orientation=None):
         self.name = name
