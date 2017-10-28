@@ -2,7 +2,7 @@
 
 (general
   (thickness 1.6)
-  (drawings 0)
+  (drawings 1)
   (tracks 0)
   (zones 0)
   (modules 14)
@@ -36,7 +36,7 @@
 
 (general
   (thickness 1.6)
-  (drawings 0)
+  (drawings 1)
   (tracks 0)
   (zones 0)
   (modules 14)
@@ -161,7 +161,7 @@
 )
 
   (module Pin_Headers:Pin_Header_Straight_1x03_Pitch1.27mm_SMD_Pin1Left (layer F.Cu) (tedit 59650535) (tstamp 59F474EF)
-    (at 87.917857 74.9225)
+    (at 89.917857 42.9225)
     (descr "surface-mounted straight pin header, 1x03, 1.27mm pitch, single row, style 1 (pin 1 left)")
     (tags "Surface mounted pin header SMD 1x03 1.27mm single row style1 pin1 left")
     (path /59ED1A01)
@@ -215,7 +215,7 @@
   )
 
   (module Ratcam:LED-GW_2.3x2.3mm (layer F.Cu) (tedit 59E00426) (tstamp 59F47503)
-    (at 85.584524 82.3375)
+    (at 87.584524 50.3375)
     (descr "2.0mm x 2.0mm PLCC4 LED, http://www.cree.com/~/media/Files/Cree/LED-Components-and-Modules/HB/Data-Sheets/CLMVBFKA.pdf")
     (tags "LED Cree PLCC-4")
     (path /59DF8544)
@@ -254,7 +254,7 @@
   )
 
   (module Ratcam:LED-GW_2.3x2.3mm (layer F.Cu) (tedit 59E00426) (tstamp 59F47517)
-    (at 99.414524 74.3575)
+    (at 101.414524 42.3575)
     (descr "2.0mm x 2.0mm PLCC4 LED, http://www.cree.com/~/media/Files/Cree/LED-Components-and-Modules/HB/Data-Sheets/CLMVBFKA.pdf")
     (tags "LED Cree PLCC-4")
     (path /59DF8503)
@@ -293,7 +293,7 @@
   )
 
   (module Ratcam:LED-GW_2.3x2.3mm (layer F.Cu) (tedit 59E00426) (tstamp 59F4752B)
-    (at 85.584524 89.1875)
+    (at 87.584524 57.1875)
     (descr "2.0mm x 2.0mm PLCC4 LED, http://www.cree.com/~/media/Files/Cree/LED-Components-and-Modules/HB/Data-Sheets/CLMVBFKA.pdf")
     (tags "LED Cree PLCC-4")
     (path /59DF849E)
@@ -332,7 +332,7 @@
   )
 
   (module Ratcam:LED-GW_2.3x2.3mm (layer F.Cu) (tedit 59E00426) (tstamp 59F4753F)
-    (at 94.744524 82.3375)
+    (at 96.744524 50.3375)
     (descr "2.0mm x 2.0mm PLCC4 LED, http://www.cree.com/~/media/Files/Cree/LED-Components-and-Modules/HB/Data-Sheets/CLMVBFKA.pdf")
     (tags "LED Cree PLCC-4")
     (path /59DF85C7)
@@ -371,7 +371,7 @@
   )
 
   (module Ratcam:LED-GW_2.3x2.3mm (layer F.Cu) (tedit 59E00426) (tstamp 59F47553)
-    (at 108.574524 74.3575)
+    (at 110.574524 42.3575)
     (descr "2.0mm x 2.0mm PLCC4 LED, http://www.cree.com/~/media/Files/Cree/LED-Components-and-Modules/HB/Data-Sheets/CLMVBFKA.pdf")
     (tags "LED Cree PLCC-4")
     (path /59DF85C1)
@@ -410,7 +410,7 @@
   )
 
   (module Ratcam:LED-GW_2.3x2.3mm (layer F.Cu) (tedit 59E00426) (tstamp 59F47567)
-    (at 94.744524 89.1875)
+    (at 96.744524 57.1875)
     (descr "2.0mm x 2.0mm PLCC4 LED, http://www.cree.com/~/media/Files/Cree/LED-Components-and-Modules/HB/Data-Sheets/CLMVBFKA.pdf")
     (tags "LED Cree PLCC-4")
     (path /59DF85BB)
@@ -449,7 +449,7 @@
   )
 
   (module Ratcam:LED-GW_2.3x2.3mm (layer F.Cu) (tedit 59E00426) (tstamp 59F4757B)
-    (at 103.904524 81.2075)
+    (at 105.904524 49.2075)
     (descr "2.0mm x 2.0mm PLCC4 LED, http://www.cree.com/~/media/Files/Cree/LED-Components-and-Modules/HB/Data-Sheets/CLMVBFKA.pdf")
     (tags "LED Cree PLCC-4")
     (path /59DF8626)
@@ -488,7 +488,7 @@
   )
 
   (module Ratcam:LED-GW_2.3x2.3mm (layer F.Cu) (tedit 59E00426) (tstamp 59F4758F)
-    (at 117.734524 74.3575)
+    (at 119.734524 42.3575)
     (descr "2.0mm x 2.0mm PLCC4 LED, http://www.cree.com/~/media/Files/Cree/LED-Components-and-Modules/HB/Data-Sheets/CLMVBFKA.pdf")
     (tags "LED Cree PLCC-4")
     (path /59DF8620)
@@ -527,7 +527,7 @@
   )
 
   (module Ratcam:LED-GW_2.3x2.3mm (layer F.Cu) (tedit 59E00426) (tstamp 59F475A3)
-    (at 103.904524 88.0575)
+    (at 105.904524 56.0575)
     (descr "2.0mm x 2.0mm PLCC4 LED, http://www.cree.com/~/media/Files/Cree/LED-Components-and-Modules/HB/Data-Sheets/CLMVBFKA.pdf")
     (tags "LED Cree PLCC-4")
     (path /59DF861A)
@@ -566,7 +566,7 @@
   )
 
   (module TO_SOT_Packages_SMD:SOT-23_Handsoldering (layer F.Cu) (tedit 58CE4E7E) (tstamp 59F475B8)
-    (at 111.405001 81.3075)
+    (at 113.405001 49.3075)
     (descr "SOT-23, Handsoldering")
     (tags SOT-23)
     (path /59DFF0EB)
@@ -607,7 +607,7 @@
   )
 
   (module Resistors_SMD:R_0805_HandSoldering (layer F.Cu) (tedit 58E0A804) (tstamp 59F475C9)
-    (at 116.905001 80.5075)
+    (at 118.905001 48.5075)
     (descr "Resistor SMD 0805, hand soldering")
     (tags "resistor 0805")
     (path /59DF8798)
@@ -643,7 +643,7 @@
   )
 
   (module Resistors_SMD:R_0805_HandSoldering (layer F.Cu) (tedit 58E0A804) (tstamp 59F475DA)
-    (at 111.055001 87.5575)
+    (at 113.055001 55.5575)
     (descr "Resistor SMD 0805, hand soldering")
     (tags "resistor 0805")
     (path /59DF884B)
@@ -679,7 +679,7 @@
   )
 
   (module Resistors_SMD:R_0805_HandSoldering (layer F.Cu) (tedit 58E0A804) (tstamp 59F475EB)
-    (at 116.905001 86.0075)
+    (at 118.905001 54.0075)
     (descr "Resistor SMD 0805, hand soldering")
     (tags "resistor 0805")
     (path /59DF8892)
@@ -713,5 +713,7 @@
       (rotate (xyz 0 0 0))
     )
   )
+
+  (gr_circle (center 100 100) (end 130 100) (layer Dwgs.User) (width 0.2))
 
 )
