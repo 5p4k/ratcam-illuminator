@@ -18,8 +18,8 @@ OPT = dotdict(
         led_ref=lambda line_idx, led_idx: 'LED%d' % (line_idx * OPT.lines.leds + led_idx),
         res_ref=lambda line_idx: 'R%d' % line_idx,
         init_angle=0.,
-        led_orient=0.,
-        res_orient=math.pi,
+        led_orient=math.pi,
+        res_orient=0.,
         radius=pcbnew.FromMM(30.),
         pad_on_circ=True
     )

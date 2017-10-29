@@ -190,9 +190,7 @@ class Polar(object):
         if self.r < 0.:
             self.a += math.pi
             self.r = -self.r
-        self.a = math.fmod(self.a, 2. * math.pi)
-        if self.a < 0.:
-            self.a += 2. * math.pi
+        self.a = normalize_angle(self.a)
 
     def __init__(self, a=0., r=0.):
         self.a = a
@@ -286,3 +284,7 @@ def apx_arc(p, da, **kwargs):
     for x in apx_unit_interval(**kwargs):
         yield Polar(p.a + x * da, p.r)
 
+
+def normalize_angle(a):
+    a = math.fmod(a, 2. * math.pi)
+    return a if a >= 0. else a + 2. * math.pi

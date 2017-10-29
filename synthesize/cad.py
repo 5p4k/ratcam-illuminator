@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import math
-from polar import Polar, Chord, Point, apx_arc_through_polars
+from polar import Polar, Chord, Point, apx_arc_through_polars, normalize_angle
 from enum import Enum
 
 
@@ -155,20 +155,25 @@ class Component(object):
     def place_pads_on_circ(self, angle, radius, pad1=None, pad2=None, orientation=0.):
         pad1, pad2 = self._two_pads(pad1, pad2)
         chord = Chord(radius, 0., angle).with_length(self.get_pads_distance(pad1, pad2))
-        self.align_pads_to_chord(chord)
-        self.orientation += orientation
+        self.align_pads_to_chord(chord, orientation=orientation)
 
     def get_pads_distance(self, pad1=None, pad2=None):
         pad1, pad2 = self._two_pads(pad1, pad2)
         return (pad1.offset - pad2.offset).l2()
 
-    def align_pads_to_chord(self, chord, pad1=None, pad2=None):
+    def align_pads_to_chord(self, chord, pad1=None, pad2=None, orientation=0.):
         pad1, pad2 = self._two_pads(pad1, pad2)
         assert(abs(chord.length - self.get_pads_distance(pad1, pad2)) < 0.001)
-        # Ok now let's get serious
-        pad1_angle = (pad1.offset - pad2.offset).to_polar().a
-        self.orientation = chord.declination + pad1_angle - 3. * math.pi / 2.
-        self.position = chord.endpoints[0].to_point() - pad2.offset
+        # Compute the natural pad inclination
+        pads_angle = normalize_angle(orientation + (pad2.offset - pad1.offset).to_polar().a)
+        # Apply the correct orientation
+        self.orientation = (chord.declination - math.pi / 2.) + (pads_angle - math.pi)
+        # Now get the correct, transformed offset and move the component in place
+        if pads_angle < math.pi / 2. or pads_angle > 3. * math.pi / 2.:
+            chord_endpt = chord.endpoints[1]
+        else:
+            chord_endpt = chord.endpoints[0]
+        self.position = chord_endpt.to_point() + (self.get_pad_position(pad1) - self.position)
 
     def __init__(self, name, pads, position=None, orientation=None, flipped=False):
         self.name = name
