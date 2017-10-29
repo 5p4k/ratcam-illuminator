@@ -81,11 +81,13 @@ class Net(object):
         kwargs['include_end'] = True
         self.tracks.append(Track(map(lambda pol: center + pol.to_point().to_vector(),
                                      apx_arc_through_polars(s, t, **kwargs))))
+        self.flag_routed = True
 
     def route_straight(self):
         if len(self.terminals) != 2:
             raise RuntimeError()
         self.tracks.append(Track([self.terminals[0].position, self.terminals[1].position]))
+        self.flag_routed = True
 
     def __repr__(self):
         return 'Net(%s, %s, %s)' % (repr(self.name), repr(self.code), repr(self.terminals))
@@ -98,6 +100,7 @@ class Net(object):
         self.code = code
         self.terminals = terminals
         self.tracks = []
+        self.flag_routed = False
 
 
 class Pad(object):
@@ -151,11 +154,13 @@ class Component(object):
     def place_radial(self, angle, radius, orientation=0.):
         self.orientation = orientation + angle - math.pi / 2.
         self.position = Polar(angle, radius).to_point()
+        self.flag_placed = True
 
     def place_pads_on_circ(self, angle, radius, pad1=None, pad2=None, orientation=0.):
         pad1, pad2 = self._two_pads(pad1, pad2)
         chord = Chord(radius, 0., angle).with_length(self.get_pads_distance(pad1, pad2))
         self.align_pads_to_chord(chord, orientation=orientation)
+        self.flag_placed = True
 
     def get_pads_distance(self, pad1=None, pad2=None):
         pad1, pad2 = self._two_pads(pad1, pad2)
@@ -180,6 +185,7 @@ class Component(object):
         self.position = position
         self.orientation = orientation
         self.flipped = flipped
+        self.flag_placed = False
         if isinstance(pads, dict):
             self.pads = pads
         else:
