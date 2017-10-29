@@ -78,6 +78,11 @@ class FromPCB(object):
                     board.netlist[net_name].tracks.append(FromPCB._conv_track(trk))
                 elif isinstance(trk, pcb.VIA):
                     board.netlist[net_name].tracks.append(FromPCB._conv_via(trk))
+        # for area_idx in range(pcb.GetBoard().GetAreaCount()):
+        #     area = pcb.GetBoard().GetArea(area_idx)
+        #     net_name = area.GetNetname()
+        #     if net_name in board.netlist:
+        #         board.netlist[net_name].fills.append(FromPCB._conv_fill(area))
         return board
 
 
@@ -120,6 +125,24 @@ class ToPCB(object):
         pcb.GetBoard().Add(v)
 
     @staticmethod
+    def _conv_fill(fill, net_code):
+        area = pcb.GetBoard().InsertArea(net_code, pcb.GetBoard().GetAreaCount(), fill.layer,
+                                         fill.points[0].x, fill.points[0].y, pcb.CPolyLine.DIAGONAL_EDGE)
+        area.SetPadConnection(pcb.PAD_ZONE_CONN_THERMAL if fill.thermal else pcb.PAD_ZONE_CONN_FULL)
+        outline = area.Outline()
+        for pt in fill.points[1:]:
+            if getattr(outline, 'AppendCorner', None) is None:
+                # Kicad nightly
+                outline.Append(pt.x, pt.y)
+            else:
+                outline.AppendCorner(pt.x, pt.y)
+        if getattr(outline, 'CloseLastContour', None) is not None:
+            outline.CloseLastContour()
+        # area.SetCornerRadius(pcb.FromMM(DEFAULT_TRACK_WIDTH_MM / 2.))
+        # area.SetCornerSmoothingType(pcb.ZONE_SETTINGS.SMOOTHING_FILLET)
+        area.BuildFilledSolidAreasPolygons(pcb.GetBoard())
+
+    @staticmethod
     def place_component(comp):
         modu = pcb.GetBoard().FindModule(comp.name)
         modu.SetPosition(ToPCB._conv_point(comp.position))
@@ -132,12 +155,15 @@ class ToPCB(object):
         for comp in board.components.values():
             ToPCB.place_component(comp)
         to_delete = list(pcb.GetBoard().GetTracks())
-        for trk in to_delete:
-            pcb.GetBoard().Delete(trk)
+        to_delete += list(map(pcb.GetBoard().GetArea, range(pcb.GetBoard().GetAreaCount())))
+        for elm in to_delete:
+            pcb.GetBoard().Delete(elm)
         for net in board.netlist.values():
             for trk in net.tracks:
                 if isinstance(trk, cad.Track):
                     ToPCB._conv_track(trk, net.code)
                 elif isinstance(trk, cad.Via):
                     ToPCB._conv_via(trk, net.code)
+            for fill in net.fills:
+                ToPCB._conv_fill(fill, net.code)
 

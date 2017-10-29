@@ -32,6 +32,19 @@ class Track(object):
         self.layer = layer
 
 
+class Fill(object):
+    def __repr__(self):
+        return 'Fill(%s, %s)' % (repr(self.points), repr(self.layer))
+
+    def __str__(self):
+        return 'Fill(%s)' % str(self.points)
+
+    def __init__(self, points, layer=Layer.F_Cu):
+        self.points = list(points)
+        self.thermal = False
+        self.layer = layer
+
+
 class Terminal(object):
     def load_objects(self, board):
         if isinstance(self.component, unicode) or isinstance(self.component, str):
@@ -100,6 +113,7 @@ class Net(object):
         self.code = code
         self.terminals = terminals
         self.tracks = []
+        self.fills = []
         self.flag_routed = False
 
 
