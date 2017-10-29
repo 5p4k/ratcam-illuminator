@@ -288,3 +288,24 @@ def apx_arc(p, da, **kwargs):
 def normalize_angle(a):
     a = math.fmod(a, 2. * math.pi)
     return a if a >= 0. else a + 2. * math.pi
+
+
+def apx_crown_sector(a1, a2, inner_r, outer_r, shift1=0., shift2=0., **kwargs):
+    # Compute the inner and outer polar points
+    inner = [Polar(a1, inner_r), Polar(a2, inner_r)]
+    outer = [Polar(a1, outer_r), Polar(a2, outer_r)]
+    # Apply the shifts
+    if shift1 != 0.:
+        inner[0] = inner[0].shift_along_tangent(shift1, True)
+        outer[0] = outer[0].shift_along_tangent(shift1, True)
+    if shift2 != 0.:
+        inner[1] = inner[1].shift_along_tangent(shift2, True)
+        outer[1] = outer[1].shift_along_tangent(shift2, True)
+    assert(inner[0].r == inner[1].r == inner_r)
+    assert(outer[0].r == outer[1].r == outer_r)
+    kwargs['skip_start'] = False
+    kwargs['include_end'] = True
+    for x in apx_arc_through_polars(inner[0], inner[1], **kwargs):
+        yield x  # yield from would be handy
+    for x in apx_arc_through_polars(outer[1], outer[0], **kwargs):
+        yield x  # Another fake yield from
