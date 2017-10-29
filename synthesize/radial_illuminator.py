@@ -1,9 +1,10 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals, print_function
 from pcb import ToPCB, FromPCB
 from cad import Component, Track
-from polar import Polar, apx_arc_through_polars, normalize_angle
+from polar import Polar, apx_arc_through_polars, normalize_angle, Chord
 import math
 import pcbnew
+import sys
 
 # Thanks https://stackoverflow.com/a/23689767/1749822
 class dotdict(dict):
@@ -30,11 +31,8 @@ OPT = dotdict(
 )
 
 OPT.lines.n_comps = OPT.lines.n_lines * (OPT.lines.n_leds + 1)
-OPT.lines.angle_step = 2. * math.pi / float(OPT.lines.n_comps)
-OPT.rings.overhang = 2. * OPT.lines.angle_step / 5.
 OPT.lines.led_ref = lambda line_idx, led_idx: '%s%d' % (OPT.lines.led_pfx, line_idx * OPT.lines.n_leds + led_idx)
 OPT.lines.res_ref = lambda line_idx: '%s%d' % (OPT.lines.res_pfx, line_idx)
-OPT.lines.init_angle = OPT.lines.angle_step / 2.
 
 
 def get_lines(board, component_only):
@@ -50,8 +48,10 @@ def place_lines(board):
     angle = OPT.lines.init_angle
     place = Component.place_pads_on_circ if OPT.lines.pad_on_circ else Component.place_radial
     for comp, is_led in get_lines(board, False):
+        # Center on the spanned angle (here is where we assume that the two pads are symmetric)
+        angle += OPT.lines.spanned_angles[comp.name] / 2.
         place(comp, angle, OPT.lines.radius, orientation=OPT.lines.led_orient if is_led else OPT.lines.res_orient)
-        angle += OPT.lines.angle_step
+        angle += OPT.lines.angle_step + OPT.lines.spanned_angles[comp.name] / 2.
 
 
 def route_led_lines(board):
@@ -88,9 +88,8 @@ def route_rings(board, **kwargs):
         for t in filter(lambda x: x.component.flag_placed, net.terminals):
             # Get the pad position
             term_pol = t.position.to_polar()
-            comp_pol = t.component.position.to_polar()
             # Decide the endpoint for the arc
-            arc_endpt = Polar(comp_pol.a + overhang, term_pol.r)
+            arc_endpt = Polar(term_pol.a + overhang, term_pol.r)
             # Draw an arc to that point
             net.tracks.append(Track(map(Polar.to_point, apx_arc_through_polars(term_pol, arc_endpt, **kwargs))))
             # Draw a segment down to the given radius
@@ -108,12 +107,37 @@ def route_rings(board, **kwargs):
             p1 = p2
 
 
+def compute_lines_spanned_angles(board):
+    # Compute how many radians do the resistor and the LED's pad span
+    def get_spanned_angle(comp):
+        c = Chord(OPT.lines.radius, 0., 0.).with_length(comp.get_pads_distance())
+        # We make the assumption that the center is at the... center
+        if abs(comp.pads.values()[0].offset.l2() - comp.pads.values()[1].offset.l2()) > 0.001:
+            print(('Component will be misaligned because %s has two pads which are not symmetric.' % comp.name),
+                  file=sys.stderr)
+        if not OPT.lines.pad_on_circ:
+            c = c.with_distance_to_origin(OPT.lines.radius)
+        return c.aperture
+    return {comp.name: get_spanned_angle(comp) for comp in get_lines(board, True)}
+
 
 def main():
     board = FromPCB.populate()
+    # Compute how much angle is reserved for each component
+    OPT.lines.spanned_angles = compute_lines_spanned_angles(board)
+    # Space between each components's pads
+    OPT.lines.angle_step = (2. * math.pi - sum(OPT.lines.spanned_angles.values())) / OPT.lines.n_comps
+    # Angular shift to get free space at angle 0
+    OPT.lines.init_angle = OPT.lines.angle_step / 2.
+    # Extra segment of wiring overhanging from the pwr (gnd) pad of the resistor (led)
+    OPT.rings.overhang = OPT.lines.angle_step / 3.
+    # Place all leds and resistors in F.Cu
     place_lines(board)
+    # Connect adjacent pads on F.Cu
     route_led_lines(board)
+    # Bring power to the resistor and ground from the LEDs onto two other concentric rings
     route_rings(board)
+    # Save
     ToPCB.apply(board)
 
 
