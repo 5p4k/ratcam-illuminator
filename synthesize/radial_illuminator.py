@@ -1,7 +1,7 @@
 from __future__ import unicode_literals, print_function
 from pcb import ToPCB, FromPCB
-from cad import Component, Track
-from polar import Polar, apx_arc_through_polars, normalize_angle, Chord
+from cad import Component, Track, Fill
+from polar import Polar, apx_arc_through_polars, normalize_angle, Chord, apx_crown_sector
 import math
 import pcbnew
 import sys
@@ -28,6 +28,11 @@ OPT = dotdict(
         pwr_radius=pcbnew.FromMM(33.),
         gnd_radius=pcbnew.FromMM(27.)
     ),
+    pours=dotdict(
+        parallel_to_comp=True,
+        inner_radius=pcbnew.FromMM(28.),
+        outer_radius=pcbnew.FromMM(32.)
+    )
 )
 
 OPT.lines.n_comps = OPT.lines.n_lines * (OPT.lines.n_leds + 1)
@@ -121,6 +126,27 @@ def compute_lines_spanned_angles(board):
     return {comp.name: get_spanned_angle(comp) for comp in get_lines(board, True)}
 
 
+def add_copper_pours(board):
+    for net in board.netlist.values():
+        if not net.flag_routed or len(net.terminals) != 2:
+            continue
+        # Add a fill on top of it
+        if OPT.pours.parallel_to_comp:
+            t1, t2 = net.terminals
+            p1 = t1.component.position.to_polar()
+            p2 = t2.component.position.to_polar()
+            shift1 = t1.component.get_pad_tangential_distance(t1.pad)
+            shift2 = t2.component.get_pad_tangential_distance(t2.pad)
+        else:
+            p1 = net.terminals[0].position.to_polar()
+            p2 = net.terminals[1].position.to_polar()
+            shift1 = 0.
+            shift2 = 0.
+        net.fills.append(Fill(
+            list(map(Polar.to_point, apx_crown_sector(p1.a, p2.a, OPT.pours.inner_radius, OPT.pours.outer_radius,
+                                                      shift1, shift2)))))
+
+
 def main():
     board = FromPCB.populate()
     # Compute how much angle is reserved for each component
@@ -137,6 +163,8 @@ def main():
     route_led_lines(board)
     # Bring power to the resistor and ground from the LEDs onto two other concentric rings
     route_rings(board)
+    # Add copper pours on the front face
+    add_copper_pours(board)
     # Save
     ToPCB.apply(board)
 

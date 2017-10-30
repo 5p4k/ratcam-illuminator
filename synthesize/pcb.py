@@ -126,11 +126,12 @@ class ToPCB(object):
 
     @staticmethod
     def _conv_fill(fill, net_code):
+        conv_pts = list(map(ToPCB._conv_point, fill.points))
         area = pcb.GetBoard().InsertArea(net_code, pcb.GetBoard().GetAreaCount(), fill.layer,
-                                         fill.points[0].x, fill.points[0].y, pcb.CPolyLine.DIAGONAL_EDGE)
+                                         conv_pts[0].x, conv_pts[0].y, pcb.CPolyLine.DIAGONAL_EDGE)
         area.SetPadConnection(pcb.PAD_ZONE_CONN_THERMAL if fill.thermal else pcb.PAD_ZONE_CONN_FULL)
         outline = area.Outline()
-        for pt in fill.points[1:]:
+        for pt in conv_pts[1:]:
             if getattr(outline, 'AppendCorner', None) is None:
                 # Kicad nightly
                 outline.Append(pt.x, pt.y)

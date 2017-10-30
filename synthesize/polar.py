@@ -68,6 +68,11 @@ class Vector(object):
             setattr(retval, k, v)
         return retval
 
+    def rotated(self, angle):
+        pol = self.to_polar()
+        pol.a += angle
+        return pol.to_point().to_vector()
+
     def __init__(self, dx=0., dy=0.):
         self.dx = dx
         self.dy = dy
@@ -158,7 +163,7 @@ class Polar(object):
             chord = Chord(self.r, 0., self.a).with_length(2. * abs(shift))
         else:
             chord = Chord.from_length_and_distance(self.r, 2. * abs(shift), self.a)
-        return chord.endpoints[0 if shift < 0 else 1]
+        return chord.endpoints[0 if shift >= 0 else 1]
 
     def change(self, **kwargs):
         retval = Polar(self.a, self.r)

@@ -159,11 +159,18 @@ class Component(object):
             pad2 = self._pad(pad2)
         return pad1, pad2
 
+    def get_pad_tangential_distance(self, pad):
+        if pad not in self.pads.values():
+            raise ValueError()
+        # Tangent angle
+        tan_angle = self.position.to_polar().a - math.pi / 2.
+        # Pad offset wrt tangent
+        return pad.offset.rotated(self.orientation - tan_angle).dx
+
     def get_pad_position(self, pad):
-        pad = self._pad(pad)
-        pad_pol = pad.offset.to_polar()
-        pad_pol.a += self.orientation
-        return self.position + pad_pol.to_point().to_vector()
+        if pad not in self.pads.values():
+            raise ValueError()
+        return self.position + pad.offset.rotated(self.orientation)
 
     def place_radial(self, angle, radius, orientation=0.):
         self.orientation = orientation + angle - math.pi / 2.
