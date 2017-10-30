@@ -29,7 +29,7 @@ OPT = dotdict(
         gnd_radius=pcbnew.FromMM(27.)
     ),
     pours=dotdict(
-        parallel_to_comp=True,
+        parallel_to_comp=False,
         inner_radius=pcbnew.FromMM(28.),
         outer_radius=pcbnew.FromMM(32.)
     )
@@ -88,6 +88,7 @@ def route_rings(board, **kwargs):
         else:
             continue
         # Ok that's one of the two ring nets.
+        OPT.ring_nets.append(net.name)
         del net.tracks[:]
         intersection_angles = []
         for t in filter(lambda x: x.component.flag_placed, net.terminals):
@@ -133,19 +134,46 @@ def add_copper_pours(board):
         # Add a fill on top of it
         if OPT.pours.parallel_to_comp:
             t1, t2 = net.terminals
-            p1 = t1.component.position.to_polar()
-            p2 = t2.component.position.to_polar()
+            a1 = t1.component.position.to_polar().a
+            a2 = t2.component.position.to_polar().a
             shift1 = t1.component.get_pad_tangential_distance(t1.pad)
             shift2 = t2.component.get_pad_tangential_distance(t2.pad)
         else:
-            p1 = net.terminals[0].position.to_polar()
-            p2 = net.terminals[1].position.to_polar()
+            a1 = net.terminals[0].position.to_polar().a
+            a2 = net.terminals[1].position.to_polar().a
             shift1 = 0.
             shift2 = 0.
         net.fills.append(Fill(
-            list(map(Polar.to_point, apx_crown_sector(p1.a, p2.a, OPT.pours.inner_radius, OPT.pours.outer_radius,
+            list(map(Polar.to_point, apx_crown_sector(a1, a2, OPT.pours.inner_radius, OPT.pours.outer_radius,
                                                       shift1, shift2)))))
-
+    # Add copper pours for the remaining pads
+    for net_name in OPT.ring_nets:
+        net = board.netlist[net_name]
+        for t in filter(lambda x: x.component.flag_placed, net.terminals):
+            # Which direction is the overhang?
+            if t.component.name.startswith(OPT.lines.res_pfx):
+                overhang = -OPT.pours.overhang
+            elif t.component.name.startswith(OPT.lines.led_pfx):
+                overhang = OPT.pours.overhang
+            else:
+                continue
+            if OPT.pours.parallel_to_comp:
+                a1 = t.component.position.to_polar().a
+                a2 = t.position.to_polar().a
+                a2 += OPT.lines.angle_step * (0.5 if overhang > 0. else -0.5)
+                shift1 = t.component.get_pad_tangential_distance(t.pad)
+                # Compute how much space is left
+                c = Chord(OPT.lines.radius, OPT.lines.angle_step - 2. * OPT.pours.overhang)
+                c = c.with_distance_to_origin(OPT.lines.radius)
+                shift2 = c.length * (0.5 if overhang > 0. else -0.5)
+            else:
+                a1 = t.position.to_polar().a
+                a2 = a1 + overhang
+                shift1 = 0.
+                shift2 = 0.
+            net.fills.append(Fill(
+                list(map(Polar.to_point, apx_crown_sector(a1, a2, OPT.pours.inner_radius, OPT.pours.outer_radius,
+                                                          shift1, shift2)))))
 
 def main():
     board = FromPCB.populate()
@@ -157,6 +185,8 @@ def main():
     OPT.lines.init_angle = OPT.lines.angle_step / 2.
     # Extra segment of wiring overhanging from the pwr (gnd) pad of the resistor (led)
     OPT.rings.overhang = OPT.lines.angle_step / 3.
+    OPT.pours.overhang = 3. * OPT.lines.angle_step / 7.
+    OPT.ring_nets = []
     # Place all leds and resistors in F.Cu
     place_lines(board)
     # Connect adjacent pads on F.Cu
