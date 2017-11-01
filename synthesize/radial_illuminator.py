@@ -1,7 +1,7 @@
 from __future__ import unicode_literals, print_function
 from pcb import ToPCB, FromPCB
-from cad import Component, Track, Fill
-from polar import Polar, apx_arc_through_polars, normalize_angle, Chord, apx_crown_sector
+from cad import Component, Track, Fill, Via
+from polar import Polar, apx_arc_through_polars, normalize_angle, Chord, apx_crown_sector, Point
 import math
 import pcbnew
 import sys
@@ -15,14 +15,15 @@ class dotdict(dict):
 
 OPT = dotdict(
     lines=dotdict(
-        n_lines=3,
-        n_leds=3,
+        n_lines=5,
+        n_leds=2,
         led_orient=math.pi,
         res_orient=0.,
         radius=pcbnew.FromMM(30.),
         pad_on_circ=True,
         led_pfx='LED',
-        res_pfx='R'
+        res_pfx='R',
+        separator=True
     ),
     rings=dotdict(
         pwr_radius=pcbnew.FromMM(33.),
@@ -30,9 +31,12 @@ OPT = dotdict(
     ),
     pours=dotdict(
         parallel_to_comp=False,
-        inner_radius=pcbnew.FromMM(28.),
-        outer_radius=pcbnew.FromMM(32.)
-    )
+        inner_radius=pcbnew.FromMM(28.5),
+        outer_radius=pcbnew.FromMM(31.5)
+    ),
+    track_width=pcbnew.FromMM(1.),
+    via_diam=pcbnew.FromMM(1.),
+    via_drill_diam=pcbnew.FromMM(0.4)
 )
 
 OPT.lines.n_comps = OPT.lines.n_lines * (OPT.lines.n_leds + 1)
@@ -53,6 +57,8 @@ def place_lines(board):
     angle = OPT.lines.init_angle
     place = Component.place_pads_on_circ if OPT.lines.pad_on_circ else Component.place_radial
     for comp, is_led in get_lines(board, False):
+        if not is_led and OPT.lines.separator:
+            angle += OPT.lines.separator_spanned_angle + OPT.lines.angle_step
         # Center on the spanned angle (here is where we assume that the two pads are symmetric)
         angle += OPT.lines.spanned_angles[comp.name] / 2.
         place(comp, angle, OPT.lines.radius, orientation=OPT.lines.led_orient if is_led else OPT.lines.res_orient)
@@ -175,18 +181,51 @@ def add_copper_pours(board):
                 list(map(Polar.to_point, apx_crown_sector(a1, a2, OPT.pours.inner_radius, OPT.pours.outer_radius,
                                                           shift1, shift2)))))
 
-def main():
-    board = FromPCB.populate()
+
+def setup_geometry(board):
+    # Setup default vias and tracks
+    Track.DEFAULT_WIDTH = OPT.track_width
+    Via.DEFAULT_DIAMETER = OPT.via_diam
+    Via.DEFAULT_DRILL_DIAMETER = OPT.via_drill_diam
+    Fill.DEFAULT_FILLET_RADIUS = OPT.track_width / 2.
     # Compute how much angle is reserved for each component
     OPT.lines.spanned_angles = compute_lines_spanned_angles(board)
+    # Space to leave between pours:
+    OPT.lines.separator_spanned_angle = Chord(OPT.lines.radius, 0., 0.).with_length(OPT.track_width).aperture
     # Space between each components's pads
-    OPT.lines.angle_step = (2. * math.pi - sum(OPT.lines.spanned_angles.values())) / OPT.lines.n_comps
+    if OPT.lines.separator:
+        # One extra component: the separator
+        consumed_angle = sum(OPT.lines.spanned_angles.values()) + OPT.lines.n_lines * OPT.lines.separator_spanned_angle
+        OPT.lines.angle_step = (2. * math.pi - consumed_angle) / (OPT.lines.n_comps + OPT.lines.n_lines)
+    else:
+        OPT.lines.angle_step = (2. * math.pi - sum(OPT.lines.spanned_angles.values())) / OPT.lines.n_comps
     # Angular shift to get free space at angle 0
-    OPT.lines.init_angle = OPT.lines.angle_step / 2.
+    if OPT.lines.separator:
+        # We begin with separators so we need to add negative space
+        OPT.lines.init_angle = -OPT.lines.separator_spanned_angle / 2.
+    else:
+        OPT.lines.init_angle = OPT.lines.angle_step / 2.
     # Extra segment of wiring overhanging from the pwr (gnd) pad of the resistor (led)
-    OPT.rings.overhang = OPT.lines.angle_step / 3.
-    OPT.pours.overhang = 3. * OPT.lines.angle_step / 7.
+    if OPT.lines.separator:
+        # Overhang track rings until 1 track distance from the end of the copper pour
+        OPT.rings.overhang = OPT.lines.angle_step - 1.5 * OPT.lines.separator_spanned_angle
+        # Fill until you leave just the separator gap
+        OPT.pours.overhang = OPT.lines.angle_step
+    else:
+        # Overhang track rings by 1/3 of the available space
+        OPT.rings.overhang = OPT.lines.angle_step / 3.
+        # Fill in until leaving 1 track distance @ OPT.lines.radius
+        OPT.pours.overhang = (OPT.lines.angle_step - OPT.lines.separator_spanned_angle) / 2.
     OPT.ring_nets = []
+
+
+def main():
+    board = FromPCB.populate()
+    # Move out of the way
+    board.components['Q0'].position = Point(0., 0.)
+    board.components['J0'].position = Point(0., 0.)
+    # Compute all the angular values according to the selected geometry
+    setup_geometry(board)
     # Place all leds and resistors in F.Cu
     place_lines(board)
     # Connect adjacent pads on F.Cu

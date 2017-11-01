@@ -48,12 +48,13 @@ class FromPCB(object):
         start = trk.GetStart()
         end = trk.GetEnd()
         layer = trk.GetLayer()
-        return cad.Track([start, end], cad.Layer(layer))
+        width = trk.GetWidth()
+        return cad.Track([start, end], cad.Layer(layer), width=width)
 
     @staticmethod
     def _conv_via(via):
         # Just assume goes from F to B
-        return cad.Via(via.GetPosition())
+        return cad.Via(via.GetPosition(), diameter=via.GetWidth(), drill_diameter=via.GetDrill())
 
     @staticmethod
     def populate():
@@ -110,6 +111,8 @@ class ToPCB(object):
             t.SetEnd(ToPCB._conv_point(pt))
             t.SetNetCode(net_code)
             t.SetLayer(track.layer)
+            if track.width is not None:
+                t.SetWidth(track.width)
             # t.SetWidth(pcb.FromMM(DEFAULT_TRACK_WIDTH_MM))
             pcb.GetBoard().Add(t)
             old_pt = pt
@@ -121,6 +124,10 @@ class ToPCB(object):
         v.SetViaType(pcb.VIA_THROUGH)
         v.SetLayerPair(cad.Layer.F_Cu, cad.Layer.B_Cu)
         v.SetNetCode(net_code)
+        if via.diameter is not None:
+            v.SetWidth(via.diameter)
+        if via.drill_diameter is not None:
+            v.SetDrill(via.drill_diameter)
         # v.SetWidth(pcb.FromMM(DEFAULT_TRACK_WIDTH_MM))
         pcb.GetBoard().Add(v)
 
@@ -139,8 +146,9 @@ class ToPCB(object):
                 outline.AppendCorner(pt.x, pt.y)
         if getattr(outline, 'CloseLastContour', None) is not None:
             outline.CloseLastContour()
-        # area.SetCornerRadius(pcb.FromMM(DEFAULT_TRACK_WIDTH_MM / 2.))
-        # area.SetCornerSmoothingType(pcb.ZONE_SETTINGS.SMOOTHING_FILLET)
+        if fill.fillet_radius is not None and fill.fillet_radius > 0.:
+            area.SetCornerSmoothingType(pcb.ZONE_SETTINGS.SMOOTHING_FILLET)
+            area.SetCornerRadius(fill.fillet_radius)
         area.BuildFilledSolidAreasPolygons(pcb.GetBoard())
 
     @staticmethod

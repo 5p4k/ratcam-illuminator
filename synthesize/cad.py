@@ -10,39 +10,50 @@ class Layer(Enum):
 
 
 class Via(object):
+    DEFAULT_DIAMETER = None
+    DEFAULT_DRILL_DIAMETER = None
+
     def __repr__(self):
         return 'Via(%s)' % repr(self.position)
 
     def __str__(self):
         return repr(self)
 
-    def __init__(self, position):
+    def __init__(self, position, diameter=DEFAULT_DIAMETER, drill_diameter=None):
         self.position = position
+        self.diameter = diameter if diameter is not None else self.__class__.DEFAULT_DIAMETER
+        self.drill_diameter = drill_diameter if drill_diameter is not None else self.__class__.DEFAULT_DRILL_DIAMETER
 
 
 class Track(object):
+    DEFAULT_WIDTH = None
+
     def __repr__(self):
         return 'Track(%s, %s)' % (repr(self.points), repr(self.layer))
 
     def __str__(self):
         return 'Track(%s)' % str(self.points)
 
-    def __init__(self, points, layer=Layer.F_Cu):
+    def __init__(self, points, layer=Layer.F_Cu, width=None):
         self.points = list(points)
         self.layer = layer
+        self.width = width if width is not None else self.__class__.DEFAULT_WIDTH
 
 
 class Fill(object):
+    DEFAULT_FILLET_RADIUS = None
+
     def __repr__(self):
         return 'Fill(%s, %s)' % (repr(self.points), repr(self.layer))
 
     def __str__(self):
         return 'Fill(%s)' % str(self.points)
 
-    def __init__(self, points, layer=Layer.F_Cu):
+    def __init__(self, points, layer=Layer.F_Cu, fillet_radius=None):
         self.points = list(points)
         self.thermal = False
         self.layer = layer
+        self.fillet_radius = fillet_radius if fillet_radius is not None else self.__class__.DEFAULT_FILLET_RADIUS
 
 
 class Terminal(object):
