@@ -148,7 +148,7 @@ class ToPCB(object):
             outline.CloseLastContour()
         if fill.fillet_radius is not None and fill.fillet_radius > 0.:
             area.SetCornerSmoothingType(pcb.ZONE_SETTINGS.SMOOTHING_FILLET)
-            area.SetCornerRadius(fill.fillet_radius)
+            area.SetCornerRadius(int(fill.fillet_radius))
         area.BuildFilledSolidAreasPolygons(pcb.GetBoard())
 
     @staticmethod
