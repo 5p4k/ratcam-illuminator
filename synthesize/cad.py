@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 import math
-from polar import Polar, Chord, Point, apx_arc_through_polars, normalize_angle
+from polar import Polar, Chord, Point, apx_arc_through_polars, normalize_angle, Vector
 from enum import Enum
 
 
@@ -171,17 +171,18 @@ class Component(object):
         return pad1, pad2
 
     def get_pad_tangential_distance(self, pad):
-        if pad not in self.pads.values():
-            raise ValueError()
         # Tangent angle
         tan_angle = self.position.to_polar().a - math.pi / 2.
         # Pad offset wrt tangent
-        return pad.offset.rotated(self.orientation - tan_angle).dx
+        return self.get_pad_offset(pad).rotated(-tan_angle).dx
 
-    def get_pad_position(self, pad):
+    def get_pad_offset(self, pad):
         if pad not in self.pads.values():
             raise ValueError()
-        return self.position + pad.offset.rotated(self.orientation)
+        return pad.offset.flipped(flip_y=self.flipped).rotated(self.orientation)
+
+    def get_pad_position(self, pad):
+        return self.position + self.get_pad_offset(pad)
 
     def place_radial(self, angle, radius, orientation=0.):
         self.orientation = orientation + angle - math.pi / 2.
@@ -202,7 +203,7 @@ class Component(object):
         pad1, pad2 = self._two_pads(pad1, pad2)
         assert(abs(chord.length - self.get_pads_distance(pad1, pad2)) < 0.001)
         # Compute the natural pad inclination
-        pads_angle = normalize_angle(orientation + (pad2.offset - pad1.offset).to_polar().a)
+        pads_angle = normalize_angle(orientation + (self.get_pad_offset(pad2) - self.get_pad_offset(pad1)).to_polar().a)
         # Apply the correct orientation
         self.orientation = (chord.declination - math.pi / 2.) + (pads_angle - math.pi)
         # Now get the correct, transformed offset and move the component in place
@@ -211,6 +212,17 @@ class Component(object):
         else:
             chord_endpt = chord.endpoints[0]
         self.position = chord_endpt.to_point() + (self.get_pad_position(pad1) - self.position)
+
+    def get_pads_bounding_box(self):
+        vmin = Vector(0., 0.)
+        vmax = Vector(0., 0.)
+        for pad in self.pads.values():
+            ofs = self.get_pad_offset(pad)
+            vmin.dx = min(vmin.dx, ofs.dx - pad.size.dx / 2.)
+            vmin.dy = min(vmin.dy, ofs.dy - pad.size.dy / 2.)
+            vmax.dx = max(vmax.dx, ofs.dx + pad.size.dx / 2.)
+            vmax.dy = max(vmax.dy, ofs.dy + pad.size.dy / 2.)
+        return vmin, vmax
 
     def __init__(self, name, pads, position=None, orientation=None, flipped=False):
         self.name = name

@@ -73,6 +73,9 @@ class Vector(object):
         pol.a += angle
         return pol.to_point().to_vector()
 
+    def flipped(self, flip_x=False, flip_y=False):
+        return Vector(-self.dx if flip_x else self.dx, -self.dy if flip_y else self.dy)
+
     def __init__(self, dx=0., dy=0.):
         self.dx = dx
         self.dy = dy

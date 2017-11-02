@@ -36,7 +36,9 @@ OPT = dotdict(
     ),
     track_width=pcbnew.FromMM(1.),
     via_diam=pcbnew.FromMM(1.),
-    via_drill_diam=pcbnew.FromMM(0.4)
+    via_drill_diam=pcbnew.FromMM(0.4),
+    connector='J0',
+    mosfet='Q0'
 )
 
 OPT.lines.n_comps = OPT.lines.n_lines * (OPT.lines.n_leds + 1)
@@ -86,15 +88,17 @@ def route_rings(board, **kwargs):
         cnt_res = len(filter(lambda x: x.component.name.startswith(OPT.lines.res_pfx) and x.component.flag_placed,
                              net.terminals))
         if cnt_res == 0 and cnt_led == OPT.lines.n_lines:
+            # Ok that's one of the two ring nets.
+            OPT.rings.gnd_net = net.name
             radius = OPT.rings.gnd_radius
             overhang = OPT.rings.overhang
         elif cnt_res == OPT.lines.n_lines and cnt_led == 0:
+            # Ok that's one of the two ring nets.
+            OPT.rings.pwr_net = net.name
             radius = OPT.rings.pwr_radius
             overhang = -OPT.rings.overhang
         else:
             continue
-        # Ok that's one of the two ring nets.
-        OPT.ring_nets.append(net.name)
         del net.tracks[:]
         intersection_angles = []
         for t in filter(lambda x: x.component.flag_placed, net.terminals):
@@ -153,7 +157,7 @@ def add_copper_pours(board):
             list(map(Polar.to_point, apx_crown_sector(a1, a2, OPT.pours.inner_radius, OPT.pours.outer_radius,
                                                       shift1, shift2)))))
     # Add copper pours for the remaining pads
-    for net_name in OPT.ring_nets:
+    for net_name in [OPT.rings.pwr_net, OPT.rings.gnd_net]:
         net = board.netlist[net_name]
         for t in filter(lambda x: x.component.flag_placed, net.terminals):
             # Which direction is the overhang?
@@ -180,6 +184,73 @@ def add_copper_pours(board):
             net.fills.append(Fill(
                 list(map(Polar.to_point, apx_crown_sector(a1, a2, OPT.pours.inner_radius, OPT.pours.outer_radius,
                                                           shift1, shift2)))))
+
+
+def negotiate_connector_and_mosfet_position(board):
+    conn = board.components[OPT.connector]
+    mosf = board.components[OPT.mosfet]
+    # Place them at 0, 0 and flip
+    conn.position = Point(0., 0.)
+    mosf.position = Point(0., 0.)
+    conn.orientation = 0.
+    mosf.orientation = 0.
+    conn.flipped = True
+    mosf.flipped = True
+    # Two pads are interconnected, but one for each is connected either to pwr or to gnd
+    conn_pwr_pad = next(pad for pad in conn.pads.values() if pad.connected_to.name == OPT.rings.pwr_net)
+    mosf_gnd_pad = next(pad for pad in mosf.pads.values() if pad.connected_to.name == OPT.rings.gnd_net)
+    # Check which one is on the right
+    conn_pwr_pad_east = (conn.get_pad_offset(conn_pwr_pad).dx > 0)
+    mosf_gnd_pad_east = (mosf.get_pad_offset(mosf_gnd_pad).dx > 0)
+    conn_oriented_correctly = (conn_pwr_pad_east == (OPT.rings.pwr_radius > OPT.lines.radius))
+    mosf_oriented_correctly = (mosf_gnd_pad_east == (OPT.rings.gnd_radius > OPT.lines.radius))
+    # Fix the orientation
+    if conn_pwr_pad_east == mosf_gnd_pad_east:
+        # One only needs to be reoriented
+        if conn_oriented_correctly:
+            # Priority to the connector which is usually bigger
+            mosf.orientation = math.pi
+            mosf_gnd_pad_east = not mosf_gnd_pad_east
+        else:
+            # Priority to the connector which is usually bigger
+            conn.orientation = math.pi
+            conn_pwr_pad_east = not conn_pwr_pad_east
+    elif not conn_oriented_correctly and not mosf_oriented_correctly:
+        # Fix them only if they are both wrong
+        conn.orientation = math.pi
+        conn_pwr_pad_east = not conn_pwr_pad_east
+        mosf.orientation = math.pi
+        mosf_gnd_pad_east = not mosf_gnd_pad_east
+    # Min and max oscillation from OPT.lines.radius
+    radius_range = (min(OPT.rings.pwr_radius, OPT.rings.gnd_radius) - OPT.lines.radius - OPT.track_width / 2.,
+                    max(OPT.rings.pwr_radius, OPT.rings.gnd_radius) - OPT.lines.radius + OPT.track_width / 2.)
+    conn_bb = conn.get_pads_bounding_box()
+    # This is the maximum displacement we allow from OPT.lines.radius without exceeding the metal with the pads
+    conn_radius_range = (radius_range[0] - conn_bb[0].dx, radius_range[1] - conn_bb[1].dx)
+    # Bring the pad as close as possible to the rail, with a safety margin
+    if conn_pwr_pad_east:
+        conn.position.x = OPT.lines.radius + conn_radius_range[1] - OPT.track_width
+    else:
+        conn.position.x = OPT.lines.radius + conn_radius_range[0] + OPT.track_width
+    # Deduce the x position of the other two pads.
+    mosf_pad1, mosf_pad2 = [pad for pad in mosf.pads.values() if pad is not mosf_gnd_pad]
+    mosf_pad1_ofs = mosf.get_pad_offset(mosf_pad1)
+    mosf_pad2_ofs = mosf.get_pad_offset(mosf_pad2)
+    mosf_r1 = conn.get_pad_position(mosf_pad1.connected_to.other_terminals(mosf_pad1)[0].pad).to_polar().r
+    mosf_r2 = conn.get_pad_position(mosf_pad2.connected_to.other_terminals(mosf_pad2)[0].pad).to_polar().r
+
+    # Convert into radius needed for the mosfet
+    def get_ofsetted_radius(ofs, r):
+        dist = ofs.l2()
+        cos = ofs.dx / dist
+        delta = math.sqrt(cos * cos + 2 * dist * cos + r * r)
+        add = -cos * dist
+        return max(add + delta, add - delta)
+    mosf_r1 = get_ofsetted_radius(mosf_pad1_ofs, mosf_r1)
+    mosf_r2 = get_ofsetted_radius(mosf_pad2_ofs, mosf_r2)
+    # If the pads are placed at this radii, the connections are arcs
+    mosf_r = max(mosf_r1, mosf_r2) if mosf_gnd_pad_east else min(mosf_r1, mosf_r2)
+    mosf.position.x = -mosf_r
 
 
 def setup_geometry(board):
@@ -216,14 +287,10 @@ def setup_geometry(board):
         OPT.rings.overhang = OPT.lines.angle_step / 3.
         # Fill in until leaving 1 track distance @ OPT.lines.radius
         OPT.pours.overhang = (OPT.lines.angle_step - OPT.lines.separator_spanned_angle) / 2.
-    OPT.ring_nets = []
 
 
 def main():
     board = FromPCB.populate()
-    # Move out of the way
-    board.components['Q0'].position = Point(0., 0.)
-    board.components['J0'].position = Point(0., 0.)
     # Compute all the angular values according to the selected geometry
     setup_geometry(board)
     # Place all leds and resistors in F.Cu
@@ -234,6 +301,8 @@ def main():
     route_rings(board)
     # Add copper pours on the front face
     add_copper_pours(board)
+    # Place smartly J0 and Q0
+    negotiate_connector_and_mosfet_position(board)
     # Save
     ToPCB.apply(board)
 
