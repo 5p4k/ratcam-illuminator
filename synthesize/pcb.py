@@ -79,6 +79,8 @@ class FromPCB(object):
                     board.netlist[net_name].tracks.append(FromPCB._conv_track(trk))
                 elif isinstance(trk, pcb.VIA):
                     board.netlist[net_name].tracks.append(FromPCB._conv_via(trk))
+        for net in board.netlist.values():
+            net.assign_connections(board)
         # for area_idx in range(pcb.GetBoard().GetAreaCount()):
         #     area = pcb.GetBoard().GetArea(area_idx)
         #     net_name = area.GetNetname()
@@ -157,7 +159,7 @@ class ToPCB(object):
         modu.SetPosition(ToPCB._conv_point(comp.position))
         modu.SetOrientation(ToPCB._conv_angle(comp.orientation))
         if modu.IsFlipped() != comp.flipped:
-            modu.Flip()
+            modu.Flip(modu.GetPosition())
 
     @staticmethod
     def apply(board):

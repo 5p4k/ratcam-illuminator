@@ -229,9 +229,9 @@ def negotiate_connector_and_mosfet_position(board):
     conn_radius_range = (radius_range[0] - conn_bb[0].dx, radius_range[1] - conn_bb[1].dx)
     # Bring the pad as close as possible to the rail, with a safety margin
     if conn_pwr_pad_east:
-        conn.position.x = OPT.lines.radius + conn_radius_range[1] - OPT.track_width
+        conn.position.x = OPT.lines.radius + conn_radius_range[1] - OPT.track_width / 2.
     else:
-        conn.position.x = OPT.lines.radius + conn_radius_range[0] + OPT.track_width
+        conn.position.x = OPT.lines.radius + conn_radius_range[0] + OPT.track_width / 2.
     # Deduce the x position of the other two pads.
     mosf_pad1, mosf_pad2 = [pad for pad in mosf.pads.values() if pad is not mosf_gnd_pad]
     mosf_pad1_ofs = mosf.get_pad_offset(mosf_pad1)
