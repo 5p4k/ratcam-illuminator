@@ -241,11 +241,8 @@ def negotiate_connector_and_mosfet_position(board):
 
     # Convert into radius needed for the mosfet
     def get_ofsetted_radius(ofs, r):
-        dist = ofs.l2()
-        cos = ofs.dx / dist
-        delta = math.sqrt(cos * cos + 2 * dist * cos + r * r)
-        add = -cos * dist
-        return max(add + delta, add - delta)
+        return math.sqrt(r * r - ofs.dy * ofs.dy) + ofs.dx
+
     mosf_r1 = get_ofsetted_radius(mosf_pad1_ofs, mosf_r1)
     mosf_r2 = get_ofsetted_radius(mosf_pad2_ofs, mosf_r2)
     # If the pads are placed at this radii, the connections are arcs
