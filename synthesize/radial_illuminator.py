@@ -1,6 +1,6 @@
 from __future__ import unicode_literals, print_function
 from pcb import ToPCB, FromPCB
-from cad import Component, Track, Fill, Via
+from cad import Component, Track, Fill, Via, Layer
 from polar import Polar, apx_arc_through_polars, normalize_angle, Chord, apx_crown_sector, Point
 import math
 import pcbnew
@@ -186,7 +186,7 @@ def add_copper_pours(board):
                                                           shift1, shift2)))))
 
 
-def negotiate_connector_and_mosfet_position(board):
+def place_connector_and_mosfet(board):
     conn = board.components[OPT.connector]
     mosf = board.components[OPT.mosfet]
     # Place them at 0, 0 and flip
@@ -232,12 +232,16 @@ def negotiate_connector_and_mosfet_position(board):
         conn.position.x = OPT.lines.radius + conn_radius_range[1] - OPT.track_width / 2.
     else:
         conn.position.x = OPT.lines.radius + conn_radius_range[0] + OPT.track_width / 2.
+    conn.flag_placed = True
     # Deduce the x position of the other two pads.
     mosf_pad1, mosf_pad2 = [pad for pad in mosf.pads.values() if pad is not mosf_gnd_pad]
     mosf_pad1_ofs = mosf.get_pad_offset(mosf_pad1)
     mosf_pad2_ofs = mosf.get_pad_offset(mosf_pad2)
     mosf_r1 = conn.get_pad_position(mosf_pad1.connected_to.other_terminals(mosf_pad1)[0].pad).to_polar().r
     mosf_r2 = conn.get_pad_position(mosf_pad2.connected_to.other_terminals(mosf_pad2)[0].pad).to_polar().r
+
+    OPT.rings.mosf_conn_radius = max(mosf_r1, mosf_r2) if mosf_gnd_pad_east else min(mosf_r1, mosf_r2)
+    OPT.rings.mosf_conn_nets = [mosf_pad1.connected_to.name, mosf_pad2.connected_to.name]
 
     # Convert into radius needed for the mosfet
     def get_ofsetted_radius(ofs, r):
@@ -248,6 +252,55 @@ def negotiate_connector_and_mosfet_position(board):
     # If the pads are placed at this radii, the connections are arcs
     mosf_r = max(mosf_r1, mosf_r2) if mosf_gnd_pad_east else min(mosf_r1, mosf_r2)
     mosf.position.x = -mosf_r
+    mosf.flag_placed = True
+
+
+def project_on_ring(pt, radius):
+    a = math.asin(pt.y / radius)
+    return Polar(a if pt.x >= 0. else math.pi - a, radius).to_point()
+
+
+def route_connector_and_mosfet(board, **kwargs):
+    kwargs['skip_start'] = False
+    kwargs['include_end'] = True
+    for net_name in OPT.rings.mosf_conn_nets:
+        net = board.netlist[net_name]
+        t1, t2 = net.terminals
+        t1_pos, t2_pos = t1.position, t2.position
+        t1_attach_pos = project_on_ring(t1_pos, OPT.rings.mosf_conn_radius)
+        t2_attach_pos = project_on_ring(t2_pos, OPT.rings.mosf_conn_radius)
+        # Draw segment if needed
+        if t1_attach_pos != t1_pos:
+            net.tracks.append(Track([t1_pos, t1_attach_pos], Layer.B_Cu))
+        if t2_attach_pos != t2_pos:
+            net.tracks.append(Track([t2_pos, t2_attach_pos], Layer.B_Cu))
+        # Draw a connecting arc
+        net.tracks.append(Track(
+            map(Polar.to_point, apx_arc_through_polars(t1_attach_pos.to_polar(), t2_attach_pos.to_polar(), **kwargs)),
+            Layer.B_Cu
+        ))
+        net.flag_routed = True
+    # And now add a straight segment and a via for the pwr and gnd stuff
+    gnd_net = board.netlist[OPT.rings.gnd_net]
+    pwr_net = board.netlist[OPT.rings.pwr_net]
+    # Find the terminal belonging to the conn/mosfet
+    gnd_t = next(t for t in gnd_net.terminals if t.component.name == OPT.mosfet)
+    pwr_t = next(t for t in pwr_net.terminals if t.component.name == OPT.connector)
+    # Find the correct position and the correct radius
+    gnd_pad_pos = gnd_t.position
+    gnd_pad_attach_pos = project_on_ring(gnd_pad_pos, OPT.rings.gnd_radius)
+    pwr_pad_pos = pwr_t.position
+    pwr_pad_attach_pos = project_on_ring(pwr_pad_pos, OPT.rings.pwr_radius)
+    # Add a segment if needed
+    if gnd_pad_attach_pos != gnd_pad_pos:
+        gnd_net.tracks.append(Track([gnd_pad_pos, gnd_pad_attach_pos], Layer.B_Cu))
+    if pwr_pad_attach_pos != pwr_pad_pos:
+        pwr_net.tracks.append(Track([pwr_pad_pos, pwr_pad_attach_pos], Layer.B_Cu))
+    # And the via
+    gnd_net.tracks.append(Via(gnd_pad_attach_pos))
+    pwr_net.tracks.append(Via(pwr_pad_attach_pos))
+    gnd_net.flag_routed = True
+    pwr_net.flag_routed = True
 
 
 def setup_geometry(board):
@@ -299,7 +352,9 @@ def main():
     # Add copper pours on the front face
     add_copper_pours(board)
     # Place smartly J0 and Q0
-    negotiate_connector_and_mosfet_position(board)
+    place_connector_and_mosfet(board)
+    # Add the metal on B.Cu
+    route_connector_and_mosfet(board)
     # Save
     ToPCB.apply(board)
 
