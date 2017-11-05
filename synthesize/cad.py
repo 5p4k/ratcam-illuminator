@@ -19,7 +19,7 @@ class Via(object):
     def __str__(self):
         return repr(self)
 
-    def __init__(self, position, diameter=DEFAULT_DIAMETER, drill_diameter=None):
+    def __init__(self, position, diameter=None, drill_diameter=None):
         self.position = position
         self.diameter = diameter if diameter is not None else self.__class__.DEFAULT_DIAMETER
         self.drill_diameter = drill_diameter if drill_diameter is not None else self.__class__.DEFAULT_DRILL_DIAMETER
