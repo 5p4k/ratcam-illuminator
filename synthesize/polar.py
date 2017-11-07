@@ -262,7 +262,7 @@ class Chord(object):
         self.declination = declination
 
 
-def apx_unit_interval(skip_start=False, include_end=False, resolution=math.pi/30., steps=None):
+def apx_unit_interval(skip_start=False, include_end=False, resolution=None, steps=None):
     if resolution is not None:
         if resolution <= 0.:
             raise ValueError()
@@ -277,24 +277,25 @@ def apx_unit_interval(skip_start=False, include_end=False, resolution=math.pi/30
         yield 1.
 
 
-def apx_arc_through_polars(p1, p2, **kwargs):
+def apx_arc_through_polars(p1, p2, resolution=math.pi/60., steps=None, **kwargs):
     if not (isinstance(p1, Polar) and isinstance(p2, Polar)):
         raise TypeError()
     dr = p2.r - p1.r
     da = p1.angle_to(p2)
-    if 'resolution' in kwargs:
-        kwargs['resolution'] /= da
-    for x in apx_unit_interval(**kwargs):
+    if steps is None and resolution is not None and abs(da) > math.pi / 3600.:
+        steps = int(math.ceil(abs(da / resolution)))
+        resolution = None
+    for x in apx_unit_interval(steps=steps, resolution=resolution, **kwargs):
         yield Polar(p1.a + x * da, p1.r + x * dr)
 
-# TODO The resolution is wrong
 
-def apx_arc(p, da, **kwargs):
+def apx_arc(p, da, resolution=math.pi/60., steps=None, **kwargs):
     if not isinstance(p, Polar):
         raise TypeError()
-    if 'resolution' in kwargs:
-        kwargs['resolution'] /= da
-    for x in apx_unit_interval(**kwargs):
+    if steps is None and resolution is not None and abs(da) > math.pi / 3600.:
+        steps = int(math.ceil(abs(da / resolution)))
+        resolution = None
+    for x in apx_unit_interval(steps=steps, resolution=resolution, **kwargs):
         yield Polar(p.a + x * da, p.r)
 
 

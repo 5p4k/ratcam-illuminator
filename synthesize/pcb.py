@@ -177,4 +177,3 @@ class ToPCB(object):
                     ToPCB._conv_via(trk, net.code)
             for fill in net.fills:
                 ToPCB._conv_fill(fill, net.code)
-
