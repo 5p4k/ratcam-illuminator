@@ -412,6 +412,29 @@ def setup_geometry(board):
         OPT.pours.overhang = (OPT.lines.angle_step - OPT.lines.separator_spanned_angle) / 2.
 
 
+def add_mosfet_copper_pours(board):
+    mosf = board.components[OPT.mosfet]
+    inner_radius = OPT.rings.mosf_conn_radius + (OPT.pours.inner_radius - OPT.lines.radius)
+    outer_radius = OPT.rings.mosf_conn_radius + (OPT.pours.outer_radius - OPT.lines.radius)
+    for pad in mosf.pads.values():
+        if pad.connected_to.name == OPT.rings.gnd_net:
+            continue
+        # Add a fill on top of it
+        if OPT.pours.parallel_to_comp:
+            a1 = mosf.position.to_polar().a
+            shift = mosf.get_pad_tangential_distance(pad)
+        else:
+            a1 = mosf.get_pad_position(pad).to_polar().a
+            shift = 0.
+        if a1 <= math.pi:
+            a2 = a1 - OPT.lines.angle_step
+        else:
+            a2 = a1 + OPT.lines.angle_step
+        pad.connected_to.fills.append(Fill(
+            list(map(Polar.to_point, apx_crown_sector(a1, a2, inner_radius, outer_radius, shift, 0.))),
+            layer=Layer.B_Cu))
+
+
 def main():
     board = FromPCB.populate()
     # Compute all the angular values according to the selected geometry
@@ -428,6 +451,7 @@ def main():
     place_connector_and_mosfet(board)
     # Add the metal on B.Cu
     route_connector_and_mosfet(board)
+    add_mosfet_copper_pours(board)
     # Save
     ToPCB.apply(board)
 
