@@ -282,13 +282,18 @@ def apx_arc_through_polars(p1, p2, **kwargs):
         raise TypeError()
     dr = p2.r - p1.r
     da = p1.angle_to(p2)
+    if 'resolution' in kwargs:
+        kwargs['resolution'] /= da
     for x in apx_unit_interval(**kwargs):
         yield Polar(p1.a + x * da, p1.r + x * dr)
 
+# TODO The resolution is wrong
 
 def apx_arc(p, da, **kwargs):
     if not isinstance(p, Polar):
         raise TypeError()
+    if 'resolution' in kwargs:
+        kwargs['resolution'] /= da
     for x in apx_unit_interval(**kwargs):
         yield Polar(p.a + x * da, p.r)
 

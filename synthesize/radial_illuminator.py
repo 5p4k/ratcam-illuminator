@@ -1,6 +1,6 @@
 from __future__ import unicode_literals, print_function
 from pcb import ToPCB, FromPCB
-from cad import Component, Track, Fill, Via, Layer
+from cad import Component, Track, Fill, Via, Layer, Terminal
 from polar import Polar, apx_arc_through_polars, normalize_angle, Chord, apx_crown_sector, Point
 import math
 import pcbnew
@@ -186,6 +186,133 @@ def add_copper_pours(board):
                                                           shift1, shift2)))))
 
 
+class ConnMosfRadiusTranslator(object):
+    @classmethod
+    def _translate(cls, r, direct, x1, y1, x2, y2):
+        if direct:
+            return -(math.sqrt((r + x1) * (r + x1) + y1 * y1 - y2 * y2) + x2)
+        else:
+            return math.sqrt((r + x1) * (r + x1) + y1 * y1 - y2 * y2) - x2
+
+    def _translate_conn_to_mosf(self, r, i):
+        return self.__class__._translate(r, True,
+                                         self._conn_pad_ofs[i].dx, self._conn_pad_ofs[i].dy,
+                                         self._mosf_pad_ofs[i].dx, self._mosf_pad_ofs[i].dy,)
+
+    def _translate_mosf_to_conn(self, r, i):
+        return self.__class__._translate(r, False,
+                                         self._mosf_pad_ofs[i].dx, self._mosf_pad_ofs[i].dy,
+                                         self._conn_pad_ofs[i].dx, self._conn_pad_ofs[i].dy)
+
+    def conn_to_mosf(self, r):
+        radii = map(lambda i: self._translate_conn_to_mosf(r, i), range(0, len(self._conn_pad_ofs)))
+        return max(radii) if self._conn_pad_ofs[0].dx >= 0. else min(radii)
+
+    def mosf_to_conn(self, r):
+        radii = map(lambda i: self._translate_mosf_to_conn(r, i), range(0, len(self._conn_pad_ofs)))
+        return min(radii) if self._conn_pad_ofs[0].dx >= 0. else max(radii)
+
+    def __init__(self, conn_pad_ofs, mosf_pad_ofs):
+        self._conn_pad_ofs = list(conn_pad_ofs)
+        self._mosf_pad_ofs = list(mosf_pad_ofs)
+        assert (len(self._conn_pad_ofs) == len(self._mosf_pad_ofs))
+
+
+def orient_connector_and_mosfet_relative(conn, mosf):
+    nets = set([pad.connected_to for pad in conn.pads.values()])
+    nets.intersection_update(set([pad.connected_to for pad in mosf.pads.values()]))
+    # Make sure the two involved pads both face north or south
+    for net in nets:
+        t1_pos, t2_pos = map(lambda t: t.position, net.terminals)
+        if (t1_pos.y >= 0) != (t2_pos.y >= 0):
+            # Rotate one
+            mosf.orientation += math.pi
+
+
+def orient_connector_and_mosfet(conn, mosf):
+    # Two pads are interconnected, but one for each is connected either to pwr or to gnd
+    conn_pwr_pad = next(pad for pad in conn.pads.values() if pad.connected_to.name == OPT.rings.pwr_net)
+    # Check which one is on the right
+    conn_pwr_pad_east = (conn.get_pad_offset(conn_pwr_pad).dx > 0)
+    conn_oriented_correctly = (conn_pwr_pad_east == (OPT.rings.pwr_radius > OPT.lines.radius))
+    # Fix the orientation
+    if not conn_oriented_correctly:
+        mosf.orientation += math.pi
+        conn.orientation += math.pi
+    # We only care about the connector. After all, if they're both oriented in the wrong direction, this will fix
+    # the issue. If only one is oriented in the wrong direction, that's better if it's the mosfet
+    conn_to_mosf_pads = [pad for pad in conn.pads.values() if pad.connected_to.name != OPT.rings.pwr_net]
+    OPT.rings.mosf_conn_nets = [pad.connected_to.name for pad in conn_to_mosf_pads]
+    mosf_to_conn_pads = map(lambda pad: pad.connected_to.other_terminals(pad)[0].pad, conn_to_mosf_pads)
+    OPT.radius_translator = ConnMosfRadiusTranslator(
+        [conn.get_pad_offset(pad) for pad in conn_to_mosf_pads],
+        [mosf.get_pad_offset(pad) for pad in mosf_to_conn_pads]
+    )
+
+
+def negotiate_connector_and_mosfet_position(conn, mosf):
+    # The variable is the connector center's radius. Constraints are expressed as a pair (min, max) of values for x
+    r_min = min(OPT.rings.gnd_radius, OPT.rings.pwr_radius) - OPT.track_width / 2.
+    r_max = max(OPT.rings.gnd_radius, OPT.rings.pwr_radius) + OPT.track_width / 2.
+    constraints = []
+    for pad in conn.pads.values():
+        # Each pad should not exceed the min-max radius
+        ofs = conn.get_pad_offset(pad)
+        sz = pad.size
+        # x + ofs.dx + sz.dx / 2 < r_max
+        constraints.append((-float('inf'), r_max - ofs.dx - sz.dx / 2.))
+        # r_min < x + ofs.dx - sz.dx / 2
+        constraints.append((r_min - ofs.dx + sz.dx / 2., float('inf')))
+        # Extra constraint for pwr/gnd pad
+        if pad.connected_to.name == OPT.rings.pwr_net:
+            if ofs.dx >= 0.:
+                # The pwr/gnd pad west end cannot exceed the track
+                # x + ofs.dx - sz.dx / 2 <= pwr/gnd_net_radius
+                constraints.append((-float('inf'), OPT.rings.pwr_radius - ofs.dx + sz.dx / 2.))
+            else:
+                # Vice versa
+                # pwr/gnd_net_radius <= x + ofs.dx + sz.dx / 2
+                constraints.append((OPT.rings.pwr_radius - ofs.dx - sz.dx / 2., float('inf')))
+    # Convert the mosfet constraints into connector constraints
+    for pad in mosf.pads.values():
+        # Each pad should not exceed the min-max radius
+        ofs = mosf.get_pad_offset(pad)
+        sz = pad.size
+        # x + ofs.dx + sz.dx / 2 < -r_min
+        constraints.append((OPT.radius_translator.mosf_to_conn(-r_min - ofs.dx - sz.dx / 2.), float('inf')))
+        # -r_max < x + ofs.dx - sz.dx / 2
+        constraints.append((-float('inf'), OPT.radius_translator.mosf_to_conn(-r_max - ofs.dx + sz.dx / 2.)))
+        # Extra constraint for pwr/gnd pad
+        if pad.connected_to.name == OPT.rings.gnd_net:
+            if ofs.dx >= 0.:
+                # The pwr/gnd pad west end cannot exceed the track
+                # x + ofs.dx - sz.dx / 2 <= -pwr/gnd_net_radius
+                constraints.append((OPT.radius_translator.mosf_to_conn(-OPT.rings.gnd_radius - ofs.dx + sz.dx / 2.),
+                                    float('inf')))
+            else:
+                # Vice versa
+                # -pwr/gnd_net_radius <= x + ofs.dx + sz.dx / 2
+                constraints.append((-float('inf'),
+                                    OPT.radius_translator.mosf_to_conn(-OPT.rings.gnd_radius - ofs.dx - sz.dx / 2.)))
+    for lb, ub in constraints:
+        r_min = max(r_min, lb)
+        r_max = min(r_max, ub)
+    r = (r_min + r_max) / 2.
+    conn.position.x = r
+    mosf.position.x = OPT.radius_translator.conn_to_mosf(r)
+    # Get the routing radius now
+    rs = [conn.get_pad_position(pad).to_polar().r for pad in conn.pads.values()
+          if pad.connected_to.name != OPT.rings.pwr_net]
+    # Min or max?
+    pwr_pad = next(pad for pad in conn.pads.values() if pad.connected_to.name == OPT.rings.pwr_net)
+    if conn.get_pad_offset(pwr_pad).dx >= 0.:
+        # Min
+        OPT.rings.mosf_conn_radius = min(rs)
+    else:
+        # Max
+        OPT.rings.mosf_conn_radius = max(rs)
+
+
 def place_connector_and_mosfet(board):
     conn = board.components[OPT.connector]
     mosf = board.components[OPT.mosfet]
@@ -196,63 +323,9 @@ def place_connector_and_mosfet(board):
     mosf.orientation = 0.
     conn.flipped = True
     mosf.flipped = True
-    # Two pads are interconnected, but one for each is connected either to pwr or to gnd
-    conn_pwr_pad = next(pad for pad in conn.pads.values() if pad.connected_to.name == OPT.rings.pwr_net)
-    mosf_gnd_pad = next(pad for pad in mosf.pads.values() if pad.connected_to.name == OPT.rings.gnd_net)
-    # Check which one is on the right
-    conn_pwr_pad_east = (conn.get_pad_offset(conn_pwr_pad).dx > 0)
-    mosf_gnd_pad_east = (mosf.get_pad_offset(mosf_gnd_pad).dx > 0)
-    conn_oriented_correctly = (conn_pwr_pad_east == (OPT.rings.pwr_radius > OPT.lines.radius))
-    mosf_oriented_correctly = (mosf_gnd_pad_east == (OPT.rings.gnd_radius > OPT.lines.radius))
-    # Fix the orientation
-    if conn_pwr_pad_east == mosf_gnd_pad_east:
-        # One only needs to be reoriented
-        if conn_oriented_correctly:
-            # Priority to the connector which is usually bigger
-            mosf.orientation = math.pi
-            mosf_gnd_pad_east = not mosf_gnd_pad_east
-        else:
-            # Priority to the connector which is usually bigger
-            conn.orientation = math.pi
-            conn_pwr_pad_east = not conn_pwr_pad_east
-    elif not conn_oriented_correctly and not mosf_oriented_correctly:
-        # Fix them only if they are both wrong
-        conn.orientation = math.pi
-        conn_pwr_pad_east = not conn_pwr_pad_east
-        mosf.orientation = math.pi
-        mosf_gnd_pad_east = not mosf_gnd_pad_east
-    # Min and max oscillation from OPT.lines.radius
-    radius_range = (min(OPT.rings.pwr_radius, OPT.rings.gnd_radius) - OPT.lines.radius - OPT.track_width / 2.,
-                    max(OPT.rings.pwr_radius, OPT.rings.gnd_radius) - OPT.lines.radius + OPT.track_width / 2.)
-    conn_bb = conn.get_pads_bounding_box()
-    # This is the maximum displacement we allow from OPT.lines.radius without exceeding the metal with the pads
-    conn_radius_range = (radius_range[0] - conn_bb[0].dx, radius_range[1] - conn_bb[1].dx)
-    # Bring the pad as close as possible to the rail, with a safety margin
-    if conn_pwr_pad_east:
-        conn.position.x = OPT.lines.radius + conn_radius_range[1] - OPT.track_width / 2.
-    else:
-        conn.position.x = OPT.lines.radius + conn_radius_range[0] + OPT.track_width / 2.
-    conn.flag_placed = True
-    # Deduce the x position of the other two pads.
-    mosf_pad1, mosf_pad2 = [pad for pad in mosf.pads.values() if pad is not mosf_gnd_pad]
-    mosf_pad1_ofs = mosf.get_pad_offset(mosf_pad1)
-    mosf_pad2_ofs = mosf.get_pad_offset(mosf_pad2)
-    mosf_r1 = conn.get_pad_position(mosf_pad1.connected_to.other_terminals(mosf_pad1)[0].pad).to_polar().r
-    mosf_r2 = conn.get_pad_position(mosf_pad2.connected_to.other_terminals(mosf_pad2)[0].pad).to_polar().r
-
-    OPT.rings.mosf_conn_radius = max(mosf_r1, mosf_r2) if mosf_gnd_pad_east else min(mosf_r1, mosf_r2)
-    OPT.rings.mosf_conn_nets = [mosf_pad1.connected_to.name, mosf_pad2.connected_to.name]
-
-    # Convert into radius needed for the mosfet
-    def get_ofsetted_radius(ofs, r):
-        return math.sqrt(r * r - ofs.dy * ofs.dy) + ofs.dx
-
-    mosf_r1 = get_ofsetted_radius(mosf_pad1_ofs, mosf_r1)
-    mosf_r2 = get_ofsetted_radius(mosf_pad2_ofs, mosf_r2)
-    # If the pads are placed at this radii, the connections are arcs
-    mosf_r = max(mosf_r1, mosf_r2) if mosf_gnd_pad_east else min(mosf_r1, mosf_r2)
-    mosf.position.x = -mosf_r
-    mosf.flag_placed = True
+    orient_connector_and_mosfet_relative(conn, mosf)
+    orient_connector_and_mosfet(conn, mosf)
+    negotiate_connector_and_mosfet_position(conn, mosf)
 
 
 def project_on_ring(pt, radius):
