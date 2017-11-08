@@ -19,20 +19,20 @@ OPT = dotdict(
         n_leds=2,
         led_orient=math.pi,
         res_orient=0.,
-        radius=pcbnew.FromMM(30.),
+        radius=pcbnew.FromMM(25.),
         pad_on_circ=True,
         led_pfx='LED',
         res_pfx='R',
         separator=True
     ),
     rings=dotdict(
-        pwr_radius=pcbnew.FromMM(33.),
-        gnd_radius=pcbnew.FromMM(27.)
+        pwr_radius=pcbnew.FromMM(28.),
+        gnd_radius=pcbnew.FromMM(22.)
     ),
     pours=dotdict(
         parallel_to_comp=False,
-        inner_radius=pcbnew.FromMM(28.5),
-        outer_radius=pcbnew.FromMM(31.5)
+        inner_radius=pcbnew.FromMM(23.5),
+        outer_radius=pcbnew.FromMM(26.5)
     ),
     track_width=pcbnew.FromMM(1.),
     via_diam=pcbnew.FromMM(1.),
