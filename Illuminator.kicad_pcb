@@ -2,7 +2,7 @@
 
 (general
   (thickness 1.6)
-  (drawings 73)
+  (drawings 76)
   (tracks 935)
   (zones 0)
   (modules 17)
@@ -11,7 +11,7 @@
 
 (page A4)
 (layers
-  (0 F.Cu signal)
+  (0 F.Cu signal hide)
   (31 B.Cu signal)
   (32 B.Adhes user)
   (33 F.Adhes user)
@@ -331,9 +331,9 @@
     (fp_line (start -3.025 1.55) (end 3.025 1.55) (layer F.CrtYd) (width 0.05))
     (fp_line (start -3.025 -1.55) (end -3.025 1.55) (layer F.CrtYd) (width 0.05))
     (fp_circle (center 0 0) (end 0.9 0) (layer F.Fab) (width 0.1))
-    (pad 2 smd rect (at 1.9 0 36.97474287) (size 1.35 0.75) (layers F.Cu F.Paste F.Mask)
+    (pad 2 smd rect (at 1.9 -0.000001 36.97474287) (size 1.35 0.75) (layers F.Cu F.Paste F.Mask)
       (net 7 "Net-(LED2-Pad1)"))
-    (pad 1 smd rect (at -1.9 0 36.97474287) (size 1.35 0.75) (layers F.Cu F.Paste F.Mask)
+    (pad 1 smd rect (at -1.9 0.000001 36.97474287) (size 1.35 0.75) (layers F.Cu F.Paste F.Mask)
       (net 6 "Net-(LED1-Pad1)"))
     (model /Users/Spak/Desktop/RatcamIlluminator/Ratcam.pretty/LED-GW_2.3x2.3mm.wrl
       (at (xyz 0 0 0))
@@ -714,9 +714,9 @@
     (fp_text user %R (at 0 0 249.7620528) (layer F.Fab)
       (effects (font (size 0.5 0.5) (thickness 0.075)))
     )
-    (pad 2 smd rect (at 1.35 0 249.7620528) (size 1.5 1.3) (layers F.Cu F.Paste F.Mask)
+    (pad 2 smd rect (at 1.350001 0 249.7620528) (size 1.5 1.3) (layers F.Cu F.Paste F.Mask)
       (net 10 "Net-(LED4-Pad2)"))
-    (pad 1 smd rect (at -1.35 0 249.7620528) (size 1.5 1.3) (layers F.Cu F.Paste F.Mask)
+    (pad 1 smd rect (at -1.350001 0 249.7620528) (size 1.5 1.3) (layers F.Cu F.Paste F.Mask)
       (net 1 /TO_5V))
     (model ${KISYS3DMOD}/Resistors_SMD.3dshapes/R_0805.wrl
       (at (xyz 0 0 0))
@@ -797,6 +797,15 @@
     )
   )
 
+  (gr_text 3V3 (at 121.519247 104.574057 258) (layer B.SilkS)
+    (effects (font (size 1.5 1.5) (thickness 0.3)) (justify mirror))
+  )
+  (gr_text GND (at 121.519247 95.425943 282) (layer B.SilkS)
+    (effects (font (size 1.5 1.5) (thickness 0.3)) (justify mirror))
+  )
+  (gr_text 5V (at 127.928844 98.005083 274.1) (layer B.SilkS)
+    (effects (font (size 1.5 1.5) (thickness 0.3)) (justify mirror))
+  )
   (gr_line (start 109.5 100) (end 111.5 100) (layer Dwgs.User) (width 0.1))
   (gr_line (start 110.5 101) (end 110.5 99) (layer Dwgs.User) (width 0.1))
   (gr_line (start 109.5 112.5) (end 111.5 112.5) (layer Dwgs.User) (width 0.1))
