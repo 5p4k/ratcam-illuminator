@@ -25,15 +25,15 @@ $INSBASE
   9
 $EXTMIN
  10
--17.23241161390704
+-13.50000000000226
  20
--19.23241161390704
+-15.5
  30
 0.0
   9
 $EXTMAX
  10
-17.23241161390704
+13.5
  20
 10.362
  30
@@ -445,19 +445,19 @@ $SKPOLY
   9
 $TDCREATE
  40
-2458066.849606481
+2458066.850543981
   9
 $TDUCREATE
  40
-2458066.807939815
+2458066.808877315
   9
 $TDUPDATE
  40
-2458066.849618055
+2458066.850555555
   9
 $TDUUPDATE
  40
-2458066.807951389
+2458066.808888889
   9
 $TDINDWG
  40
@@ -505,7 +505,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-150
+F8
   9
 $SURFTAB1
  70
@@ -885,7 +885,7 @@ $PSTYLEMODE
   9
 $FINGERPRINTGUID
   2
-{DF7AF8E0-2754-43FD-BD19-55CD8CB9FA16}
+{BA89F574-9D0F-4805-A813-6244D466FA25}
   9
 $VERSIONGUID
   2
@@ -1111,7 +1111,7 @@ VPORT
 102
 {ACAD_XDICTIONARY
 360
-109
+B1
 102
 }
 330
@@ -1143,9 +1143,9 @@ AcDbViewportTableRecord
  21
 1.0
  12
-0.0
+-0.0000000000011298
  22
--4.435205806953519
+-2.568999999999999
  13
 0.0
  23
@@ -1171,9 +1171,9 @@ AcDbViewportTableRecord
  37
 0.0
  40
-30.18629984618518
+26.37924
  41
-1.164572003574429
+1.044002784007511
  42
 50.0
  43
@@ -1467,7 +1467,7 @@ ACAD
   0
 APPID
   5
-148
+F0
 330
 9
 100
@@ -1701,7 +1701,7 @@ SECTION
   2
 ENTITIES
   0
-ARC
+POLYLINE
   5
 6F
 330
@@ -1711,99 +1711,65 @@ AcDbEntity
   8
 Default
 100
-AcDbCircle
+AcDb2dPolyline
+ 66
+     1
  10
-12.5
+0.0
  20
-9.361999999998837
+0.0
  30
 0.0
- 40
-1.0
-100
-AcDbArc
- 50
-0.0
- 51
-89.99999999986973
   0
-ARC
+VERTEX
   5
 70
 330
-1F
+6F
 100
 AcDbEntity
   8
 Default
 100
-AcDbCircle
+AcDbVertex
+100
+AcDb2dVertex
  10
--12.50000000000226
+-13.49999999999999
  20
-9.362
+9.362002146063228
  30
 0.0
- 40
-1.0
-100
-AcDbArc
- 50
-90.0
- 51
-180.0000000000665
   0
-ARC
+VERTEX
   5
 71
 330
-1F
+6F
 100
 AcDbEntity
   8
 Default
 100
-AcDbCircle
+AcDbVertex
+100
+AcDb2dVertex
  10
-10.5
+-13.49999999999999
  20
-0.0
+3.450000000000007
  30
 0.0
- 40
-2.45
-100
-AcDbArc
- 50
-90.0
- 51
-270.0
   0
-ARC
+SEQEND
   5
 72
 330
-1F
+6F
 100
 AcDbEntity
   8
 Default
-100
-AcDbCircle
- 10
--10.5
- 20
-0.0
- 30
-0.0
- 40
-2.45
-100
-AcDbArc
- 50
-270.0
- 51
-90.0
   0
 POLYLINE
   5
@@ -1839,9 +1805,9 @@ AcDbVertex
 100
 AcDb2dVertex
  10
-9.5
+12.50000000000227
  20
-0.0
+10.362
  30
 0.0
   0
@@ -1859,9 +1825,9 @@ AcDbVertex
 100
 AcDb2dVertex
  10
-11.5
+-12.50000000000226
  20
-0.0
+10.362
  30
 0.0
   0
@@ -1909,9 +1875,9 @@ AcDbVertex
 100
 AcDb2dVertex
  10
-10.5
+13.5
  20
--1.0
+3.450000000000002
  30
 0.0
   0
@@ -1929,9 +1895,9 @@ AcDbVertex
 100
 AcDb2dVertex
  10
-10.5
+13.5
  20
-1.0
+9.361999999998837
  30
 0.0
   0
@@ -1945,7 +1911,7 @@ AcDbEntity
   8
 Default
   0
-POLYLINE
+ARC
   5
 7B
 330
@@ -1955,67 +1921,101 @@ AcDbEntity
   8
 Default
 100
-AcDb2dPolyline
- 66
-     1
+AcDbCircle
  10
-0.0
+12.5
  20
-0.0
+9.361999999998837
  30
 0.0
+ 40
+1.0
+100
+AcDbArc
+ 50
+0.0
+ 51
+89.99999999986973
   0
-VERTEX
+ARC
   5
 7C
 330
-7B
+1F
 100
 AcDbEntity
   8
 Default
 100
-AcDbVertex
-100
-AcDb2dVertex
+AcDbCircle
  10
-9.5
+-12.50000000000226
  20
--12.5
+9.362
  30
 0.0
+ 40
+1.0
+100
+AcDbArc
+ 50
+90.0
+ 51
+180.0000000000665
   0
-VERTEX
+ARC
   5
 7D
 330
-7B
+1F
 100
 AcDbEntity
   8
 Default
 100
-AcDbVertex
-100
-AcDb2dVertex
+AcDbCircle
  10
-11.5
+10.5
  20
--12.5
+0.0
  30
 0.0
+ 40
+2.45
+100
+AcDbArc
+ 50
+90.0
+ 51
+270.0
   0
-SEQEND
+ARC
   5
 7E
 330
-7B
+1F
 100
 AcDbEntity
   8
 Default
+100
+AcDbCircle
+ 10
+-10.5
+ 20
+0.0
+ 30
+0.0
+ 40
+2.45
+100
+AcDbArc
+ 50
+270.0
+ 51
+90.0
   0
-POLYLINE
+CIRCLE
   5
 7F
 330
@@ -2025,65 +2025,75 @@ AcDbEntity
   8
 Default
 100
-AcDb2dPolyline
- 66
-     1
+AcDbCircle
  10
-0.0
+-10.5
  20
 0.0
  30
 0.0
+ 40
+1.1
   0
-VERTEX
+CIRCLE
   5
 80
 330
-7F
+1F
 100
 AcDbEntity
   8
 Default
 100
-AcDbVertex
-100
-AcDb2dVertex
+AcDbCircle
  10
 10.5
  20
--13.5
+0.0
  30
 0.0
+ 40
+1.1
   0
-VERTEX
+CIRCLE
   5
 81
 330
-7F
+1F
 100
 AcDbEntity
   8
 Default
 100
-AcDbVertex
-100
-AcDb2dVertex
+AcDbCircle
  10
 10.5
  20
--11.5
+-12.5
  30
 0.0
+ 40
+1.1
   0
-SEQEND
+CIRCLE
   5
 82
 330
-7F
+1F
 100
 AcDbEntity
   8
 Default
+100
+AcDbCircle
+ 10
+-10.5
+ 20
+-12.5
+ 30
+0.0
+ 40
+1.1
   0
 POLYLINE
   5
@@ -2119,9 +2129,9 @@ AcDbVertex
 100
 AcDb2dVertex
  10
--11.5
+0.0
  20
--12.5
+-1.0
  30
 0.0
   0
@@ -2139,9 +2149,9 @@ AcDbVertex
 100
 AcDb2dVertex
  10
--9.5
+0.0
  20
--12.5
+1.0
  30
 0.0
   0
@@ -2189,9 +2199,9 @@ AcDbVertex
 100
 AcDb2dVertex
  10
--10.5
+-1.0
  20
--13.5
+0.0
  30
 0.0
   0
@@ -2209,9 +2219,9 @@ AcDbVertex
 100
 AcDb2dVertex
  10
--10.5
+1.0
  20
--11.5
+0.0
  30
 0.0
   0
@@ -2225,849 +2235,9 @@ AcDbEntity
   8
 Default
   0
-POLYLINE
+ARC
   5
 8B
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-8C
-330
-8B
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--11.5
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-8D
-330
-8B
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--9.5
- 20
-0.0
- 30
-0.0
-  0
-SEQEND
-  5
-8E
-330
-8B
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-8F
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-90
-330
-8F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--10.5
- 20
--1.0
- 30
-0.0
-  0
-VERTEX
-  5
-91
-330
-8F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--10.5
- 20
-1.0
- 30
-0.0
-  0
-SEQEND
-  5
-92
-330
-8F
-100
-AcDbEntity
-  8
-Default
-  0
-CIRCLE
-  5
-93
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
--10.5
- 20
-0.0
- 30
-0.0
- 40
-1.1
-  0
-CIRCLE
-  5
-94
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
-10.5
- 20
-0.0
- 30
-0.0
- 40
-1.1
-  0
-CIRCLE
-  5
-95
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
-10.5
- 20
--12.5
- 30
-0.0
- 40
-1.1
-  0
-CIRCLE
-  5
-96
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
--10.5
- 20
--12.5
- 30
-0.0
- 40
-1.1
-  0
-POLYLINE
-  5
-97
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-98
-330
-97
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-0.0
- 20
--1.0
- 30
-0.0
-  0
-VERTEX
-  5
-99
-330
-97
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-0.0
- 20
-1.0
- 30
-0.0
-  0
-SEQEND
-  5
-9A
-330
-97
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-9B
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-9C
-330
-9B
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--1.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-9D
-330
-9B
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-1.0
- 20
-0.0
- 30
-0.0
-  0
-SEQEND
-  5
-9E
-330
-9B
-100
-AcDbEntity
-  8
-Default
-  0
-ARC
-  5
-9F
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
-10.5
- 20
--12.50000000000001
- 30
-0.0
- 40
-2.0
-100
-AcDbArc
- 50
-270.0
- 51
-0.0
-  0
-ARC
-  5
-A0
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
-10.5
- 20
-7.361999999999998
- 30
-0.0
- 40
-2.0
-100
-AcDbArc
- 50
-0.000000000000229
- 51
-90.0
-  0
-ARC
-  5
-A1
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
--10.5
- 20
-7.362000000000006
- 30
-0.0
- 40
-2.0
-100
-AcDbArc
- 50
-90.0
- 51
-180.0
-  0
-ARC
-  5
-A2
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
--10.5
- 20
--12.5
- 30
-0.0
- 40
-2.0
-100
-AcDbArc
- 50
-180.0000000000004
- 51
-270.0
-  0
-LINE
-  5
-A3
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbLine
- 10
--12.5
- 20
--14.5
- 30
-0.0
- 11
-12.5
- 21
--14.5
- 31
-0.0
-  0
-LINE
-  5
-A4
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbLine
- 10
-12.5
- 20
--14.5
- 30
-0.0
- 11
-12.5
- 21
-9.361999999999998
- 31
-0.0
-  0
-LINE
-  5
-A5
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbLine
- 10
--12.5
- 20
-9.361999999999998
- 30
-0.0
- 11
--12.5
- 21
--14.5
- 31
-0.0
-  0
-LINE
-  5
-A6
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbLine
- 10
-12.5
- 20
-9.361999999999998
- 30
-0.0
- 11
--12.5
- 21
-9.361999999999998
- 31
-0.0
-  0
-POLYLINE
-  5
-A7
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-A8
-330
-A7
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--17.23241161390704
- 20
--15.76758838609296
- 30
-0.0
-  0
-VERTEX
-  5
-A9
-330
-A7
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--12.23241161390704
- 20
--10.76758838609296
- 30
-0.0
-  0
-SEQEND
-  5
-AA
-330
-A7
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-AB
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-AC
-330
-AB
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--13.76758838609296
- 20
--19.23241161390704
- 30
-0.0
-  0
-VERTEX
-  5
-AD
-330
-AB
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--8.76758838609296
- 20
--14.23241161390704
- 30
-0.0
-  0
-SEQEND
-  5
-AE
-330
-AB
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-AF
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-B0
-330
-AF
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-8.76758838609296
- 20
--14.23241161390704
- 30
-0.0
-  0
-VERTEX
-  5
-B1
-330
-AF
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-13.76758838609296
- 20
--19.23241161390704
- 30
-0.0
-  0
-SEQEND
-  5
-B2
-330
-AF
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-B3
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-B4
-330
-B3
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-12.23241161390704
- 20
--10.76758838609296
- 30
-0.0
-  0
-VERTEX
-  5
-B5
-330
-B3
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-17.23241161390704
- 20
--15.76758838609296
- 30
-0.0
-  0
-SEQEND
-  5
-B6
-330
-B3
-100
-AcDbEntity
-  8
-Default
-  0
-ARC
-  5
-B7
 330
 1F
 100
@@ -3093,7 +2263,7 @@ AcDbArc
   0
 ARC
   5
-B8
+8C
 330
 1F
 100
@@ -3119,7 +2289,7 @@ AcDbArc
   0
 ARC
   5
-B9
+8D
 330
 1F
 100
@@ -3145,7 +2315,7 @@ AcDbArc
   0
 ARC
   5
-BA
+8E
 330
 1F
 100
@@ -3171,7 +2341,7 @@ AcDbArc
   0
 ARC
   5
-BB
+8F
 330
 1F
 100
@@ -3197,7 +2367,7 @@ AcDbArc
   0
 ARC
   5
-BC
+90
 330
 1F
 100
@@ -3223,7 +2393,7 @@ AcDbArc
   0
 ARC
   5
-BD
+91
 330
 1F
 100
@@ -3249,7 +2419,7 @@ AcDbArc
   0
 ARC
   5
-BE
+92
 330
 1F
 100
@@ -3275,33 +2445,7 @@ AcDbArc
   0
 ARC
   5
-BF
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
--10.5
- 20
--12.5
- 30
-0.0
- 40
-2.45
-100
-AcDbArc
- 50
-314.9999999999998
- 51
-324.5698416398926
-  0
-ARC
-  5
-C0
+93
 330
 1F
 100
@@ -3327,59 +2471,7 @@ AcDbArc
   0
 ARC
   5
-C1
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
--10.5
- 20
--12.5
- 30
-0.0
- 40
-2.45
-100
-AcDbArc
- 50
-125.4301583601071
- 51
-135.0
-  0
-ARC
-  5
-C2
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
-10.5
- 20
--12.5
- 30
-0.0
- 40
-2.45
-100
-AcDbArc
- 50
-45.00000000000006
- 51
-54.56984163989272
-  0
-ARC
-  5
-C3
+94
 330
 1F
 100
@@ -3403,35 +2495,9 @@ AcDbArc
  51
 215.4301583601072
   0
-ARC
-  5
-C4
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDbCircle
- 10
-10.5
- 20
--12.5
- 30
-0.0
- 40
-2.45
-100
-AcDbArc
- 50
-215.4301583601072
- 51
-225.0
-  0
 POLYLINE
   5
-C5
+95
 330
 1F
 100
@@ -3451,9 +2517,9 @@ AcDb2dPolyline
   0
 VERTEX
   5
-C6
+96
 330
-C5
+95
 100
 AcDbEntity
   8
@@ -3471,9 +2537,9 @@ AcDb2dVertex
   0
 VERTEX
   5
-C7
+97
 330
-C5
+95
 100
 AcDbEntity
   8
@@ -3491,9 +2557,9 @@ AcDb2dVertex
   0
 SEQEND
   5
-C8
+98
 330
-C5
+95
 100
 AcDbEntity
   8
@@ -3501,7 +2567,7 @@ Default
   0
 POLYLINE
   5
-C9
+99
 330
 1F
 100
@@ -3521,99 +2587,9 @@ AcDb2dPolyline
   0
 VERTEX
   5
-CA
+9A
 330
-C9
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-7.688861440625881
- 20
--15.5
- 30
-0.0
-  0
-VERTEX
-  5
-CB
-330
-C9
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-13.5
- 20
--15.5
- 30
-0.0
-  0
-VERTEX
-  5
-CC
-330
-C9
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-13.5
- 20
--9.688861440625878
- 30
-0.0
-  0
-SEQEND
-  5
-CD
-330
-C9
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-CE
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-CF
-330
-CE
+99
 100
 AcDbEntity
   8
@@ -3631,9 +2607,9 @@ AcDb2dVertex
   0
 VERTEX
   5
-D0
+9B
 330
-CE
+99
 100
 AcDbEntity
   8
@@ -3651,9 +2627,9 @@ AcDb2dVertex
   0
 SEQEND
   5
-D1
+9C
 330
-CE
+99
 100
 AcDbEntity
   8
@@ -3661,7 +2637,7 @@ Default
   0
 POLYLINE
   5
-D2
+9D
 330
 1F
 100
@@ -3681,259 +2657,9 @@ AcDb2dPolyline
   0
 VERTEX
   5
-D3
+9E
 330
-D2
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-13.5
- 20
--3.450000000000003
- 30
-0.0
-  0
-VERTEX
-  5
-D4
-330
-D2
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-13.5
- 20
-3.450000000000002
- 30
-0.0
-  0
-SEQEND
-  5
-D5
-330
-D2
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-D6
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-D7
-330
-D6
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-13.5
- 20
-3.450000000000002
- 30
-0.0
-  0
-VERTEX
-  5
-D8
-330
-D6
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-13.5
- 20
-10.362
- 30
-0.0
-  0
-VERTEX
-  5
-D9
-330
-D6
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--13.49999999999999
- 20
-10.362
- 30
-0.0
-  0
-VERTEX
-  5
-DA
-330
-D6
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--13.49999999999999
- 20
-3.450000000000007
- 30
-0.0
-  0
-SEQEND
-  5
-DB
-330
-D6
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-DC
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-DD
-330
-DC
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--13.49999999999999
- 20
-3.450000000000007
- 30
-0.0
-  0
-VERTEX
-  5
-DE
-330
-DC
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--13.49999999999999
- 20
--3.450000000000001
- 30
-0.0
-  0
-SEQEND
-  5
-DF
-330
-DC
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-E0
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-E1
-330
-E0
+9D
 100
 AcDbEntity
   8
@@ -3951,9 +2677,9 @@ AcDb2dVertex
   0
 VERTEX
   5
-E2
+9F
 330
-E0
+9D
 100
 AcDbEntity
   8
@@ -3971,9 +2697,9 @@ AcDb2dVertex
   0
 SEQEND
   5
-E3
+A0
 330
-E0
+9D
 100
 AcDbEntity
   8
@@ -3981,7 +2707,7 @@ Default
   0
 POLYLINE
   5
-E4
+A1
 330
 1F
 100
@@ -4001,99 +2727,9 @@ AcDb2dPolyline
   0
 VERTEX
   5
-E5
+A2
 330
-E4
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--13.49999999999999
- 20
--9.688861440625884
- 30
-0.0
-  0
-VERTEX
-  5
-E6
-330
-E4
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--13.49999999999999
- 20
--15.5
- 30
-0.0
-  0
-VERTEX
-  5
-E7
-330
-E4
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--7.688861440625876
- 20
--15.5
- 30
-0.0
-  0
-SEQEND
-  5
-E8
-330
-E4
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-E9
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-EA
-330
-E9
+A1
 100
 AcDbEntity
   8
@@ -4111,9 +2747,9 @@ AcDb2dVertex
   0
 VERTEX
   5
-EB
+A3
 330
-E9
+A1
 100
 AcDbEntity
   8
@@ -4131,9 +2767,9 @@ AcDb2dVertex
   0
 SEQEND
   5
-EC
+A4
 330
-E9
+A1
 100
 AcDbEntity
   8
@@ -4141,7 +2777,7 @@ Default
   0
 POLYLINE
   5
-ED
+A5
 330
 1F
 100
@@ -4161,79 +2797,9 @@ AcDb2dPolyline
   0
 VERTEX
   5
-EE
+A6
 330
-ED
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-12.5
- 20
--2.45
- 30
-0.0
-  0
-VERTEX
-  5
-EF
-330
-ED
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-13.5
- 20
--2.45
- 30
-0.0
-  0
-SEQEND
-  5
-F0
-330
-ED
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-F1
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-F2
-330
-F1
+A5
 100
 AcDbEntity
   8
@@ -4251,9 +2817,9 @@ AcDb2dVertex
   0
 VERTEX
   5
-F3
+A7
 330
-F1
+A5
 100
 AcDbEntity
   8
@@ -4271,9 +2837,9 @@ AcDb2dVertex
   0
 SEQEND
   5
-F4
+A8
 330
-F1
+A5
 100
 AcDbEntity
   8
@@ -4281,7 +2847,7 @@ Default
   0
 POLYLINE
   5
-F5
+A9
 330
 1F
 100
@@ -4301,79 +2867,9 @@ AcDb2dPolyline
   0
 VERTEX
   5
-F6
+AA
 330
-F5
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-12.5
- 20
-2.45
- 30
-0.0
-  0
-VERTEX
-  5
-F7
-330
-F5
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
-13.5
- 20
-2.45
- 30
-0.0
-  0
-SEQEND
-  5
-F8
-330
-F5
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-F9
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-FA
-330
-F9
+A9
 100
 AcDbEntity
   8
@@ -4391,9 +2887,9 @@ AcDb2dVertex
   0
 VERTEX
   5
-FB
+AB
 330
-F9
+A9
 100
 AcDbEntity
   8
@@ -4411,9 +2907,9 @@ AcDb2dVertex
   0
 SEQEND
   5
-FC
+AC
 330
-F9
+A9
 100
 AcDbEntity
   8
@@ -4421,7 +2917,7 @@ Default
   0
 POLYLINE
   5
-FD
+AD
 330
 1F
 100
@@ -4441,79 +2937,9 @@ AcDb2dPolyline
   0
 VERTEX
   5
-FE
+AE
 330
-FD
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--12.5
- 20
-2.45
- 30
-0.0
-  0
-VERTEX
-  5
-FF
-330
-FD
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--13.5
- 20
-2.45
- 30
-0.0
-  0
-SEQEND
-  5
-100
-330
-FD
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-101
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-102
-330
-101
+AD
 100
 AcDbEntity
   8
@@ -4531,9 +2957,9 @@ AcDb2dVertex
   0
 VERTEX
   5
-103
+AF
 330
-101
+AD
 100
 AcDbEntity
   8
@@ -4551,79 +2977,9 @@ AcDb2dVertex
   0
 SEQEND
   5
-104
+B0
 330
-101
-100
-AcDbEntity
-  8
-Default
-  0
-POLYLINE
-  5
-105
-330
-1F
-100
-AcDbEntity
-  8
-Default
-100
-AcDb2dPolyline
- 66
-     1
- 10
-0.0
- 20
-0.0
- 30
-0.0
-  0
-VERTEX
-  5
-106
-330
-105
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--12.5
- 20
--2.45
- 30
-0.0
-  0
-VERTEX
-  5
-107
-330
-105
-100
-AcDbEntity
-  8
-Default
-100
-AcDbVertex
-100
-AcDb2dVertex
- 10
--13.5
- 20
--2.45
- 30
-0.0
-  0
-SEQEND
-  5
-108
-330
-105
+AD
 100
 AcDbEntity
   8
@@ -4647,7 +3003,7 @@ AcDbDictionary
   3
 ACAD_DETAILVIEWSTYLE
 350
-14E
+F6
   3
 ACAD_GROUP
 350
@@ -4683,7 +3039,7 @@ ACAD_SCALELIST
   3
 ACAD_SECTIONVIEWSTYLE
 350
-14F
+F7
   3
 ACAD_TABLESTYLE
 350
@@ -4695,15 +3051,15 @@ ACAD_VISUALSTYLE
   3
 AcDbVariableDictionary
 350
-10B
+B3
   3
 ACDB_RECOMPOSE_DATA
 350
-14B
+F3
   0
 DICTIONARY
   5
-109
+B1
 330
 8
 100
@@ -4715,11 +3071,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-10A
+B2
   0
 DICTIONARY
   5
-14E
+F6
 102
 {ACAD_REACTORS
 330
@@ -5035,7 +3391,7 @@ D2
   0
 DICTIONARY
   5
-14F
+F7
 102
 {ACAD_REACTORS
 330
@@ -5183,7 +3539,7 @@ X-Ray
   0
 DICTIONARY
   5
-10B
+B3
 102
 {ACAD_REACTORS
 330
@@ -5199,27 +3555,27 @@ AcDbDictionary
   3
 CANNOSCALE
 350
-10C
+B4
   3
 CMLEADERSTYLE
 350
-14D
+F5
   3
 CTABLESTYLE
 350
-14C
+F4
   3
 MSLTSCALE
 350
-10D
+B5
   3
 XCLIPFRAME
 350
-10E
+B6
   0
 XRECORD
   5
-14B
+F3
 102
 {ACAD_REACTORS
 330
@@ -5239,15 +3595,15 @@ AcDbXrecord
   0
 XRECORD
   5
-10A
+B2
 102
 {ACAD_REACTORS
 330
-109
+B1
 102
 }
 330
-109
+B1
 100
 AcDbXrecord
 280
@@ -5637,13 +3993,13 @@ Model
  32
 0.0
  14
--17.23241161390704
+-13.50000000000226
  24
--19.23241161390704
+-15.5
  34
 0.0
  15
-17.23241161390704
+13.5
  25
 10.362
  35
@@ -5687,7 +4043,7 @@ MATERIAL
 102
 {ACAD_XDICTIONARY
 360
-141
+E9
 102
 }
 330
@@ -5709,7 +4065,7 @@ MATERIAL
 102
 {ACAD_XDICTIONARY
 360
-13F
+E7
 102
 }
 330
@@ -5731,7 +4087,7 @@ MATERIAL
 102
 {ACAD_XDICTIONARY
 360
-143
+EB
 102
 }
 330
@@ -5753,7 +4109,7 @@ MLEADERSTYLE
 102
 {ACAD_XDICTIONARY
 360
-149
+F1
 102
 }
 330
@@ -6703,7 +5059,7 @@ TABLESTYLE
 102
 {ACAD_XDICTIONARY
 360
-145
+ED
 102
 }
 330
@@ -6881,7 +5237,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-117
+BF
 102
 }
 330
@@ -6977,7 +5333,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-11D
+C5
 102
 }
 330
@@ -7073,7 +5429,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-125
+CD
 102
 }
 330
@@ -7169,7 +5525,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-12D
+D5
 102
 }
 330
@@ -7267,7 +5623,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-121
+C9
 102
 }
 330
@@ -7363,7 +5719,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-123
+CB
 102
 }
 330
@@ -7459,7 +5815,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-133
+DB
 102
 }
 330
@@ -7555,7 +5911,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-12B
+D3
 102
 }
 330
@@ -7651,7 +6007,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-10F
+B7
 102
 }
 330
@@ -7747,7 +6103,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-111
+B9
 102
 }
 330
@@ -7843,7 +6199,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-113
+BB
 102
 }
 330
@@ -7939,7 +6295,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-115
+BD
 102
 }
 330
@@ -8035,7 +6391,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-11B
+C3
 102
 }
 330
@@ -8131,7 +6487,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-12F
+D7
 102
 }
 330
@@ -8227,7 +6583,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-129
+D1
 102
 }
 330
@@ -8323,7 +6679,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-131
+D9
 102
 }
 330
@@ -8419,7 +6775,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-11F
+C7
 102
 }
 330
@@ -8515,7 +6871,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-13D
+E5
 102
 }
 330
@@ -8613,7 +6969,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-13B
+E3
 102
 }
 330
@@ -8709,7 +7065,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-135
+DD
 102
 }
 330
@@ -8805,7 +7161,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-137
+DF
 102
 }
 330
@@ -8901,7 +7257,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-127
+CF
 102
 }
 330
@@ -8997,7 +7353,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-119
+C1
 102
 }
 330
@@ -9093,7 +7449,7 @@ VISUALSTYLE
 102
 {ACAD_XDICTIONARY
 360
-139
+E1
 102
 }
 330
@@ -9179,15 +7535,15 @@ AcDbSavedByObjectVersion
   0
 DICTIONARYVAR
   5
-10C
+B4
 102
 {ACAD_REACTORS
 330
-10B
+B3
 102
 }
 330
-10B
+B3
 100
 DictionaryVariables
 280
@@ -9197,15 +7553,15 @@ DictionaryVariables
   0
 DICTIONARYVAR
   5
-14D
+F5
 102
 {ACAD_REACTORS
 330
-10B
+B3
 102
 }
 330
-10B
+B3
 100
 DictionaryVariables
 280
@@ -9215,15 +7571,15 @@ Standard
   0
 DICTIONARYVAR
   5
-14C
+F4
 102
 {ACAD_REACTORS
 330
-10B
+B3
 102
 }
 330
-10B
+B3
 100
 DictionaryVariables
 280
@@ -9233,15 +7589,15 @@ Standard
   0
 DICTIONARYVAR
   5
-10D
+B5
 102
 {ACAD_REACTORS
 330
-10B
+B3
 102
 }
 330
-10B
+B3
 100
 DictionaryVariables
 280
@@ -9251,15 +7607,15 @@ DictionaryVariables
   0
 DICTIONARYVAR
   5
-10E
+B6
 102
 {ACAD_REACTORS
 330
-10B
+B3
 102
 }
 330
-10B
+B3
 100
 DictionaryVariables
 280
@@ -9269,7 +7625,7 @@ DictionaryVariables
   0
 DICTIONARY
   5
-141
+E9
 330
 45
 100
@@ -9281,11 +7637,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-142
+EA
   0
 DICTIONARY
   5
-13F
+E7
 330
 44
 100
@@ -9297,11 +7653,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-140
+E8
   0
 DICTIONARY
   5
-143
+EB
 330
 46
 100
@@ -9313,11 +7669,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-144
+EC
   0
 DICTIONARY
   5
-149
+F1
 330
 6C
 100
@@ -9329,11 +7685,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-14A
+F2
   0
 DICTIONARY
   5
-145
+ED
 330
 6A
 100
@@ -9345,15 +7701,15 @@ AcDbDictionary
   3
 ACAD_ROUNDTRIP_2008_TABLESTYLE_CELLSTYLEMAP
 360
-147
+EF
   3
 ACAD_XREC_ROUNDTRIP
 360
-146
+EE
   0
 DICTIONARY
   5
-117
+BF
 330
 2F
 100
@@ -9365,11 +7721,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-118
+C0
   0
 DICTIONARY
   5
-11D
+C5
 330
 32
 100
@@ -9381,11 +7737,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-11E
+C6
   0
 DICTIONARY
   5
-125
+CD
 330
 36
 100
@@ -9397,11 +7753,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-126
+CE
   0
 DICTIONARY
   5
-12D
+D5
 330
 3A
 100
@@ -9413,11 +7769,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-12E
+D6
   0
 DICTIONARY
   5
-121
+C9
 330
 34
 100
@@ -9429,11 +7785,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-122
+CA
   0
 DICTIONARY
   5
-123
+CB
 330
 35
 100
@@ -9445,11 +7801,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-124
+CC
   0
 DICTIONARY
   5
-133
+DB
 330
 3D
 100
@@ -9461,11 +7817,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-134
+DC
   0
 DICTIONARY
   5
-12B
+D3
 330
 39
 100
@@ -9477,11 +7833,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-12C
+D4
   0
 DICTIONARY
   5
-10F
+B7
 330
 2B
 100
@@ -9493,11 +7849,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-110
+B8
   0
 DICTIONARY
   5
-111
+B9
 330
 2C
 100
@@ -9509,11 +7865,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-112
+BA
   0
 DICTIONARY
   5
-113
+BB
 330
 2D
 100
@@ -9525,11 +7881,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-114
+BC
   0
 DICTIONARY
   5
-115
+BD
 330
 2E
 100
@@ -9541,11 +7897,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-116
+BE
   0
 DICTIONARY
   5
-11B
+C3
 330
 31
 100
@@ -9557,11 +7913,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-11C
+C4
   0
 DICTIONARY
   5
-12F
+D7
 330
 3B
 100
@@ -9573,11 +7929,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-130
+D8
   0
 DICTIONARY
   5
-129
+D1
 330
 38
 100
@@ -9589,11 +7945,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-12A
+D2
   0
 DICTIONARY
   5
-131
+D9
 330
 3C
 100
@@ -9605,11 +7961,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-132
+DA
   0
 DICTIONARY
   5
-11F
+C7
 330
 33
 100
@@ -9621,11 +7977,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-120
+C8
   0
 DICTIONARY
   5
-13D
+E5
 330
 42
 100
@@ -9637,11 +7993,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-13E
+E6
   0
 DICTIONARY
   5
-13B
+E3
 330
 41
 100
@@ -9653,11 +8009,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-13C
+E4
   0
 DICTIONARY
   5
-135
+DD
 330
 3E
 100
@@ -9669,11 +8025,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-136
+DE
   0
 DICTIONARY
   5
-137
+DF
 330
 3F
 100
@@ -9685,11 +8041,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-138
+E0
   0
 DICTIONARY
   5
-127
+CF
 330
 37
 100
@@ -9701,11 +8057,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-128
+D0
   0
 DICTIONARY
   5
-119
+C1
 330
 30
 100
@@ -9717,11 +8073,11 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-11A
+C2
   0
 DICTIONARY
   5
-139
+E1
 330
 40
 100
@@ -9733,19 +8089,19 @@ AcDbDictionary
   3
 ACAD_XREC_ROUNDTRIP
 360
-13A
+E2
   0
 XRECORD
   5
-142
+EA
 102
 {ACAD_REACTORS
 330
-141
+E9
 102
 }
 330
-141
+E9
 100
 AcDbXrecord
 280
@@ -9779,15 +8135,15 @@ MATERIAL
   0
 XRECORD
   5
-140
+E8
 102
 {ACAD_REACTORS
 330
-13F
+E7
 102
 }
 330
-13F
+E7
 100
 AcDbXrecord
 280
@@ -9821,15 +8177,15 @@ MATERIAL
   0
 XRECORD
   5
-144
+EC
 102
 {ACAD_REACTORS
 330
-143
+EB
 102
 }
 330
-143
+EB
 100
 AcDbXrecord
 280
@@ -9863,15 +8219,15 @@ MATERIAL
   0
 XRECORD
   5
-14A
+F2
 102
 {ACAD_REACTORS
 330
-149
+F1
 102
 }
 330
-149
+F1
 100
 AcDbXrecord
 280
@@ -9881,15 +8237,15 @@ ACAD_ROUNDTRIP_2010_MLEADER_STYLE
   0
 CELLSTYLEMAP
   5
-147
+EF
 102
 {ACAD_REACTORS
 330
-145
+ED
 102
 }
 330
-145
+ED
 100
 AcDbCellStyleMap
  90
@@ -10527,15 +8883,15 @@ CELLSTYLE_END
   0
 XRECORD
   5
-146
+EE
 102
 {ACAD_REACTORS
 330
-145
+ED
 102
 }
 330
-145
+ED
 100
 AcDbXrecord
 280
@@ -10563,15 +8919,15 @@ ACAD_ROUNDTRIP_PRE2007_TABLESTYLE
   0
 XRECORD
   5
-118
+C0
 102
 {ACAD_REACTORS
 330
-117
+BF
 102
 }
 330
-117
+BF
 100
 AcDbXrecord
 280
@@ -11063,15 +9419,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-11E
+C6
 102
 {ACAD_REACTORS
 330
-11D
+C5
 102
 }
 330
-11D
+C5
 100
 AcDbXrecord
 280
@@ -11563,15 +9919,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-126
+CE
 102
 {ACAD_REACTORS
 330
-125
+CD
 102
 }
 330
-125
+CD
 100
 AcDbXrecord
 280
@@ -12063,15 +10419,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-12E
+D6
 102
 {ACAD_REACTORS
 330
-12D
+D5
 102
 }
 330
-12D
+D5
 100
 AcDbXrecord
 280
@@ -12563,15 +10919,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-122
+CA
 102
 {ACAD_REACTORS
 330
-121
+C9
 102
 }
 330
-121
+C9
 100
 AcDbXrecord
 280
@@ -13063,15 +11419,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-124
+CC
 102
 {ACAD_REACTORS
 330
-123
+CB
 102
 }
 330
-123
+CB
 100
 AcDbXrecord
 280
@@ -13563,3515 +11919,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-134
+DC
 102
 {ACAD_REACTORS
 330
-133
+DB
 102
 }
 330
-133
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     0
-102
-RTVSPropertyOp1
- 70
-     0
-102
-RTVSPropertyOp2
- 70
-     0
-102
-RTVSPropertyOp3
- 70
-     0
-102
-RTVSPropertyOp4
- 70
-     0
-102
-RTVSPropertyOp5
- 70
-     0
-102
-RTVSPropertyOp6
- 70
-     0
-102
-RTVSPropertyOp7
- 70
-     0
-102
-RTVSPropertyOp8
- 70
-     0
-102
-RTVSPropertyOp9
- 70
-     0
-102
-RTVSPropertyOp10
- 70
-     0
-102
-RTVSPropertyOp11
- 70
-     0
-102
-RTVSPropertyOp12
- 70
-     0
-102
-RTVSPropertyOp13
- 70
-     0
-102
-RTVSPropertyOp14
- 70
-     2
-102
-RTVSPropertyOp15
- 70
-     0
-102
-RTVSPropertyOp16
- 70
-     0
-102
-RTVSPropertyOp17
- 70
-     0
-102
-RTVSPropertyOp18
- 70
-     0
-102
-RTVSPropertyOp19
- 70
-     0
-102
-RTVSPropertyOp20
- 70
-     0
-102
-RTVSPropertyOp21
- 70
-     0
-102
-RTVSPropertyOp22
- 70
-     0
-102
-RTVSPropertyOp23
- 70
-     0
-102
-RTVSPropertyOp24
- 70
-     0
-102
-RTVSPropertyOp25
- 70
-     0
-102
-RTVSPropertyOp26
- 70
-     0
-102
-RTVSPropertyOp27
- 70
-     0
-102
-RTVSPropertyOp28
- 70
-     0
-102
-RTVSPropertyOp29
- 70
-     0
-102
-RTVSPropertyOp30
- 70
-     0
-102
-RTVSPropertyOp31
- 70
-     0
-102
-RTVSPropertyOp32
- 70
-     0
-102
-RTVSPropertyOp33
- 70
-     0
-102
-RTVSPropertyOp34
- 70
-     0
-102
-RTVSPropertyOp35
- 70
-     0
-102
-RTVSPropertyOp36
- 70
-     0
-102
-RTVSPropertyOp37
- 70
-     0
-102
-RTVSPropertyOp38
- 70
-     0
-102
-RTVSPropertyOp39
- 70
-     0
-102
-RTVSPropertyOp40
- 70
-     0
-102
-RTVSPropertyOp41
- 70
-     0
-102
-RTVSPropertyOp42
- 70
-     0
-102
-RTVSPropertyOp43
- 70
-     0
-102
-RTVSPropertyOp44
- 70
-     0
-102
-RTVSPropertyOp45
- 70
-     0
-102
-RTVSPropertyOp46
- 70
-     0
-102
-RTVSPropertyOp47
- 70
-     0
-102
-RTVSPropertyOp48
- 70
-     0
-102
-RTVSPropertyOp49
- 70
-     0
-102
-RTVSPropertyOp50
- 70
-     0
-102
-RTVSPropertyOp51
- 70
-     0
-102
-RTVSPropertyOp52
- 70
-     0
-102
-RTVSPropertyOp53
- 70
-     0
-102
-RTVSPropertyOp54
- 70
-     0
-102
-RTVSPropertyOp55
- 70
-     0
-102
-RTVSPropertyOp56
- 70
-     0
-102
-RTVSPropertyOp57
- 70
-     0
-102
-RTVSPost2010Prop28
-280
-     0
-102
-RTVSPost2010PropOp28
- 70
-     0
-102
-RTVSPost2010Prop29
-280
-     1
-102
-RTVSPost2010PropOp29
- 70
-     0
-102
-RTVSPost2010Prop30
-280
-     1
-102
-RTVSPost2010PropOp30
- 70
-     0
-102
-RTVSPost2010Prop31
-280
-     0
-102
-RTVSPost2010PropOp31
- 70
-     0
-102
-RTVSPost2010Prop32
-280
-     0
-102
-RTVSPost2010PropOp32
- 70
-     0
-102
-RTVSPost2010Prop33
-280
-     0
-102
-RTVSPost2010PropOp33
- 70
-     0
-102
-RTVSPost2010Prop34
-280
-     0
-102
-RTVSPost2010PropOp34
- 70
-     0
-102
-RTVSPost2010Prop35
-280
-     0
-102
-RTVSPost2010PropOp35
- 70
-     0
-102
-RTVSPost2010Prop36
-280
-     0
-102
-RTVSPost2010PropOp36
- 70
-     0
-102
-RTVSPost2010Prop37
- 90
-       50
-102
-RTVSPost2010PropOp37
- 70
-     0
-102
-RTVSPost2010Prop38
-140
-0.0
-102
-RTVSPost2010PropOp38
- 70
-     0
-102
-RTVSPost2010Prop39
-140
-1.0
-102
-RTVSPost2010PropOp39
- 70
-     0
-102
-RTVSPost2010Prop40
- 90
-        0
-102
-RTVSPost2010PropOp40
- 70
-     0
-102
-RTVSPost2010Prop41ColorIndex
- 90
-      178
-102
-RTVSPost2010Prop41ColorRGB
- 90
-        0
-102
-RTVSPost2010PropOp41
- 70
-     0
-102
-RTVSPost2010Prop42
- 90
-       50
-102
-RTVSPost2010PropOp42
- 70
-     0
-102
-RTVSPost2010Prop43
- 90
-        3
-102
-RTVSPost2010PropOp43
- 70
-     0
-102
-RTVSPost2010Prop44ColorIndex
- 90
-        5
-102
-RTVSPost2010Prop44ColorRGB
- 90
-      255
-102
-RTVSPost2010PropOp44
- 70
-     0
-102
-RTVSPost2010Prop45
-280
-     0
-102
-RTVSPost2010PropOp45
- 70
-     0
-102
-RTVSPost2010Prop46
- 90
-       50
-102
-RTVSPost2010PropOp46
- 70
-     0
-102
-RTVSPost2010Prop47
- 90
-       50
-102
-RTVSPost2010PropOp47
- 70
-     0
-102
-RTVSPost2010Prop48
- 90
-       50
-102
-RTVSPost2010PropOp48
- 70
-     0
-102
-RTVSPost2010Prop49
-280
-     0
-102
-RTVSPost2010PropOp49
- 70
-     0
-102
-RTVSPost2010Prop50
- 90
-       50
-102
-RTVSPost2010PropOp50
- 70
-     0
-102
-RTVSPost2010Prop51ColorIndex
- 90
-      256
-102
-RTVSPost2010Prop51ColorRGB
- 90
--16777216
-102
-RTVSPost2010PropOp51
- 70
-     0
-102
-RTVSPost2010Prop52
-140
-1.0
-102
-RTVSPost2010PropOp52
- 70
-     0
-102
-RTVSPost2010Prop53
- 90
-        2
-102
-RTVSPost2010PropOp53
- 70
-     0
-102
-RTVSPost2010Prop54
-  1
-strokes_ogs.tif
-102
-RTVSPost2010PropOp54
- 70
-     0
-102
-RTVSPost2010Prop55
-280
-     0
-102
-RTVSPost2010PropOp55
- 70
-     0
-102
-RTVSPost2010Prop56
-140
-1.0
-102
-RTVSPost2010PropOp56
- 70
-     0
-102
-RTVSPost2010Prop57
-140
-1.0
-102
-RTVSPost2010PropOp57
- 70
-     0
-  0
-XRECORD
-  5
-12C
-102
-{ACAD_REACTORS
-330
-12B
-102
-}
-330
-12B
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-102
-RTVSPropertyOp33
- 70
-     1
-102
-RTVSPropertyOp34
- 70
-     1
-102
-RTVSPropertyOp35
- 70
-     1
-102
-RTVSPropertyOp36
- 70
-     1
-102
-RTVSPropertyOp37
- 70
-     1
-102
-RTVSPropertyOp38
- 70
-     1
-102
-RTVSPropertyOp39
- 70
-     1
-102
-RTVSPropertyOp40
- 70
-     1
-102
-RTVSPropertyOp41
- 70
-     1
-102
-RTVSPropertyOp42
- 70
-     1
-102
-RTVSPropertyOp43
- 70
-     1
-102
-RTVSPropertyOp44
- 70
-     1
-102
-RTVSPropertyOp45
- 70
-     1
-102
-RTVSPropertyOp46
- 70
-     1
-102
-RTVSPropertyOp47
- 70
-     1
-102
-RTVSPropertyOp48
- 70
-     1
-102
-RTVSPropertyOp49
- 70
-     1
-102
-RTVSPropertyOp50
- 70
-     1
-102
-RTVSPropertyOp51
- 70
-     0
-102
-RTVSPropertyOp52
- 70
-     0
-102
-RTVSPropertyOp53
- 70
-     1
-102
-RTVSPropertyOp54
- 70
-     1
-102
-RTVSPropertyOp55
- 70
-     1
-102
-RTVSPropertyOp56
- 70
-     1
-102
-RTVSPropertyOp57
- 70
-     1
-102
-RTVSPost2010Prop28
-280
-     0
-102
-RTVSPost2010PropOp28
- 70
-     1
-102
-RTVSPost2010Prop29
-280
-     1
-102
-RTVSPost2010PropOp29
- 70
-     1
-102
-RTVSPost2010Prop30
-280
-     1
-102
-RTVSPost2010PropOp30
- 70
-     1
-102
-RTVSPost2010Prop31
-280
-     0
-102
-RTVSPost2010PropOp31
- 70
-     1
-102
-RTVSPost2010Prop32
-280
-     0
-102
-RTVSPost2010PropOp32
- 70
-     1
-102
-RTVSPost2010Prop33
-280
-     0
-102
-RTVSPost2010PropOp33
- 70
-     1
-102
-RTVSPost2010Prop34
-280
-     0
-102
-RTVSPost2010PropOp34
- 70
-     1
-102
-RTVSPost2010Prop35
-280
-     0
-102
-RTVSPost2010PropOp35
- 70
-     1
-102
-RTVSPost2010Prop36
-280
-     0
-102
-RTVSPost2010PropOp36
- 70
-     1
-102
-RTVSPost2010Prop37
- 90
-       50
-102
-RTVSPost2010PropOp37
- 70
-     1
-102
-RTVSPost2010Prop38
-140
-0.0
-102
-RTVSPost2010PropOp38
- 70
-     1
-102
-RTVSPost2010Prop39
-140
-1.0
-102
-RTVSPost2010PropOp39
- 70
-     1
-102
-RTVSPost2010Prop40
- 90
-        0
-102
-RTVSPost2010PropOp40
- 70
-     1
-102
-RTVSPost2010Prop41ColorIndex
- 90
-      178
-102
-RTVSPost2010Prop41ColorRGB
- 90
-        0
-102
-RTVSPost2010PropOp41
- 70
-     1
-102
-RTVSPost2010Prop42
- 90
-       50
-102
-RTVSPost2010PropOp42
- 70
-     1
-102
-RTVSPost2010Prop43
- 90
-        3
-102
-RTVSPost2010PropOp43
- 70
-     1
-102
-RTVSPost2010Prop44ColorIndex
- 90
-        5
-102
-RTVSPost2010Prop44ColorRGB
- 90
-      255
-102
-RTVSPost2010PropOp44
- 70
-     1
-102
-RTVSPost2010Prop45
-280
-     0
-102
-RTVSPost2010PropOp45
- 70
-     1
-102
-RTVSPost2010Prop46
- 90
-       50
-102
-RTVSPost2010PropOp46
- 70
-     1
-102
-RTVSPost2010Prop47
- 90
-       50
-102
-RTVSPost2010PropOp47
- 70
-     1
-102
-RTVSPost2010Prop48
- 90
-       50
-102
-RTVSPost2010PropOp48
- 70
-     1
-102
-RTVSPost2010Prop49
-280
-     0
-102
-RTVSPost2010PropOp49
- 70
-     1
-102
-RTVSPost2010Prop50
- 90
-       50
-102
-RTVSPost2010PropOp50
- 70
-     1
-102
-RTVSPost2010Prop51ColorIndex
- 90
-      256
-102
-RTVSPost2010Prop51ColorRGB
- 90
--16777216
-102
-RTVSPost2010PropOp51
- 70
-     0
-102
-RTVSPost2010Prop52
-140
-1.0
-102
-RTVSPost2010PropOp52
- 70
-     0
-102
-RTVSPost2010Prop53
- 90
-        2
-102
-RTVSPost2010PropOp53
- 70
-     1
-102
-RTVSPost2010Prop54
-  1
-strokes_ogs.tif
-102
-RTVSPost2010PropOp54
- 70
-     1
-102
-RTVSPost2010Prop55
-280
-     0
-102
-RTVSPost2010PropOp55
- 70
-     1
-102
-RTVSPost2010Prop56
-140
-1.0
-102
-RTVSPost2010PropOp56
- 70
-     1
-102
-RTVSPost2010Prop57
-140
-1.0
-102
-RTVSPost2010PropOp57
- 70
-     1
-  0
-XRECORD
-  5
-110
-102
-{ACAD_REACTORS
-330
-10F
-102
-}
-330
-10F
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-102
-RTVSPropertyOp33
- 70
-     1
-102
-RTVSPropertyOp34
- 70
-     1
-102
-RTVSPropertyOp35
- 70
-     1
-102
-RTVSPropertyOp36
- 70
-     1
-102
-RTVSPropertyOp37
- 70
-     1
-102
-RTVSPropertyOp38
- 70
-     1
-102
-RTVSPropertyOp39
- 70
-     1
-102
-RTVSPropertyOp40
- 70
-     1
-102
-RTVSPropertyOp41
- 70
-     1
-102
-RTVSPropertyOp42
- 70
-     1
-102
-RTVSPropertyOp43
- 70
-     1
-102
-RTVSPropertyOp44
- 70
-     1
-102
-RTVSPropertyOp45
- 70
-     1
-102
-RTVSPropertyOp46
- 70
-     1
-102
-RTVSPropertyOp47
- 70
-     1
-102
-RTVSPropertyOp48
- 70
-     1
-102
-RTVSPropertyOp49
- 70
-     1
-102
-RTVSPropertyOp50
- 70
-     1
-102
-RTVSPropertyOp51
- 70
-     0
-102
-RTVSPropertyOp52
- 70
-     0
-102
-RTVSPropertyOp53
- 70
-     1
-102
-RTVSPropertyOp54
- 70
-     1
-102
-RTVSPropertyOp55
- 70
-     1
-102
-RTVSPropertyOp56
- 70
-     1
-102
-RTVSPropertyOp57
- 70
-     1
-102
-RTVSPost2010Prop28
-280
-     0
-102
-RTVSPost2010PropOp28
- 70
-     1
-102
-RTVSPost2010Prop29
-280
-     1
-102
-RTVSPost2010PropOp29
- 70
-     1
-102
-RTVSPost2010Prop30
-280
-     1
-102
-RTVSPost2010PropOp30
- 70
-     1
-102
-RTVSPost2010Prop31
-280
-     0
-102
-RTVSPost2010PropOp31
- 70
-     1
-102
-RTVSPost2010Prop32
-280
-     0
-102
-RTVSPost2010PropOp32
- 70
-     1
-102
-RTVSPost2010Prop33
-280
-     0
-102
-RTVSPost2010PropOp33
- 70
-     1
-102
-RTVSPost2010Prop34
-280
-     0
-102
-RTVSPost2010PropOp34
- 70
-     1
-102
-RTVSPost2010Prop35
-280
-     0
-102
-RTVSPost2010PropOp35
- 70
-     1
-102
-RTVSPost2010Prop36
-280
-     0
-102
-RTVSPost2010PropOp36
- 70
-     1
-102
-RTVSPost2010Prop37
- 90
-       50
-102
-RTVSPost2010PropOp37
- 70
-     1
-102
-RTVSPost2010Prop38
-140
-0.0
-102
-RTVSPost2010PropOp38
- 70
-     1
-102
-RTVSPost2010Prop39
-140
-1.0
-102
-RTVSPost2010PropOp39
- 70
-     1
-102
-RTVSPost2010Prop40
- 90
-        0
-102
-RTVSPost2010PropOp40
- 70
-     1
-102
-RTVSPost2010Prop41ColorIndex
- 90
-      178
-102
-RTVSPost2010Prop41ColorRGB
- 90
-        0
-102
-RTVSPost2010PropOp41
- 70
-     1
-102
-RTVSPost2010Prop42
- 90
-       50
-102
-RTVSPost2010PropOp42
- 70
-     1
-102
-RTVSPost2010Prop43
- 90
-        3
-102
-RTVSPost2010PropOp43
- 70
-     1
-102
-RTVSPost2010Prop44ColorIndex
- 90
-        5
-102
-RTVSPost2010Prop44ColorRGB
- 90
-      255
-102
-RTVSPost2010PropOp44
- 70
-     1
-102
-RTVSPost2010Prop45
-280
-     0
-102
-RTVSPost2010PropOp45
- 70
-     1
-102
-RTVSPost2010Prop46
- 90
-       50
-102
-RTVSPost2010PropOp46
- 70
-     1
-102
-RTVSPost2010Prop47
- 90
-       50
-102
-RTVSPost2010PropOp47
- 70
-     1
-102
-RTVSPost2010Prop48
- 90
-       50
-102
-RTVSPost2010PropOp48
- 70
-     1
-102
-RTVSPost2010Prop49
-280
-     0
-102
-RTVSPost2010PropOp49
- 70
-     1
-102
-RTVSPost2010Prop50
- 90
-       50
-102
-RTVSPost2010PropOp50
- 70
-     1
-102
-RTVSPost2010Prop51ColorIndex
- 90
-      256
-102
-RTVSPost2010Prop51ColorRGB
- 90
--16777216
-102
-RTVSPost2010PropOp51
- 70
-     0
-102
-RTVSPost2010Prop52
-140
-1.0
-102
-RTVSPost2010PropOp52
- 70
-     0
-102
-RTVSPost2010Prop53
- 90
-        2
-102
-RTVSPost2010PropOp53
- 70
-     1
-102
-RTVSPost2010Prop54
-  1
-strokes_ogs.tif
-102
-RTVSPost2010PropOp54
- 70
-     1
-102
-RTVSPost2010Prop55
-280
-     0
-102
-RTVSPost2010PropOp55
- 70
-     1
-102
-RTVSPost2010Prop56
-140
-1.0
-102
-RTVSPost2010PropOp56
- 70
-     1
-102
-RTVSPost2010Prop57
-140
-1.0
-102
-RTVSPost2010PropOp57
- 70
-     1
-  0
-XRECORD
-  5
-112
-102
-{ACAD_REACTORS
-330
-111
-102
-}
-330
-111
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-102
-RTVSPropertyOp33
- 70
-     1
-102
-RTVSPropertyOp34
- 70
-     1
-102
-RTVSPropertyOp35
- 70
-     1
-102
-RTVSPropertyOp36
- 70
-     1
-102
-RTVSPropertyOp37
- 70
-     1
-102
-RTVSPropertyOp38
- 70
-     1
-102
-RTVSPropertyOp39
- 70
-     1
-102
-RTVSPropertyOp40
- 70
-     1
-102
-RTVSPropertyOp41
- 70
-     1
-102
-RTVSPropertyOp42
- 70
-     1
-102
-RTVSPropertyOp43
- 70
-     1
-102
-RTVSPropertyOp44
- 70
-     1
-102
-RTVSPropertyOp45
- 70
-     1
-102
-RTVSPropertyOp46
- 70
-     1
-102
-RTVSPropertyOp47
- 70
-     1
-102
-RTVSPropertyOp48
- 70
-     1
-102
-RTVSPropertyOp49
- 70
-     1
-102
-RTVSPropertyOp50
- 70
-     1
-102
-RTVSPropertyOp51
- 70
-     0
-102
-RTVSPropertyOp52
- 70
-     0
-102
-RTVSPropertyOp53
- 70
-     1
-102
-RTVSPropertyOp54
- 70
-     1
-102
-RTVSPropertyOp55
- 70
-     1
-102
-RTVSPropertyOp56
- 70
-     1
-102
-RTVSPropertyOp57
- 70
-     1
-102
-RTVSPost2010Prop28
-280
-     0
-102
-RTVSPost2010PropOp28
- 70
-     1
-102
-RTVSPost2010Prop29
-280
-     1
-102
-RTVSPost2010PropOp29
- 70
-     1
-102
-RTVSPost2010Prop30
-280
-     1
-102
-RTVSPost2010PropOp30
- 70
-     1
-102
-RTVSPost2010Prop31
-280
-     0
-102
-RTVSPost2010PropOp31
- 70
-     1
-102
-RTVSPost2010Prop32
-280
-     0
-102
-RTVSPost2010PropOp32
- 70
-     1
-102
-RTVSPost2010Prop33
-280
-     0
-102
-RTVSPost2010PropOp33
- 70
-     1
-102
-RTVSPost2010Prop34
-280
-     0
-102
-RTVSPost2010PropOp34
- 70
-     1
-102
-RTVSPost2010Prop35
-280
-     0
-102
-RTVSPost2010PropOp35
- 70
-     1
-102
-RTVSPost2010Prop36
-280
-     0
-102
-RTVSPost2010PropOp36
- 70
-     1
-102
-RTVSPost2010Prop37
- 90
-       50
-102
-RTVSPost2010PropOp37
- 70
-     1
-102
-RTVSPost2010Prop38
-140
-0.0
-102
-RTVSPost2010PropOp38
- 70
-     1
-102
-RTVSPost2010Prop39
-140
-1.0
-102
-RTVSPost2010PropOp39
- 70
-     1
-102
-RTVSPost2010Prop40
- 90
-        0
-102
-RTVSPost2010PropOp40
- 70
-     1
-102
-RTVSPost2010Prop41ColorIndex
- 90
-      178
-102
-RTVSPost2010Prop41ColorRGB
- 90
-        0
-102
-RTVSPost2010PropOp41
- 70
-     1
-102
-RTVSPost2010Prop42
- 90
-       50
-102
-RTVSPost2010PropOp42
- 70
-     1
-102
-RTVSPost2010Prop43
- 90
-        3
-102
-RTVSPost2010PropOp43
- 70
-     1
-102
-RTVSPost2010Prop44ColorIndex
- 90
-        5
-102
-RTVSPost2010Prop44ColorRGB
- 90
-      255
-102
-RTVSPost2010PropOp44
- 70
-     1
-102
-RTVSPost2010Prop45
-280
-     0
-102
-RTVSPost2010PropOp45
- 70
-     1
-102
-RTVSPost2010Prop46
- 90
-       50
-102
-RTVSPost2010PropOp46
- 70
-     1
-102
-RTVSPost2010Prop47
- 90
-       50
-102
-RTVSPost2010PropOp47
- 70
-     1
-102
-RTVSPost2010Prop48
- 90
-       50
-102
-RTVSPost2010PropOp48
- 70
-     1
-102
-RTVSPost2010Prop49
-280
-     0
-102
-RTVSPost2010PropOp49
- 70
-     1
-102
-RTVSPost2010Prop50
- 90
-       50
-102
-RTVSPost2010PropOp50
- 70
-     1
-102
-RTVSPost2010Prop51ColorIndex
- 90
-      256
-102
-RTVSPost2010Prop51ColorRGB
- 90
--16777216
-102
-RTVSPost2010PropOp51
- 70
-     0
-102
-RTVSPost2010Prop52
-140
-1.0
-102
-RTVSPost2010PropOp52
- 70
-     0
-102
-RTVSPost2010Prop53
- 90
-        2
-102
-RTVSPost2010PropOp53
- 70
-     1
-102
-RTVSPost2010Prop54
-  1
-strokes_ogs.tif
-102
-RTVSPost2010PropOp54
- 70
-     1
-102
-RTVSPost2010Prop55
-280
-     0
-102
-RTVSPost2010PropOp55
- 70
-     1
-102
-RTVSPost2010Prop56
-140
-1.0
-102
-RTVSPost2010PropOp56
- 70
-     1
-102
-RTVSPost2010Prop57
-140
-1.0
-102
-RTVSPost2010PropOp57
- 70
-     1
-  0
-XRECORD
-  5
-114
-102
-{ACAD_REACTORS
-330
-113
-102
-}
-330
-113
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-102
-RTVSPropertyOp33
- 70
-     1
-102
-RTVSPropertyOp34
- 70
-     1
-102
-RTVSPropertyOp35
- 70
-     1
-102
-RTVSPropertyOp36
- 70
-     1
-102
-RTVSPropertyOp37
- 70
-     1
-102
-RTVSPropertyOp38
- 70
-     1
-102
-RTVSPropertyOp39
- 70
-     1
-102
-RTVSPropertyOp40
- 70
-     1
-102
-RTVSPropertyOp41
- 70
-     1
-102
-RTVSPropertyOp42
- 70
-     1
-102
-RTVSPropertyOp43
- 70
-     1
-102
-RTVSPropertyOp44
- 70
-     1
-102
-RTVSPropertyOp45
- 70
-     1
-102
-RTVSPropertyOp46
- 70
-     1
-102
-RTVSPropertyOp47
- 70
-     1
-102
-RTVSPropertyOp48
- 70
-     1
-102
-RTVSPropertyOp49
- 70
-     1
-102
-RTVSPropertyOp50
- 70
-     1
-102
-RTVSPropertyOp51
- 70
-     0
-102
-RTVSPropertyOp52
- 70
-     0
-102
-RTVSPropertyOp53
- 70
-     1
-102
-RTVSPropertyOp54
- 70
-     1
-102
-RTVSPropertyOp55
- 70
-     1
-102
-RTVSPropertyOp56
- 70
-     1
-102
-RTVSPropertyOp57
- 70
-     1
-102
-RTVSPost2010Prop28
-280
-     0
-102
-RTVSPost2010PropOp28
- 70
-     1
-102
-RTVSPost2010Prop29
-280
-     1
-102
-RTVSPost2010PropOp29
- 70
-     1
-102
-RTVSPost2010Prop30
-280
-     1
-102
-RTVSPost2010PropOp30
- 70
-     1
-102
-RTVSPost2010Prop31
-280
-     0
-102
-RTVSPost2010PropOp31
- 70
-     1
-102
-RTVSPost2010Prop32
-280
-     0
-102
-RTVSPost2010PropOp32
- 70
-     1
-102
-RTVSPost2010Prop33
-280
-     0
-102
-RTVSPost2010PropOp33
- 70
-     1
-102
-RTVSPost2010Prop34
-280
-     0
-102
-RTVSPost2010PropOp34
- 70
-     1
-102
-RTVSPost2010Prop35
-280
-     0
-102
-RTVSPost2010PropOp35
- 70
-     1
-102
-RTVSPost2010Prop36
-280
-     0
-102
-RTVSPost2010PropOp36
- 70
-     1
-102
-RTVSPost2010Prop37
- 90
-       50
-102
-RTVSPost2010PropOp37
- 70
-     1
-102
-RTVSPost2010Prop38
-140
-0.0
-102
-RTVSPost2010PropOp38
- 70
-     1
-102
-RTVSPost2010Prop39
-140
-1.0
-102
-RTVSPost2010PropOp39
- 70
-     1
-102
-RTVSPost2010Prop40
- 90
-        0
-102
-RTVSPost2010PropOp40
- 70
-     1
-102
-RTVSPost2010Prop41ColorIndex
- 90
-      178
-102
-RTVSPost2010Prop41ColorRGB
- 90
-        0
-102
-RTVSPost2010PropOp41
- 70
-     1
-102
-RTVSPost2010Prop42
- 90
-       50
-102
-RTVSPost2010PropOp42
- 70
-     1
-102
-RTVSPost2010Prop43
- 90
-        3
-102
-RTVSPost2010PropOp43
- 70
-     1
-102
-RTVSPost2010Prop44ColorIndex
- 90
-        5
-102
-RTVSPost2010Prop44ColorRGB
- 90
-      255
-102
-RTVSPost2010PropOp44
- 70
-     1
-102
-RTVSPost2010Prop45
-280
-     0
-102
-RTVSPost2010PropOp45
- 70
-     1
-102
-RTVSPost2010Prop46
- 90
-       50
-102
-RTVSPost2010PropOp46
- 70
-     1
-102
-RTVSPost2010Prop47
- 90
-       50
-102
-RTVSPost2010PropOp47
- 70
-     1
-102
-RTVSPost2010Prop48
- 90
-       50
-102
-RTVSPost2010PropOp48
- 70
-     1
-102
-RTVSPost2010Prop49
-280
-     0
-102
-RTVSPost2010PropOp49
- 70
-     1
-102
-RTVSPost2010Prop50
- 90
-       50
-102
-RTVSPost2010PropOp50
- 70
-     1
-102
-RTVSPost2010Prop51ColorIndex
- 90
-      256
-102
-RTVSPost2010Prop51ColorRGB
- 90
--16777216
-102
-RTVSPost2010PropOp51
- 70
-     0
-102
-RTVSPost2010Prop52
-140
-1.0
-102
-RTVSPost2010PropOp52
- 70
-     0
-102
-RTVSPost2010Prop53
- 90
-        2
-102
-RTVSPost2010PropOp53
- 70
-     1
-102
-RTVSPost2010Prop54
-  1
-strokes_ogs.tif
-102
-RTVSPost2010PropOp54
- 70
-     1
-102
-RTVSPost2010Prop55
-280
-     0
-102
-RTVSPost2010PropOp55
- 70
-     1
-102
-RTVSPost2010Prop56
-140
-1.0
-102
-RTVSPost2010PropOp56
- 70
-     1
-102
-RTVSPost2010Prop57
-140
-1.0
-102
-RTVSPost2010PropOp57
- 70
-     1
-  0
-XRECORD
-  5
-116
-102
-{ACAD_REACTORS
-330
-115
-102
-}
-330
-115
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-102
-RTVSPropertyOp33
- 70
-     1
-102
-RTVSPropertyOp34
- 70
-     1
-102
-RTVSPropertyOp35
- 70
-     1
-102
-RTVSPropertyOp36
- 70
-     1
-102
-RTVSPropertyOp37
- 70
-     1
-102
-RTVSPropertyOp38
- 70
-     1
-102
-RTVSPropertyOp39
- 70
-     1
-102
-RTVSPropertyOp40
- 70
-     1
-102
-RTVSPropertyOp41
- 70
-     1
-102
-RTVSPropertyOp42
- 70
-     1
-102
-RTVSPropertyOp43
- 70
-     1
-102
-RTVSPropertyOp44
- 70
-     1
-102
-RTVSPropertyOp45
- 70
-     1
-102
-RTVSPropertyOp46
- 70
-     1
-102
-RTVSPropertyOp47
- 70
-     1
-102
-RTVSPropertyOp48
- 70
-     1
-102
-RTVSPropertyOp49
- 70
-     1
-102
-RTVSPropertyOp50
- 70
-     1
-102
-RTVSPropertyOp51
- 70
-     0
-102
-RTVSPropertyOp52
- 70
-     0
-102
-RTVSPropertyOp53
- 70
-     1
-102
-RTVSPropertyOp54
- 70
-     1
-102
-RTVSPropertyOp55
- 70
-     1
-102
-RTVSPropertyOp56
- 70
-     1
-102
-RTVSPropertyOp57
- 70
-     1
-102
-RTVSPost2010Prop28
-280
-     0
-102
-RTVSPost2010PropOp28
- 70
-     1
-102
-RTVSPost2010Prop29
-280
-     1
-102
-RTVSPost2010PropOp29
- 70
-     1
-102
-RTVSPost2010Prop30
-280
-     1
-102
-RTVSPost2010PropOp30
- 70
-     1
-102
-RTVSPost2010Prop31
-280
-     0
-102
-RTVSPost2010PropOp31
- 70
-     1
-102
-RTVSPost2010Prop32
-280
-     0
-102
-RTVSPost2010PropOp32
- 70
-     1
-102
-RTVSPost2010Prop33
-280
-     0
-102
-RTVSPost2010PropOp33
- 70
-     1
-102
-RTVSPost2010Prop34
-280
-     0
-102
-RTVSPost2010PropOp34
- 70
-     1
-102
-RTVSPost2010Prop35
-280
-     0
-102
-RTVSPost2010PropOp35
- 70
-     1
-102
-RTVSPost2010Prop36
-280
-     0
-102
-RTVSPost2010PropOp36
- 70
-     1
-102
-RTVSPost2010Prop37
- 90
-       50
-102
-RTVSPost2010PropOp37
- 70
-     1
-102
-RTVSPost2010Prop38
-140
-0.0
-102
-RTVSPost2010PropOp38
- 70
-     1
-102
-RTVSPost2010Prop39
-140
-1.0
-102
-RTVSPost2010PropOp39
- 70
-     1
-102
-RTVSPost2010Prop40
- 90
-        0
-102
-RTVSPost2010PropOp40
- 70
-     1
-102
-RTVSPost2010Prop41ColorIndex
- 90
-      178
-102
-RTVSPost2010Prop41ColorRGB
- 90
-        0
-102
-RTVSPost2010PropOp41
- 70
-     1
-102
-RTVSPost2010Prop42
- 90
-       50
-102
-RTVSPost2010PropOp42
- 70
-     1
-102
-RTVSPost2010Prop43
- 90
-        3
-102
-RTVSPost2010PropOp43
- 70
-     1
-102
-RTVSPost2010Prop44ColorIndex
- 90
-        5
-102
-RTVSPost2010Prop44ColorRGB
- 90
-      255
-102
-RTVSPost2010PropOp44
- 70
-     1
-102
-RTVSPost2010Prop45
-280
-     0
-102
-RTVSPost2010PropOp45
- 70
-     1
-102
-RTVSPost2010Prop46
- 90
-       50
-102
-RTVSPost2010PropOp46
- 70
-     1
-102
-RTVSPost2010Prop47
- 90
-       50
-102
-RTVSPost2010PropOp47
- 70
-     1
-102
-RTVSPost2010Prop48
- 90
-       50
-102
-RTVSPost2010PropOp48
- 70
-     1
-102
-RTVSPost2010Prop49
-280
-     0
-102
-RTVSPost2010PropOp49
- 70
-     1
-102
-RTVSPost2010Prop50
- 90
-       50
-102
-RTVSPost2010PropOp50
- 70
-     1
-102
-RTVSPost2010Prop51ColorIndex
- 90
-      256
-102
-RTVSPost2010Prop51ColorRGB
- 90
--16777216
-102
-RTVSPost2010PropOp51
- 70
-     0
-102
-RTVSPost2010Prop52
-140
-1.0
-102
-RTVSPost2010PropOp52
- 70
-     0
-102
-RTVSPost2010Prop53
- 90
-        2
-102
-RTVSPost2010PropOp53
- 70
-     1
-102
-RTVSPost2010Prop54
-  1
-strokes_ogs.tif
-102
-RTVSPost2010PropOp54
- 70
-     1
-102
-RTVSPost2010Prop55
-280
-     0
-102
-RTVSPost2010PropOp55
- 70
-     1
-102
-RTVSPost2010Prop56
-140
-1.0
-102
-RTVSPost2010PropOp56
- 70
-     1
-102
-RTVSPost2010Prop57
-140
-1.0
-102
-RTVSPost2010PropOp57
- 70
-     1
-  0
-XRECORD
-  5
-11C
-102
-{ACAD_REACTORS
-330
-11B
-102
-}
-330
-11B
-100
-AcDbXrecord
-280
-     1
-102
-RTVSPropertyOp0
- 70
-     1
-102
-RTVSPropertyOp1
- 70
-     1
-102
-RTVSPropertyOp2
- 70
-     1
-102
-RTVSPropertyOp3
- 70
-     1
-102
-RTVSPropertyOp4
- 70
-     1
-102
-RTVSPropertyOp5
- 70
-     1
-102
-RTVSPropertyOp6
- 70
-     1
-102
-RTVSPropertyOp7
- 70
-     1
-102
-RTVSPropertyOp8
- 70
-     1
-102
-RTVSPropertyOp9
- 70
-     1
-102
-RTVSPropertyOp10
- 70
-     1
-102
-RTVSPropertyOp11
- 70
-     1
-102
-RTVSPropertyOp12
- 70
-     1
-102
-RTVSPropertyOp13
- 70
-     1
-102
-RTVSPropertyOp14
- 70
-     1
-102
-RTVSPropertyOp15
- 70
-     1
-102
-RTVSPropertyOp16
- 70
-     1
-102
-RTVSPropertyOp17
- 70
-     1
-102
-RTVSPropertyOp18
- 70
-     1
-102
-RTVSPropertyOp19
- 70
-     1
-102
-RTVSPropertyOp20
- 70
-     1
-102
-RTVSPropertyOp21
- 70
-     1
-102
-RTVSPropertyOp22
- 70
-     1
-102
-RTVSPropertyOp23
- 70
-     1
-102
-RTVSPropertyOp24
- 70
-     1
-102
-RTVSPropertyOp25
- 70
-     1
-102
-RTVSPropertyOp26
- 70
-     1
-102
-RTVSPropertyOp27
- 70
-     1
-102
-RTVSPropertyOp28
- 70
-     1
-102
-RTVSPropertyOp29
- 70
-     1
-102
-RTVSPropertyOp30
- 70
-     1
-102
-RTVSPropertyOp31
- 70
-     1
-102
-RTVSPropertyOp32
- 70
-     1
-102
-RTVSPropertyOp33
- 70
-     1
-102
-RTVSPropertyOp34
- 70
-     1
-102
-RTVSPropertyOp35
- 70
-     1
-102
-RTVSPropertyOp36
- 70
-     1
-102
-RTVSPropertyOp37
- 70
-     1
-102
-RTVSPropertyOp38
- 70
-     1
-102
-RTVSPropertyOp39
- 70
-     1
-102
-RTVSPropertyOp40
- 70
-     1
-102
-RTVSPropertyOp41
- 70
-     1
-102
-RTVSPropertyOp42
- 70
-     1
-102
-RTVSPropertyOp43
- 70
-     1
-102
-RTVSPropertyOp44
- 70
-     1
-102
-RTVSPropertyOp45
- 70
-     1
-102
-RTVSPropertyOp46
- 70
-     1
-102
-RTVSPropertyOp47
- 70
-     1
-102
-RTVSPropertyOp48
- 70
-     1
-102
-RTVSPropertyOp49
- 70
-     1
-102
-RTVSPropertyOp50
- 70
-     1
-102
-RTVSPropertyOp51
- 70
-     0
-102
-RTVSPropertyOp52
- 70
-     0
-102
-RTVSPropertyOp53
- 70
-     1
-102
-RTVSPropertyOp54
- 70
-     1
-102
-RTVSPropertyOp55
- 70
-     1
-102
-RTVSPropertyOp56
- 70
-     1
-102
-RTVSPropertyOp57
- 70
-     1
-102
-RTVSPost2010Prop28
-280
-     0
-102
-RTVSPost2010PropOp28
- 70
-     1
-102
-RTVSPost2010Prop29
-280
-     1
-102
-RTVSPost2010PropOp29
- 70
-     1
-102
-RTVSPost2010Prop30
-280
-     1
-102
-RTVSPost2010PropOp30
- 70
-     1
-102
-RTVSPost2010Prop31
-280
-     0
-102
-RTVSPost2010PropOp31
- 70
-     1
-102
-RTVSPost2010Prop32
-280
-     0
-102
-RTVSPost2010PropOp32
- 70
-     1
-102
-RTVSPost2010Prop33
-280
-     0
-102
-RTVSPost2010PropOp33
- 70
-     1
-102
-RTVSPost2010Prop34
-280
-     0
-102
-RTVSPost2010PropOp34
- 70
-     1
-102
-RTVSPost2010Prop35
-280
-     0
-102
-RTVSPost2010PropOp35
- 70
-     1
-102
-RTVSPost2010Prop36
-280
-     0
-102
-RTVSPost2010PropOp36
- 70
-     1
-102
-RTVSPost2010Prop37
- 90
-       50
-102
-RTVSPost2010PropOp37
- 70
-     1
-102
-RTVSPost2010Prop38
-140
-0.0
-102
-RTVSPost2010PropOp38
- 70
-     1
-102
-RTVSPost2010Prop39
-140
-1.0
-102
-RTVSPost2010PropOp39
- 70
-     1
-102
-RTVSPost2010Prop40
- 90
-        0
-102
-RTVSPost2010PropOp40
- 70
-     1
-102
-RTVSPost2010Prop41ColorIndex
- 90
-      178
-102
-RTVSPost2010Prop41ColorRGB
- 90
-        0
-102
-RTVSPost2010PropOp41
- 70
-     1
-102
-RTVSPost2010Prop42
- 90
-       50
-102
-RTVSPost2010PropOp42
- 70
-     1
-102
-RTVSPost2010Prop43
- 90
-        3
-102
-RTVSPost2010PropOp43
- 70
-     1
-102
-RTVSPost2010Prop44ColorIndex
- 90
-        5
-102
-RTVSPost2010Prop44ColorRGB
- 90
-      255
-102
-RTVSPost2010PropOp44
- 70
-     1
-102
-RTVSPost2010Prop45
-280
-     0
-102
-RTVSPost2010PropOp45
- 70
-     1
-102
-RTVSPost2010Prop46
- 90
-       50
-102
-RTVSPost2010PropOp46
- 70
-     1
-102
-RTVSPost2010Prop47
- 90
-       50
-102
-RTVSPost2010PropOp47
- 70
-     1
-102
-RTVSPost2010Prop48
- 90
-       50
-102
-RTVSPost2010PropOp48
- 70
-     1
-102
-RTVSPost2010Prop49
-280
-     0
-102
-RTVSPost2010PropOp49
- 70
-     1
-102
-RTVSPost2010Prop50
- 90
-       50
-102
-RTVSPost2010PropOp50
- 70
-     1
-102
-RTVSPost2010Prop51ColorIndex
- 90
-      256
-102
-RTVSPost2010Prop51ColorRGB
- 90
--16777216
-102
-RTVSPost2010PropOp51
- 70
-     0
-102
-RTVSPost2010Prop52
-140
-1.0
-102
-RTVSPost2010PropOp52
- 70
-     0
-102
-RTVSPost2010Prop53
- 90
-        2
-102
-RTVSPost2010PropOp53
- 70
-     1
-102
-RTVSPost2010Prop54
-  1
-strokes_ogs.tif
-102
-RTVSPost2010PropOp54
- 70
-     1
-102
-RTVSPost2010Prop55
-280
-     0
-102
-RTVSPost2010PropOp55
- 70
-     1
-102
-RTVSPost2010Prop56
-140
-1.0
-102
-RTVSPost2010PropOp56
- 70
-     1
-102
-RTVSPost2010Prop57
-140
-1.0
-102
-RTVSPost2010PropOp57
- 70
-     1
-  0
-XRECORD
-  5
-130
-102
-{ACAD_REACTORS
-330
-12F
-102
-}
-330
-12F
+DB
 100
 AcDbXrecord
 280
@@ -17563,15 +12419,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-12A
+D4
 102
 {ACAD_REACTORS
 330
-129
+D3
 102
 }
 330
-129
+D3
 100
 AcDbXrecord
 280
@@ -18063,15 +12919,2515 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-132
+B8
 102
 {ACAD_REACTORS
 330
-131
+B7
 102
 }
 330
-131
+B7
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+102
+RTVSPropertyOp33
+ 70
+     1
+102
+RTVSPropertyOp34
+ 70
+     1
+102
+RTVSPropertyOp35
+ 70
+     1
+102
+RTVSPropertyOp36
+ 70
+     1
+102
+RTVSPropertyOp37
+ 70
+     1
+102
+RTVSPropertyOp38
+ 70
+     1
+102
+RTVSPropertyOp39
+ 70
+     1
+102
+RTVSPropertyOp40
+ 70
+     1
+102
+RTVSPropertyOp41
+ 70
+     1
+102
+RTVSPropertyOp42
+ 70
+     1
+102
+RTVSPropertyOp43
+ 70
+     1
+102
+RTVSPropertyOp44
+ 70
+     1
+102
+RTVSPropertyOp45
+ 70
+     1
+102
+RTVSPropertyOp46
+ 70
+     1
+102
+RTVSPropertyOp47
+ 70
+     1
+102
+RTVSPropertyOp48
+ 70
+     1
+102
+RTVSPropertyOp49
+ 70
+     1
+102
+RTVSPropertyOp50
+ 70
+     1
+102
+RTVSPropertyOp51
+ 70
+     0
+102
+RTVSPropertyOp52
+ 70
+     0
+102
+RTVSPropertyOp53
+ 70
+     1
+102
+RTVSPropertyOp54
+ 70
+     1
+102
+RTVSPropertyOp55
+ 70
+     1
+102
+RTVSPropertyOp56
+ 70
+     1
+102
+RTVSPropertyOp57
+ 70
+     1
+102
+RTVSPost2010Prop28
+280
+     0
+102
+RTVSPost2010PropOp28
+ 70
+     1
+102
+RTVSPost2010Prop29
+280
+     1
+102
+RTVSPost2010PropOp29
+ 70
+     1
+102
+RTVSPost2010Prop30
+280
+     1
+102
+RTVSPost2010PropOp30
+ 70
+     1
+102
+RTVSPost2010Prop31
+280
+     0
+102
+RTVSPost2010PropOp31
+ 70
+     1
+102
+RTVSPost2010Prop32
+280
+     0
+102
+RTVSPost2010PropOp32
+ 70
+     1
+102
+RTVSPost2010Prop33
+280
+     0
+102
+RTVSPost2010PropOp33
+ 70
+     1
+102
+RTVSPost2010Prop34
+280
+     0
+102
+RTVSPost2010PropOp34
+ 70
+     1
+102
+RTVSPost2010Prop35
+280
+     0
+102
+RTVSPost2010PropOp35
+ 70
+     1
+102
+RTVSPost2010Prop36
+280
+     0
+102
+RTVSPost2010PropOp36
+ 70
+     1
+102
+RTVSPost2010Prop37
+ 90
+       50
+102
+RTVSPost2010PropOp37
+ 70
+     1
+102
+RTVSPost2010Prop38
+140
+0.0
+102
+RTVSPost2010PropOp38
+ 70
+     1
+102
+RTVSPost2010Prop39
+140
+1.0
+102
+RTVSPost2010PropOp39
+ 70
+     1
+102
+RTVSPost2010Prop40
+ 90
+        0
+102
+RTVSPost2010PropOp40
+ 70
+     1
+102
+RTVSPost2010Prop41ColorIndex
+ 90
+      178
+102
+RTVSPost2010Prop41ColorRGB
+ 90
+        0
+102
+RTVSPost2010PropOp41
+ 70
+     1
+102
+RTVSPost2010Prop42
+ 90
+       50
+102
+RTVSPost2010PropOp42
+ 70
+     1
+102
+RTVSPost2010Prop43
+ 90
+        3
+102
+RTVSPost2010PropOp43
+ 70
+     1
+102
+RTVSPost2010Prop44ColorIndex
+ 90
+        5
+102
+RTVSPost2010Prop44ColorRGB
+ 90
+      255
+102
+RTVSPost2010PropOp44
+ 70
+     1
+102
+RTVSPost2010Prop45
+280
+     0
+102
+RTVSPost2010PropOp45
+ 70
+     1
+102
+RTVSPost2010Prop46
+ 90
+       50
+102
+RTVSPost2010PropOp46
+ 70
+     1
+102
+RTVSPost2010Prop47
+ 90
+       50
+102
+RTVSPost2010PropOp47
+ 70
+     1
+102
+RTVSPost2010Prop48
+ 90
+       50
+102
+RTVSPost2010PropOp48
+ 70
+     1
+102
+RTVSPost2010Prop49
+280
+     0
+102
+RTVSPost2010PropOp49
+ 70
+     1
+102
+RTVSPost2010Prop50
+ 90
+       50
+102
+RTVSPost2010PropOp50
+ 70
+     1
+102
+RTVSPost2010Prop51ColorIndex
+ 90
+      256
+102
+RTVSPost2010Prop51ColorRGB
+ 90
+-16777216
+102
+RTVSPost2010PropOp51
+ 70
+     0
+102
+RTVSPost2010Prop52
+140
+1.0
+102
+RTVSPost2010PropOp52
+ 70
+     0
+102
+RTVSPost2010Prop53
+ 90
+        2
+102
+RTVSPost2010PropOp53
+ 70
+     1
+102
+RTVSPost2010Prop54
+  1
+strokes_ogs.tif
+102
+RTVSPost2010PropOp54
+ 70
+     1
+102
+RTVSPost2010Prop55
+280
+     0
+102
+RTVSPost2010PropOp55
+ 70
+     1
+102
+RTVSPost2010Prop56
+140
+1.0
+102
+RTVSPost2010PropOp56
+ 70
+     1
+102
+RTVSPost2010Prop57
+140
+1.0
+102
+RTVSPost2010PropOp57
+ 70
+     1
+  0
+XRECORD
+  5
+BA
+102
+{ACAD_REACTORS
+330
+B9
+102
+}
+330
+B9
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+102
+RTVSPropertyOp33
+ 70
+     1
+102
+RTVSPropertyOp34
+ 70
+     1
+102
+RTVSPropertyOp35
+ 70
+     1
+102
+RTVSPropertyOp36
+ 70
+     1
+102
+RTVSPropertyOp37
+ 70
+     1
+102
+RTVSPropertyOp38
+ 70
+     1
+102
+RTVSPropertyOp39
+ 70
+     1
+102
+RTVSPropertyOp40
+ 70
+     1
+102
+RTVSPropertyOp41
+ 70
+     1
+102
+RTVSPropertyOp42
+ 70
+     1
+102
+RTVSPropertyOp43
+ 70
+     1
+102
+RTVSPropertyOp44
+ 70
+     1
+102
+RTVSPropertyOp45
+ 70
+     1
+102
+RTVSPropertyOp46
+ 70
+     1
+102
+RTVSPropertyOp47
+ 70
+     1
+102
+RTVSPropertyOp48
+ 70
+     1
+102
+RTVSPropertyOp49
+ 70
+     1
+102
+RTVSPropertyOp50
+ 70
+     1
+102
+RTVSPropertyOp51
+ 70
+     0
+102
+RTVSPropertyOp52
+ 70
+     0
+102
+RTVSPropertyOp53
+ 70
+     1
+102
+RTVSPropertyOp54
+ 70
+     1
+102
+RTVSPropertyOp55
+ 70
+     1
+102
+RTVSPropertyOp56
+ 70
+     1
+102
+RTVSPropertyOp57
+ 70
+     1
+102
+RTVSPost2010Prop28
+280
+     0
+102
+RTVSPost2010PropOp28
+ 70
+     1
+102
+RTVSPost2010Prop29
+280
+     1
+102
+RTVSPost2010PropOp29
+ 70
+     1
+102
+RTVSPost2010Prop30
+280
+     1
+102
+RTVSPost2010PropOp30
+ 70
+     1
+102
+RTVSPost2010Prop31
+280
+     0
+102
+RTVSPost2010PropOp31
+ 70
+     1
+102
+RTVSPost2010Prop32
+280
+     0
+102
+RTVSPost2010PropOp32
+ 70
+     1
+102
+RTVSPost2010Prop33
+280
+     0
+102
+RTVSPost2010PropOp33
+ 70
+     1
+102
+RTVSPost2010Prop34
+280
+     0
+102
+RTVSPost2010PropOp34
+ 70
+     1
+102
+RTVSPost2010Prop35
+280
+     0
+102
+RTVSPost2010PropOp35
+ 70
+     1
+102
+RTVSPost2010Prop36
+280
+     0
+102
+RTVSPost2010PropOp36
+ 70
+     1
+102
+RTVSPost2010Prop37
+ 90
+       50
+102
+RTVSPost2010PropOp37
+ 70
+     1
+102
+RTVSPost2010Prop38
+140
+0.0
+102
+RTVSPost2010PropOp38
+ 70
+     1
+102
+RTVSPost2010Prop39
+140
+1.0
+102
+RTVSPost2010PropOp39
+ 70
+     1
+102
+RTVSPost2010Prop40
+ 90
+        0
+102
+RTVSPost2010PropOp40
+ 70
+     1
+102
+RTVSPost2010Prop41ColorIndex
+ 90
+      178
+102
+RTVSPost2010Prop41ColorRGB
+ 90
+        0
+102
+RTVSPost2010PropOp41
+ 70
+     1
+102
+RTVSPost2010Prop42
+ 90
+       50
+102
+RTVSPost2010PropOp42
+ 70
+     1
+102
+RTVSPost2010Prop43
+ 90
+        3
+102
+RTVSPost2010PropOp43
+ 70
+     1
+102
+RTVSPost2010Prop44ColorIndex
+ 90
+        5
+102
+RTVSPost2010Prop44ColorRGB
+ 90
+      255
+102
+RTVSPost2010PropOp44
+ 70
+     1
+102
+RTVSPost2010Prop45
+280
+     0
+102
+RTVSPost2010PropOp45
+ 70
+     1
+102
+RTVSPost2010Prop46
+ 90
+       50
+102
+RTVSPost2010PropOp46
+ 70
+     1
+102
+RTVSPost2010Prop47
+ 90
+       50
+102
+RTVSPost2010PropOp47
+ 70
+     1
+102
+RTVSPost2010Prop48
+ 90
+       50
+102
+RTVSPost2010PropOp48
+ 70
+     1
+102
+RTVSPost2010Prop49
+280
+     0
+102
+RTVSPost2010PropOp49
+ 70
+     1
+102
+RTVSPost2010Prop50
+ 90
+       50
+102
+RTVSPost2010PropOp50
+ 70
+     1
+102
+RTVSPost2010Prop51ColorIndex
+ 90
+      256
+102
+RTVSPost2010Prop51ColorRGB
+ 90
+-16777216
+102
+RTVSPost2010PropOp51
+ 70
+     0
+102
+RTVSPost2010Prop52
+140
+1.0
+102
+RTVSPost2010PropOp52
+ 70
+     0
+102
+RTVSPost2010Prop53
+ 90
+        2
+102
+RTVSPost2010PropOp53
+ 70
+     1
+102
+RTVSPost2010Prop54
+  1
+strokes_ogs.tif
+102
+RTVSPost2010PropOp54
+ 70
+     1
+102
+RTVSPost2010Prop55
+280
+     0
+102
+RTVSPost2010PropOp55
+ 70
+     1
+102
+RTVSPost2010Prop56
+140
+1.0
+102
+RTVSPost2010PropOp56
+ 70
+     1
+102
+RTVSPost2010Prop57
+140
+1.0
+102
+RTVSPost2010PropOp57
+ 70
+     1
+  0
+XRECORD
+  5
+BC
+102
+{ACAD_REACTORS
+330
+BB
+102
+}
+330
+BB
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+102
+RTVSPropertyOp33
+ 70
+     1
+102
+RTVSPropertyOp34
+ 70
+     1
+102
+RTVSPropertyOp35
+ 70
+     1
+102
+RTVSPropertyOp36
+ 70
+     1
+102
+RTVSPropertyOp37
+ 70
+     1
+102
+RTVSPropertyOp38
+ 70
+     1
+102
+RTVSPropertyOp39
+ 70
+     1
+102
+RTVSPropertyOp40
+ 70
+     1
+102
+RTVSPropertyOp41
+ 70
+     1
+102
+RTVSPropertyOp42
+ 70
+     1
+102
+RTVSPropertyOp43
+ 70
+     1
+102
+RTVSPropertyOp44
+ 70
+     1
+102
+RTVSPropertyOp45
+ 70
+     1
+102
+RTVSPropertyOp46
+ 70
+     1
+102
+RTVSPropertyOp47
+ 70
+     1
+102
+RTVSPropertyOp48
+ 70
+     1
+102
+RTVSPropertyOp49
+ 70
+     1
+102
+RTVSPropertyOp50
+ 70
+     1
+102
+RTVSPropertyOp51
+ 70
+     0
+102
+RTVSPropertyOp52
+ 70
+     0
+102
+RTVSPropertyOp53
+ 70
+     1
+102
+RTVSPropertyOp54
+ 70
+     1
+102
+RTVSPropertyOp55
+ 70
+     1
+102
+RTVSPropertyOp56
+ 70
+     1
+102
+RTVSPropertyOp57
+ 70
+     1
+102
+RTVSPost2010Prop28
+280
+     0
+102
+RTVSPost2010PropOp28
+ 70
+     1
+102
+RTVSPost2010Prop29
+280
+     1
+102
+RTVSPost2010PropOp29
+ 70
+     1
+102
+RTVSPost2010Prop30
+280
+     1
+102
+RTVSPost2010PropOp30
+ 70
+     1
+102
+RTVSPost2010Prop31
+280
+     0
+102
+RTVSPost2010PropOp31
+ 70
+     1
+102
+RTVSPost2010Prop32
+280
+     0
+102
+RTVSPost2010PropOp32
+ 70
+     1
+102
+RTVSPost2010Prop33
+280
+     0
+102
+RTVSPost2010PropOp33
+ 70
+     1
+102
+RTVSPost2010Prop34
+280
+     0
+102
+RTVSPost2010PropOp34
+ 70
+     1
+102
+RTVSPost2010Prop35
+280
+     0
+102
+RTVSPost2010PropOp35
+ 70
+     1
+102
+RTVSPost2010Prop36
+280
+     0
+102
+RTVSPost2010PropOp36
+ 70
+     1
+102
+RTVSPost2010Prop37
+ 90
+       50
+102
+RTVSPost2010PropOp37
+ 70
+     1
+102
+RTVSPost2010Prop38
+140
+0.0
+102
+RTVSPost2010PropOp38
+ 70
+     1
+102
+RTVSPost2010Prop39
+140
+1.0
+102
+RTVSPost2010PropOp39
+ 70
+     1
+102
+RTVSPost2010Prop40
+ 90
+        0
+102
+RTVSPost2010PropOp40
+ 70
+     1
+102
+RTVSPost2010Prop41ColorIndex
+ 90
+      178
+102
+RTVSPost2010Prop41ColorRGB
+ 90
+        0
+102
+RTVSPost2010PropOp41
+ 70
+     1
+102
+RTVSPost2010Prop42
+ 90
+       50
+102
+RTVSPost2010PropOp42
+ 70
+     1
+102
+RTVSPost2010Prop43
+ 90
+        3
+102
+RTVSPost2010PropOp43
+ 70
+     1
+102
+RTVSPost2010Prop44ColorIndex
+ 90
+        5
+102
+RTVSPost2010Prop44ColorRGB
+ 90
+      255
+102
+RTVSPost2010PropOp44
+ 70
+     1
+102
+RTVSPost2010Prop45
+280
+     0
+102
+RTVSPost2010PropOp45
+ 70
+     1
+102
+RTVSPost2010Prop46
+ 90
+       50
+102
+RTVSPost2010PropOp46
+ 70
+     1
+102
+RTVSPost2010Prop47
+ 90
+       50
+102
+RTVSPost2010PropOp47
+ 70
+     1
+102
+RTVSPost2010Prop48
+ 90
+       50
+102
+RTVSPost2010PropOp48
+ 70
+     1
+102
+RTVSPost2010Prop49
+280
+     0
+102
+RTVSPost2010PropOp49
+ 70
+     1
+102
+RTVSPost2010Prop50
+ 90
+       50
+102
+RTVSPost2010PropOp50
+ 70
+     1
+102
+RTVSPost2010Prop51ColorIndex
+ 90
+      256
+102
+RTVSPost2010Prop51ColorRGB
+ 90
+-16777216
+102
+RTVSPost2010PropOp51
+ 70
+     0
+102
+RTVSPost2010Prop52
+140
+1.0
+102
+RTVSPost2010PropOp52
+ 70
+     0
+102
+RTVSPost2010Prop53
+ 90
+        2
+102
+RTVSPost2010PropOp53
+ 70
+     1
+102
+RTVSPost2010Prop54
+  1
+strokes_ogs.tif
+102
+RTVSPost2010PropOp54
+ 70
+     1
+102
+RTVSPost2010Prop55
+280
+     0
+102
+RTVSPost2010PropOp55
+ 70
+     1
+102
+RTVSPost2010Prop56
+140
+1.0
+102
+RTVSPost2010PropOp56
+ 70
+     1
+102
+RTVSPost2010Prop57
+140
+1.0
+102
+RTVSPost2010PropOp57
+ 70
+     1
+  0
+XRECORD
+  5
+BE
+102
+{ACAD_REACTORS
+330
+BD
+102
+}
+330
+BD
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+102
+RTVSPropertyOp33
+ 70
+     1
+102
+RTVSPropertyOp34
+ 70
+     1
+102
+RTVSPropertyOp35
+ 70
+     1
+102
+RTVSPropertyOp36
+ 70
+     1
+102
+RTVSPropertyOp37
+ 70
+     1
+102
+RTVSPropertyOp38
+ 70
+     1
+102
+RTVSPropertyOp39
+ 70
+     1
+102
+RTVSPropertyOp40
+ 70
+     1
+102
+RTVSPropertyOp41
+ 70
+     1
+102
+RTVSPropertyOp42
+ 70
+     1
+102
+RTVSPropertyOp43
+ 70
+     1
+102
+RTVSPropertyOp44
+ 70
+     1
+102
+RTVSPropertyOp45
+ 70
+     1
+102
+RTVSPropertyOp46
+ 70
+     1
+102
+RTVSPropertyOp47
+ 70
+     1
+102
+RTVSPropertyOp48
+ 70
+     1
+102
+RTVSPropertyOp49
+ 70
+     1
+102
+RTVSPropertyOp50
+ 70
+     1
+102
+RTVSPropertyOp51
+ 70
+     0
+102
+RTVSPropertyOp52
+ 70
+     0
+102
+RTVSPropertyOp53
+ 70
+     1
+102
+RTVSPropertyOp54
+ 70
+     1
+102
+RTVSPropertyOp55
+ 70
+     1
+102
+RTVSPropertyOp56
+ 70
+     1
+102
+RTVSPropertyOp57
+ 70
+     1
+102
+RTVSPost2010Prop28
+280
+     0
+102
+RTVSPost2010PropOp28
+ 70
+     1
+102
+RTVSPost2010Prop29
+280
+     1
+102
+RTVSPost2010PropOp29
+ 70
+     1
+102
+RTVSPost2010Prop30
+280
+     1
+102
+RTVSPost2010PropOp30
+ 70
+     1
+102
+RTVSPost2010Prop31
+280
+     0
+102
+RTVSPost2010PropOp31
+ 70
+     1
+102
+RTVSPost2010Prop32
+280
+     0
+102
+RTVSPost2010PropOp32
+ 70
+     1
+102
+RTVSPost2010Prop33
+280
+     0
+102
+RTVSPost2010PropOp33
+ 70
+     1
+102
+RTVSPost2010Prop34
+280
+     0
+102
+RTVSPost2010PropOp34
+ 70
+     1
+102
+RTVSPost2010Prop35
+280
+     0
+102
+RTVSPost2010PropOp35
+ 70
+     1
+102
+RTVSPost2010Prop36
+280
+     0
+102
+RTVSPost2010PropOp36
+ 70
+     1
+102
+RTVSPost2010Prop37
+ 90
+       50
+102
+RTVSPost2010PropOp37
+ 70
+     1
+102
+RTVSPost2010Prop38
+140
+0.0
+102
+RTVSPost2010PropOp38
+ 70
+     1
+102
+RTVSPost2010Prop39
+140
+1.0
+102
+RTVSPost2010PropOp39
+ 70
+     1
+102
+RTVSPost2010Prop40
+ 90
+        0
+102
+RTVSPost2010PropOp40
+ 70
+     1
+102
+RTVSPost2010Prop41ColorIndex
+ 90
+      178
+102
+RTVSPost2010Prop41ColorRGB
+ 90
+        0
+102
+RTVSPost2010PropOp41
+ 70
+     1
+102
+RTVSPost2010Prop42
+ 90
+       50
+102
+RTVSPost2010PropOp42
+ 70
+     1
+102
+RTVSPost2010Prop43
+ 90
+        3
+102
+RTVSPost2010PropOp43
+ 70
+     1
+102
+RTVSPost2010Prop44ColorIndex
+ 90
+        5
+102
+RTVSPost2010Prop44ColorRGB
+ 90
+      255
+102
+RTVSPost2010PropOp44
+ 70
+     1
+102
+RTVSPost2010Prop45
+280
+     0
+102
+RTVSPost2010PropOp45
+ 70
+     1
+102
+RTVSPost2010Prop46
+ 90
+       50
+102
+RTVSPost2010PropOp46
+ 70
+     1
+102
+RTVSPost2010Prop47
+ 90
+       50
+102
+RTVSPost2010PropOp47
+ 70
+     1
+102
+RTVSPost2010Prop48
+ 90
+       50
+102
+RTVSPost2010PropOp48
+ 70
+     1
+102
+RTVSPost2010Prop49
+280
+     0
+102
+RTVSPost2010PropOp49
+ 70
+     1
+102
+RTVSPost2010Prop50
+ 90
+       50
+102
+RTVSPost2010PropOp50
+ 70
+     1
+102
+RTVSPost2010Prop51ColorIndex
+ 90
+      256
+102
+RTVSPost2010Prop51ColorRGB
+ 90
+-16777216
+102
+RTVSPost2010PropOp51
+ 70
+     0
+102
+RTVSPost2010Prop52
+140
+1.0
+102
+RTVSPost2010PropOp52
+ 70
+     0
+102
+RTVSPost2010Prop53
+ 90
+        2
+102
+RTVSPost2010PropOp53
+ 70
+     1
+102
+RTVSPost2010Prop54
+  1
+strokes_ogs.tif
+102
+RTVSPost2010PropOp54
+ 70
+     1
+102
+RTVSPost2010Prop55
+280
+     0
+102
+RTVSPost2010PropOp55
+ 70
+     1
+102
+RTVSPost2010Prop56
+140
+1.0
+102
+RTVSPost2010PropOp56
+ 70
+     1
+102
+RTVSPost2010Prop57
+140
+1.0
+102
+RTVSPost2010PropOp57
+ 70
+     1
+  0
+XRECORD
+  5
+C4
+102
+{ACAD_REACTORS
+330
+C3
+102
+}
+330
+C3
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+102
+RTVSPropertyOp33
+ 70
+     1
+102
+RTVSPropertyOp34
+ 70
+     1
+102
+RTVSPropertyOp35
+ 70
+     1
+102
+RTVSPropertyOp36
+ 70
+     1
+102
+RTVSPropertyOp37
+ 70
+     1
+102
+RTVSPropertyOp38
+ 70
+     1
+102
+RTVSPropertyOp39
+ 70
+     1
+102
+RTVSPropertyOp40
+ 70
+     1
+102
+RTVSPropertyOp41
+ 70
+     1
+102
+RTVSPropertyOp42
+ 70
+     1
+102
+RTVSPropertyOp43
+ 70
+     1
+102
+RTVSPropertyOp44
+ 70
+     1
+102
+RTVSPropertyOp45
+ 70
+     1
+102
+RTVSPropertyOp46
+ 70
+     1
+102
+RTVSPropertyOp47
+ 70
+     1
+102
+RTVSPropertyOp48
+ 70
+     1
+102
+RTVSPropertyOp49
+ 70
+     1
+102
+RTVSPropertyOp50
+ 70
+     1
+102
+RTVSPropertyOp51
+ 70
+     0
+102
+RTVSPropertyOp52
+ 70
+     0
+102
+RTVSPropertyOp53
+ 70
+     1
+102
+RTVSPropertyOp54
+ 70
+     1
+102
+RTVSPropertyOp55
+ 70
+     1
+102
+RTVSPropertyOp56
+ 70
+     1
+102
+RTVSPropertyOp57
+ 70
+     1
+102
+RTVSPost2010Prop28
+280
+     0
+102
+RTVSPost2010PropOp28
+ 70
+     1
+102
+RTVSPost2010Prop29
+280
+     1
+102
+RTVSPost2010PropOp29
+ 70
+     1
+102
+RTVSPost2010Prop30
+280
+     1
+102
+RTVSPost2010PropOp30
+ 70
+     1
+102
+RTVSPost2010Prop31
+280
+     0
+102
+RTVSPost2010PropOp31
+ 70
+     1
+102
+RTVSPost2010Prop32
+280
+     0
+102
+RTVSPost2010PropOp32
+ 70
+     1
+102
+RTVSPost2010Prop33
+280
+     0
+102
+RTVSPost2010PropOp33
+ 70
+     1
+102
+RTVSPost2010Prop34
+280
+     0
+102
+RTVSPost2010PropOp34
+ 70
+     1
+102
+RTVSPost2010Prop35
+280
+     0
+102
+RTVSPost2010PropOp35
+ 70
+     1
+102
+RTVSPost2010Prop36
+280
+     0
+102
+RTVSPost2010PropOp36
+ 70
+     1
+102
+RTVSPost2010Prop37
+ 90
+       50
+102
+RTVSPost2010PropOp37
+ 70
+     1
+102
+RTVSPost2010Prop38
+140
+0.0
+102
+RTVSPost2010PropOp38
+ 70
+     1
+102
+RTVSPost2010Prop39
+140
+1.0
+102
+RTVSPost2010PropOp39
+ 70
+     1
+102
+RTVSPost2010Prop40
+ 90
+        0
+102
+RTVSPost2010PropOp40
+ 70
+     1
+102
+RTVSPost2010Prop41ColorIndex
+ 90
+      178
+102
+RTVSPost2010Prop41ColorRGB
+ 90
+        0
+102
+RTVSPost2010PropOp41
+ 70
+     1
+102
+RTVSPost2010Prop42
+ 90
+       50
+102
+RTVSPost2010PropOp42
+ 70
+     1
+102
+RTVSPost2010Prop43
+ 90
+        3
+102
+RTVSPost2010PropOp43
+ 70
+     1
+102
+RTVSPost2010Prop44ColorIndex
+ 90
+        5
+102
+RTVSPost2010Prop44ColorRGB
+ 90
+      255
+102
+RTVSPost2010PropOp44
+ 70
+     1
+102
+RTVSPost2010Prop45
+280
+     0
+102
+RTVSPost2010PropOp45
+ 70
+     1
+102
+RTVSPost2010Prop46
+ 90
+       50
+102
+RTVSPost2010PropOp46
+ 70
+     1
+102
+RTVSPost2010Prop47
+ 90
+       50
+102
+RTVSPost2010PropOp47
+ 70
+     1
+102
+RTVSPost2010Prop48
+ 90
+       50
+102
+RTVSPost2010PropOp48
+ 70
+     1
+102
+RTVSPost2010Prop49
+280
+     0
+102
+RTVSPost2010PropOp49
+ 70
+     1
+102
+RTVSPost2010Prop50
+ 90
+       50
+102
+RTVSPost2010PropOp50
+ 70
+     1
+102
+RTVSPost2010Prop51ColorIndex
+ 90
+      256
+102
+RTVSPost2010Prop51ColorRGB
+ 90
+-16777216
+102
+RTVSPost2010PropOp51
+ 70
+     0
+102
+RTVSPost2010Prop52
+140
+1.0
+102
+RTVSPost2010PropOp52
+ 70
+     0
+102
+RTVSPost2010Prop53
+ 90
+        2
+102
+RTVSPost2010PropOp53
+ 70
+     1
+102
+RTVSPost2010Prop54
+  1
+strokes_ogs.tif
+102
+RTVSPost2010PropOp54
+ 70
+     1
+102
+RTVSPost2010Prop55
+280
+     0
+102
+RTVSPost2010PropOp55
+ 70
+     1
+102
+RTVSPost2010Prop56
+140
+1.0
+102
+RTVSPost2010PropOp56
+ 70
+     1
+102
+RTVSPost2010Prop57
+140
+1.0
+102
+RTVSPost2010PropOp57
+ 70
+     1
+  0
+XRECORD
+  5
+D8
+102
+{ACAD_REACTORS
+330
+D7
+102
+}
+330
+D7
 100
 AcDbXrecord
 280
@@ -18563,15 +15919,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-120
+D2
 102
 {ACAD_REACTORS
 330
-11F
+D1
 102
 }
 330
-11F
+D1
 100
 AcDbXrecord
 280
@@ -19063,15 +16419,515 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-13E
+DA
 102
 {ACAD_REACTORS
 330
-13D
+D9
 102
 }
 330
-13D
+D9
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     0
+102
+RTVSPropertyOp1
+ 70
+     0
+102
+RTVSPropertyOp2
+ 70
+     0
+102
+RTVSPropertyOp3
+ 70
+     0
+102
+RTVSPropertyOp4
+ 70
+     0
+102
+RTVSPropertyOp5
+ 70
+     0
+102
+RTVSPropertyOp6
+ 70
+     0
+102
+RTVSPropertyOp7
+ 70
+     0
+102
+RTVSPropertyOp8
+ 70
+     0
+102
+RTVSPropertyOp9
+ 70
+     0
+102
+RTVSPropertyOp10
+ 70
+     0
+102
+RTVSPropertyOp11
+ 70
+     0
+102
+RTVSPropertyOp12
+ 70
+     0
+102
+RTVSPropertyOp13
+ 70
+     0
+102
+RTVSPropertyOp14
+ 70
+     2
+102
+RTVSPropertyOp15
+ 70
+     0
+102
+RTVSPropertyOp16
+ 70
+     0
+102
+RTVSPropertyOp17
+ 70
+     0
+102
+RTVSPropertyOp18
+ 70
+     0
+102
+RTVSPropertyOp19
+ 70
+     0
+102
+RTVSPropertyOp20
+ 70
+     0
+102
+RTVSPropertyOp21
+ 70
+     0
+102
+RTVSPropertyOp22
+ 70
+     0
+102
+RTVSPropertyOp23
+ 70
+     0
+102
+RTVSPropertyOp24
+ 70
+     0
+102
+RTVSPropertyOp25
+ 70
+     0
+102
+RTVSPropertyOp26
+ 70
+     0
+102
+RTVSPropertyOp27
+ 70
+     0
+102
+RTVSPropertyOp28
+ 70
+     0
+102
+RTVSPropertyOp29
+ 70
+     0
+102
+RTVSPropertyOp30
+ 70
+     0
+102
+RTVSPropertyOp31
+ 70
+     0
+102
+RTVSPropertyOp32
+ 70
+     0
+102
+RTVSPropertyOp33
+ 70
+     0
+102
+RTVSPropertyOp34
+ 70
+     0
+102
+RTVSPropertyOp35
+ 70
+     0
+102
+RTVSPropertyOp36
+ 70
+     0
+102
+RTVSPropertyOp37
+ 70
+     0
+102
+RTVSPropertyOp38
+ 70
+     0
+102
+RTVSPropertyOp39
+ 70
+     0
+102
+RTVSPropertyOp40
+ 70
+     0
+102
+RTVSPropertyOp41
+ 70
+     0
+102
+RTVSPropertyOp42
+ 70
+     0
+102
+RTVSPropertyOp43
+ 70
+     0
+102
+RTVSPropertyOp44
+ 70
+     0
+102
+RTVSPropertyOp45
+ 70
+     0
+102
+RTVSPropertyOp46
+ 70
+     0
+102
+RTVSPropertyOp47
+ 70
+     0
+102
+RTVSPropertyOp48
+ 70
+     0
+102
+RTVSPropertyOp49
+ 70
+     0
+102
+RTVSPropertyOp50
+ 70
+     0
+102
+RTVSPropertyOp51
+ 70
+     0
+102
+RTVSPropertyOp52
+ 70
+     0
+102
+RTVSPropertyOp53
+ 70
+     0
+102
+RTVSPropertyOp54
+ 70
+     0
+102
+RTVSPropertyOp55
+ 70
+     0
+102
+RTVSPropertyOp56
+ 70
+     0
+102
+RTVSPropertyOp57
+ 70
+     0
+102
+RTVSPost2010Prop28
+280
+     0
+102
+RTVSPost2010PropOp28
+ 70
+     0
+102
+RTVSPost2010Prop29
+280
+     1
+102
+RTVSPost2010PropOp29
+ 70
+     0
+102
+RTVSPost2010Prop30
+280
+     1
+102
+RTVSPost2010PropOp30
+ 70
+     0
+102
+RTVSPost2010Prop31
+280
+     0
+102
+RTVSPost2010PropOp31
+ 70
+     0
+102
+RTVSPost2010Prop32
+280
+     0
+102
+RTVSPost2010PropOp32
+ 70
+     0
+102
+RTVSPost2010Prop33
+280
+     0
+102
+RTVSPost2010PropOp33
+ 70
+     0
+102
+RTVSPost2010Prop34
+280
+     0
+102
+RTVSPost2010PropOp34
+ 70
+     0
+102
+RTVSPost2010Prop35
+280
+     0
+102
+RTVSPost2010PropOp35
+ 70
+     0
+102
+RTVSPost2010Prop36
+280
+     0
+102
+RTVSPost2010PropOp36
+ 70
+     0
+102
+RTVSPost2010Prop37
+ 90
+       50
+102
+RTVSPost2010PropOp37
+ 70
+     0
+102
+RTVSPost2010Prop38
+140
+0.0
+102
+RTVSPost2010PropOp38
+ 70
+     0
+102
+RTVSPost2010Prop39
+140
+1.0
+102
+RTVSPost2010PropOp39
+ 70
+     0
+102
+RTVSPost2010Prop40
+ 90
+        0
+102
+RTVSPost2010PropOp40
+ 70
+     0
+102
+RTVSPost2010Prop41ColorIndex
+ 90
+      178
+102
+RTVSPost2010Prop41ColorRGB
+ 90
+        0
+102
+RTVSPost2010PropOp41
+ 70
+     0
+102
+RTVSPost2010Prop42
+ 90
+       50
+102
+RTVSPost2010PropOp42
+ 70
+     0
+102
+RTVSPost2010Prop43
+ 90
+        3
+102
+RTVSPost2010PropOp43
+ 70
+     0
+102
+RTVSPost2010Prop44ColorIndex
+ 90
+        5
+102
+RTVSPost2010Prop44ColorRGB
+ 90
+      255
+102
+RTVSPost2010PropOp44
+ 70
+     0
+102
+RTVSPost2010Prop45
+280
+     0
+102
+RTVSPost2010PropOp45
+ 70
+     0
+102
+RTVSPost2010Prop46
+ 90
+       50
+102
+RTVSPost2010PropOp46
+ 70
+     0
+102
+RTVSPost2010Prop47
+ 90
+       50
+102
+RTVSPost2010PropOp47
+ 70
+     0
+102
+RTVSPost2010Prop48
+ 90
+       50
+102
+RTVSPost2010PropOp48
+ 70
+     0
+102
+RTVSPost2010Prop49
+280
+     0
+102
+RTVSPost2010PropOp49
+ 70
+     0
+102
+RTVSPost2010Prop50
+ 90
+       50
+102
+RTVSPost2010PropOp50
+ 70
+     0
+102
+RTVSPost2010Prop51ColorIndex
+ 90
+      256
+102
+RTVSPost2010Prop51ColorRGB
+ 90
+-16777216
+102
+RTVSPost2010PropOp51
+ 70
+     0
+102
+RTVSPost2010Prop52
+140
+1.0
+102
+RTVSPost2010PropOp52
+ 70
+     0
+102
+RTVSPost2010Prop53
+ 90
+        2
+102
+RTVSPost2010PropOp53
+ 70
+     0
+102
+RTVSPost2010Prop54
+  1
+strokes_ogs.tif
+102
+RTVSPost2010PropOp54
+ 70
+     0
+102
+RTVSPost2010Prop55
+280
+     0
+102
+RTVSPost2010PropOp55
+ 70
+     0
+102
+RTVSPost2010Prop56
+140
+1.0
+102
+RTVSPost2010PropOp56
+ 70
+     0
+102
+RTVSPost2010Prop57
+140
+1.0
+102
+RTVSPost2010PropOp57
+ 70
+     0
+  0
+XRECORD
+  5
+C8
+102
+{ACAD_REACTORS
+330
+C7
+102
+}
+330
+C7
 100
 AcDbXrecord
 280
@@ -19563,15 +17419,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-13C
+E6
 102
 {ACAD_REACTORS
 330
-13B
+E5
 102
 }
 330
-13B
+E5
 100
 AcDbXrecord
 280
@@ -20063,15 +17919,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-136
+E4
 102
 {ACAD_REACTORS
 330
-135
+E3
 102
 }
 330
-135
+E3
 100
 AcDbXrecord
 280
@@ -20563,15 +18419,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-138
+DE
 102
 {ACAD_REACTORS
 330
-137
+DD
 102
 }
 330
-137
+DD
 100
 AcDbXrecord
 280
@@ -21063,15 +18919,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-128
+E0
 102
 {ACAD_REACTORS
 330
-127
+DF
 102
 }
 330
-127
+DF
 100
 AcDbXrecord
 280
@@ -21563,15 +19419,15 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-11A
+D0
 102
 {ACAD_REACTORS
 330
-119
+CF
 102
 }
 330
-119
+CF
 100
 AcDbXrecord
 280
@@ -22063,15 +19919,515 @@ RTVSPost2010PropOp57
   0
 XRECORD
   5
-13A
+C2
 102
 {ACAD_REACTORS
 330
-139
+C1
 102
 }
 330
-139
+C1
+100
+AcDbXrecord
+280
+     1
+102
+RTVSPropertyOp0
+ 70
+     1
+102
+RTVSPropertyOp1
+ 70
+     1
+102
+RTVSPropertyOp2
+ 70
+     1
+102
+RTVSPropertyOp3
+ 70
+     1
+102
+RTVSPropertyOp4
+ 70
+     1
+102
+RTVSPropertyOp5
+ 70
+     1
+102
+RTVSPropertyOp6
+ 70
+     1
+102
+RTVSPropertyOp7
+ 70
+     1
+102
+RTVSPropertyOp8
+ 70
+     1
+102
+RTVSPropertyOp9
+ 70
+     1
+102
+RTVSPropertyOp10
+ 70
+     1
+102
+RTVSPropertyOp11
+ 70
+     1
+102
+RTVSPropertyOp12
+ 70
+     1
+102
+RTVSPropertyOp13
+ 70
+     1
+102
+RTVSPropertyOp14
+ 70
+     1
+102
+RTVSPropertyOp15
+ 70
+     1
+102
+RTVSPropertyOp16
+ 70
+     1
+102
+RTVSPropertyOp17
+ 70
+     1
+102
+RTVSPropertyOp18
+ 70
+     1
+102
+RTVSPropertyOp19
+ 70
+     1
+102
+RTVSPropertyOp20
+ 70
+     1
+102
+RTVSPropertyOp21
+ 70
+     1
+102
+RTVSPropertyOp22
+ 70
+     1
+102
+RTVSPropertyOp23
+ 70
+     1
+102
+RTVSPropertyOp24
+ 70
+     1
+102
+RTVSPropertyOp25
+ 70
+     1
+102
+RTVSPropertyOp26
+ 70
+     1
+102
+RTVSPropertyOp27
+ 70
+     1
+102
+RTVSPropertyOp28
+ 70
+     1
+102
+RTVSPropertyOp29
+ 70
+     1
+102
+RTVSPropertyOp30
+ 70
+     1
+102
+RTVSPropertyOp31
+ 70
+     1
+102
+RTVSPropertyOp32
+ 70
+     1
+102
+RTVSPropertyOp33
+ 70
+     1
+102
+RTVSPropertyOp34
+ 70
+     1
+102
+RTVSPropertyOp35
+ 70
+     1
+102
+RTVSPropertyOp36
+ 70
+     1
+102
+RTVSPropertyOp37
+ 70
+     1
+102
+RTVSPropertyOp38
+ 70
+     1
+102
+RTVSPropertyOp39
+ 70
+     1
+102
+RTVSPropertyOp40
+ 70
+     1
+102
+RTVSPropertyOp41
+ 70
+     1
+102
+RTVSPropertyOp42
+ 70
+     1
+102
+RTVSPropertyOp43
+ 70
+     1
+102
+RTVSPropertyOp44
+ 70
+     1
+102
+RTVSPropertyOp45
+ 70
+     1
+102
+RTVSPropertyOp46
+ 70
+     1
+102
+RTVSPropertyOp47
+ 70
+     1
+102
+RTVSPropertyOp48
+ 70
+     1
+102
+RTVSPropertyOp49
+ 70
+     1
+102
+RTVSPropertyOp50
+ 70
+     1
+102
+RTVSPropertyOp51
+ 70
+     0
+102
+RTVSPropertyOp52
+ 70
+     0
+102
+RTVSPropertyOp53
+ 70
+     1
+102
+RTVSPropertyOp54
+ 70
+     1
+102
+RTVSPropertyOp55
+ 70
+     1
+102
+RTVSPropertyOp56
+ 70
+     1
+102
+RTVSPropertyOp57
+ 70
+     1
+102
+RTVSPost2010Prop28
+280
+     0
+102
+RTVSPost2010PropOp28
+ 70
+     1
+102
+RTVSPost2010Prop29
+280
+     1
+102
+RTVSPost2010PropOp29
+ 70
+     1
+102
+RTVSPost2010Prop30
+280
+     1
+102
+RTVSPost2010PropOp30
+ 70
+     1
+102
+RTVSPost2010Prop31
+280
+     0
+102
+RTVSPost2010PropOp31
+ 70
+     1
+102
+RTVSPost2010Prop32
+280
+     0
+102
+RTVSPost2010PropOp32
+ 70
+     1
+102
+RTVSPost2010Prop33
+280
+     0
+102
+RTVSPost2010PropOp33
+ 70
+     1
+102
+RTVSPost2010Prop34
+280
+     0
+102
+RTVSPost2010PropOp34
+ 70
+     1
+102
+RTVSPost2010Prop35
+280
+     0
+102
+RTVSPost2010PropOp35
+ 70
+     1
+102
+RTVSPost2010Prop36
+280
+     0
+102
+RTVSPost2010PropOp36
+ 70
+     1
+102
+RTVSPost2010Prop37
+ 90
+       50
+102
+RTVSPost2010PropOp37
+ 70
+     1
+102
+RTVSPost2010Prop38
+140
+0.0
+102
+RTVSPost2010PropOp38
+ 70
+     1
+102
+RTVSPost2010Prop39
+140
+1.0
+102
+RTVSPost2010PropOp39
+ 70
+     1
+102
+RTVSPost2010Prop40
+ 90
+        0
+102
+RTVSPost2010PropOp40
+ 70
+     1
+102
+RTVSPost2010Prop41ColorIndex
+ 90
+      178
+102
+RTVSPost2010Prop41ColorRGB
+ 90
+        0
+102
+RTVSPost2010PropOp41
+ 70
+     1
+102
+RTVSPost2010Prop42
+ 90
+       50
+102
+RTVSPost2010PropOp42
+ 70
+     1
+102
+RTVSPost2010Prop43
+ 90
+        3
+102
+RTVSPost2010PropOp43
+ 70
+     1
+102
+RTVSPost2010Prop44ColorIndex
+ 90
+        5
+102
+RTVSPost2010Prop44ColorRGB
+ 90
+      255
+102
+RTVSPost2010PropOp44
+ 70
+     1
+102
+RTVSPost2010Prop45
+280
+     0
+102
+RTVSPost2010PropOp45
+ 70
+     1
+102
+RTVSPost2010Prop46
+ 90
+       50
+102
+RTVSPost2010PropOp46
+ 70
+     1
+102
+RTVSPost2010Prop47
+ 90
+       50
+102
+RTVSPost2010PropOp47
+ 70
+     1
+102
+RTVSPost2010Prop48
+ 90
+       50
+102
+RTVSPost2010PropOp48
+ 70
+     1
+102
+RTVSPost2010Prop49
+280
+     0
+102
+RTVSPost2010PropOp49
+ 70
+     1
+102
+RTVSPost2010Prop50
+ 90
+       50
+102
+RTVSPost2010PropOp50
+ 70
+     1
+102
+RTVSPost2010Prop51ColorIndex
+ 90
+      256
+102
+RTVSPost2010Prop51ColorRGB
+ 90
+-16777216
+102
+RTVSPost2010PropOp51
+ 70
+     0
+102
+RTVSPost2010Prop52
+140
+1.0
+102
+RTVSPost2010PropOp52
+ 70
+     0
+102
+RTVSPost2010Prop53
+ 90
+        2
+102
+RTVSPost2010PropOp53
+ 70
+     1
+102
+RTVSPost2010Prop54
+  1
+strokes_ogs.tif
+102
+RTVSPost2010PropOp54
+ 70
+     1
+102
+RTVSPost2010Prop55
+280
+     0
+102
+RTVSPost2010PropOp55
+ 70
+     1
+102
+RTVSPost2010Prop56
+140
+1.0
+102
+RTVSPost2010PropOp56
+ 70
+     1
+102
+RTVSPost2010Prop57
+140
+1.0
+102
+RTVSPost2010PropOp57
+ 70
+     1
+  0
+XRECORD
+  5
+E2
+102
+{ACAD_REACTORS
+330
+E1
+102
+}
+330
+E1
 100
 AcDbXrecord
 280
