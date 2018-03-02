@@ -1,4 +1,4 @@
-EESchema Schematic File Version 3
+EESchema Schematic File Version 2
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -28,8 +28,9 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:RatcamLib
 LIBS:Illuminator-cache
-EELAYER 26 0
+EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -156,31 +157,20 @@ $EndComp
 $Comp
 L Q_NMOS_GSD Q0
 U 1 1 59DFF0EB
-P 4450 3400
-F 0 "Q0" H 4650 3450 50  0000 L CNN
-F 1 "DMG1012UW" H 4650 3350 50  0000 L CNN
-F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 4650 3500 50  0001 C CNN
-F 3 "" H 4450 3400 50  0001 C CNN
-	1    4450 3400
-	0    1    -1   0   
+P 5000 3850
+F 0 "Q0" H 5200 3900 50  0000 L CNN
+F 1 "DMG1012UW" H 5200 3800 50  0000 L CNN
+F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 5200 3950 50  0001 C CNN
+F 3 "" H 5000 3850 50  0001 C CNN
+	1    5000 3850
+	-1   0    0    -1  
 $EndComp
-$Comp
-L Conn_01x03_Male J0
-U 1 1 59ED1A01
-P 5800 4900
-F 0 "J0" H 5906 5178 50  0000 C CNN
-F 1 "Conn_01x03_Male" H 5906 5087 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch1.27mm_SMD_Pin1Left" H 5800 4900 50  0001 C CNN
-F 3 "" H 5800 4900 50  0001 C CNN
-	1    5800 4900
-	0    -1   -1   0   
-$EndComp
-Text Label 5900 4350 1    60   ~ 0
+Text Label 7400 3950 2    60   ~ 0
 TO_GND
-Text Label 5800 4350 1    60   ~ 0
+Text Label 7400 3750 2    60   ~ 0
 TO_5V
-Text Label 5700 4350 1    60   ~ 0
-TO_3V3
+Text Label 7400 3850 2    60   ~ 0
+TO_PWM
 $Comp
 L LED_ALT LED9
 U 1 1 59F8E30D
@@ -236,72 +226,196 @@ F 3 "" H 6300 3300 50  0001 C CNN
 	1    6300 3300
 	0    1    -1   0   
 $EndComp
+$Comp
+L VEML7700 U1
+U 1 1 5A9897A7
+P 7950 2200
+F 0 "U1" V 7950 2500 60  0000 C CNN
+F 1 "VEML7700" V 8100 2200 60  0000 C CNN
+F 2 "Ratcam:VEML7700" H 7500 2050 60  0001 C CNN
+F 3 "" H 7500 2050 60  0001 C CNN
+	1    7950 2200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R_PU2
+U 1 1 5A989B02
+P 8650 3150
+F 0 "R_PU2" V 8730 3150 50  0000 C CNN
+F 1 "4.7KΩ" V 8550 3150 50  0000 C CNN
+F 2 "" V 8580 3150 50  0001 C CNN
+F 3 "" H 8650 3150 50  0001 C CNN
+	1    8650 3150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R_PU1
+U 1 1 5A989B84
+P 8650 2700
+F 0 "R_PU1" V 8730 2700 50  0000 C CNN
+F 1 "4.7KΩ" V 8550 2700 50  0000 C CNN
+F 2 "" V 8580 2700 50  0001 C CNN
+F 3 "" H 8650 2700 50  0001 C CNN
+	1    8650 2700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Conn_02x03_Top_Bottom J0
+U 1 1 5A98B497
+P 7750 3850
+F 0 "J0" H 7800 4050 50  0000 C CNN
+F 1 "Conn_02x03_Top_Bottom" H 7800 3650 50  0000 C CNN
+F 2 "" H 7750 3850 50  0001 C CNN
+F 3 "" H 7750 3850 50  0001 C CNN
+	1    7750 3850
+	1    0    0    -1  
+$EndComp
+Text Label 9550 4050 0    60   ~ 0
+TO_SCL
+Text Label 8600 4350 0    60   ~ 0
+TO_3V3
+Text Label 9600 4400 0    60   ~ 0
+TO_SDA
+$Comp
+L C C?
+U 1 1 5A99124A
+P 7250 2850
+F 0 "C?" H 7275 2950 50  0000 L CNN
+F 1 "C" H 7275 2750 50  0000 L CNN
+F 2 "" H 7288 2700 50  0001 C CNN
+F 3 "" H 7250 2850 50  0001 C CNN
+	1    7250 2850
+	0    1    1    0   
+$EndComp
 Wire Wire Line
-	4450 3700 5700 3700
-Connection ~ 4900 3300
-Connection ~ 6700 3300
+	8100 3950 8050 3950
 Wire Wire Line
-	4450 3600 4450 3700
-Connection ~ 4900 2900
+	6700 4050 4900 4050
 Wire Wire Line
-	4650 3300 5150 3300
-Connection ~ 4900 2500
+	6700 3950 6700 4050
 Wire Wire Line
-	4900 2900 5150 2900
-Connection ~ 4900 2100
+	6700 3950 6900 3950
 Wire Wire Line
-	4900 2500 5150 2500
+	6900 3950 7550 3950
 Wire Wire Line
-	4900 2100 5150 2100
+	5200 3850 7550 3850
 Wire Wire Line
-	4900 1700 4900 3300
-Wire Wire Line
-	5150 1700 4900 1700
-Connection ~ 6700 2900
-Wire Wire Line
-	6700 3300 6450 3300
-Connection ~ 6700 2500
-Wire Wire Line
-	6700 2900 6450 2900
-Connection ~ 6700 2100
-Wire Wire Line
-	6700 2500 6450 2500
-Wire Wire Line
-	6700 2100 6450 2100
-Wire Wire Line
-	6700 1700 6700 3700
-Wire Wire Line
-	6450 1700 6700 1700
-Wire Wire Line
-	5450 1700 5650 1700
-Wire Wire Line
-	5950 1700 6150 1700
-Wire Wire Line
-	5700 3700 5700 4700
-Wire Wire Line
-	4250 3800 5900 3800
-Wire Wire Line
-	6700 3700 5800 3700
-Wire Wire Line
-	5800 3700 5800 4700
-Wire Wire Line
-	4250 3300 4250 3800
-Wire Wire Line
-	5900 3800 5900 4700
-Wire Wire Line
-	5450 2100 5650 2100
-Wire Wire Line
-	5450 2500 5650 2500
-Wire Wire Line
-	5450 2900 5650 2900
-Wire Wire Line
-	5450 3300 5650 3300
-Wire Wire Line
-	5950 2100 6150 2100
-Wire Wire Line
-	5950 2500 6150 2500
+	5950 3300 6150 3300
 Wire Wire Line
 	5950 2900 6150 2900
 Wire Wire Line
-	5950 3300 6150 3300
+	5950 2500 6150 2500
+Wire Wire Line
+	5950 2100 6150 2100
+Wire Wire Line
+	5450 3300 5650 3300
+Wire Wire Line
+	5450 2900 5650 2900
+Wire Wire Line
+	5450 2500 5650 2500
+Wire Wire Line
+	5450 2100 5650 2100
+Wire Wire Line
+	6700 3750 7550 3750
+Wire Wire Line
+	5950 1700 6150 1700
+Wire Wire Line
+	5450 1700 5650 1700
+Wire Wire Line
+	6450 1700 6700 1700
+Wire Wire Line
+	6700 1700 6700 2100
+Wire Wire Line
+	6700 2100 6700 2500
+Wire Wire Line
+	6700 2500 6700 2900
+Wire Wire Line
+	6700 2900 6700 3300
+Wire Wire Line
+	6700 3300 6700 3750
+Wire Wire Line
+	6700 2100 6450 2100
+Wire Wire Line
+	6700 2500 6450 2500
+Connection ~ 6700 2100
+Wire Wire Line
+	6700 2900 6450 2900
+Connection ~ 6700 2500
+Wire Wire Line
+	6700 3300 6450 3300
+Connection ~ 6700 2900
+Wire Wire Line
+	5150 1700 4900 1700
+Wire Wire Line
+	4900 2100 5150 2100
+Wire Wire Line
+	4900 2500 5150 2500
+Connection ~ 4900 2100
+Wire Wire Line
+	4900 2900 5150 2900
+Connection ~ 4900 2500
+Wire Wire Line
+	4900 3300 5150 3300
+Wire Wire Line
+	4900 1700 4900 2100
+Wire Wire Line
+	4900 2100 4900 2500
+Wire Wire Line
+	4900 2500 4900 2900
+Wire Wire Line
+	4900 2900 4900 3300
+Wire Wire Line
+	4900 3300 4900 3650
+Connection ~ 4900 2900
+Connection ~ 6700 3300
+Connection ~ 4900 3300
+Wire Wire Line
+	7800 2600 7800 2700
+Wire Wire Line
+	7800 2700 7800 3300
+Wire Wire Line
+	7800 2700 8500 2700
+Wire Wire Line
+	7900 2600 7900 2850
+Wire Wire Line
+	7400 2850 7900 2850
+Wire Wire Line
+	7900 2850 8900 2850
+Wire Wire Line
+	8100 3150 8500 3150
+Connection ~ 7900 2850
+Wire Wire Line
+	7100 3000 8000 3000
+Wire Wire Line
+	7100 3000 6900 3950
+Connection ~ 6900 3950
+Connection ~ 7100 3000
+Wire Wire Line
+	8800 2700 8900 2700
+Wire Wire Line
+	8900 2700 8900 2850
+Wire Wire Line
+	8900 2850 8900 3150
+Wire Wire Line
+	8900 3150 8900 3850
+Wire Wire Line
+	8900 3150 8800 3150
+Connection ~ 8900 2850
+Connection ~ 8900 3150
+Wire Wire Line
+	7800 3300 8600 3300
+Wire Wire Line
+	8600 3300 8600 3750
+Connection ~ 7800 2700
+Connection ~ 8100 3150
+Wire Wire Line
+	7100 2850 7100 3000
+Wire Wire Line
+	8000 3000 8000 2600
+Wire Wire Line
+	8100 2600 8100 3150
+Wire Wire Line
+	8100 3150 8100 3750
+Wire Wire Line
+	8100 3750 8050 3750
 $EndSCHEMATC
