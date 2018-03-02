@@ -1,4 +1,6 @@
 *.bak
+*.bck
+*.dcm
 *-bak
 __pycache__
 *.pyc
