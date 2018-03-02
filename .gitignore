@@ -5,3 +5,4 @@ __pycache__
 *-cache.lib
 venv
 .idea
+.DS_Store
