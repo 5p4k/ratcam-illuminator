@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>/home/saccardi/Desktop/ratcam-illuminator/Illuminator.sch</source>
+    <date>Fri 02 Mar 2018 06:39:23 PM CET</date>
+    <tool>Eeschema 5.0.0-rc2-dev-unknown-5f578c8~62~ubuntu16.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>Illuminator.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="LED2">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF849E</tstamp>
+    </comp>
+    <comp ref="LED1">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF8503</tstamp>
+    </comp>
+    <comp ref="LED0">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <datasheet>https://www.mouser.de/ProductDetail/Vishay-Semiconductors/VSMY2850G?qs=%2fha2pyFadugRr65YXyH43eOkfSkmt9pmTQ080%252bPFuts%3d</datasheet>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF8544</tstamp>
+    </comp>
+    <comp ref="LED5">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF85BB</tstamp>
+    </comp>
+    <comp ref="LED4">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF85C1</tstamp>
+    </comp>
+    <comp ref="LED3">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF85C7</tstamp>
+    </comp>
+    <comp ref="LED8">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF861A</tstamp>
+    </comp>
+    <comp ref="LED7">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF8620</tstamp>
+    </comp>
+    <comp ref="LED6">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF8626</tstamp>
+    </comp>
+    <comp ref="R0">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder</footprint>
+      <libsource lib="Device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DF8798</tstamp>
+    </comp>
+    <comp ref="Q0">
+      <value>DMG1012UW</value>
+      <footprint>Package_TO_SOT_SMD:SOT-323_SC-70_Handsoldering</footprint>
+      <datasheet>https://www.mouser.de/ProductDetail/Diodes-Incorporated/DMG1012UW-7?qs=sGAEpiMZZMs%252bPnt8BXTeXzFwSQCuF1XS</datasheet>
+      <libsource lib="Device" part="Q_NMOS_GSD"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59DFF0EB</tstamp>
+    </comp>
+    <comp ref="LED9">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59F8E30D</tstamp>
+    </comp>
+    <comp ref="R1">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder</footprint>
+      <libsource lib="Device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59F8E3CE</tstamp>
+    </comp>
+    <comp ref="R2">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder</footprint>
+      <libsource lib="Device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59F8E404</tstamp>
+    </comp>
+    <comp ref="R3">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder</footprint>
+      <libsource lib="Device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59F8E43B</tstamp>
+    </comp>
+    <comp ref="R4">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder</footprint>
+      <libsource lib="Device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>59F8E475</tstamp>
+    </comp>
+    <comp ref="U1">
+      <value>VEML7700</value>
+      <footprint>Ratcam:VEML7700</footprint>
+      <libsource lib="RatcamLib" part="VEML7700"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A9897A7</tstamp>
+    </comp>
+    <comp ref="R_PU2">
+      <value>4.7KΩ</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder</footprint>
+      <datasheet>https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d</datasheet>
+      <libsource lib="Device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A989B02</tstamp>
+    </comp>
+    <comp ref="R_PU1">
+      <value>4.7KΩ</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder</footprint>
+      <datasheet>https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d</datasheet>
+      <libsource lib="Device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A989B84</tstamp>
+    </comp>
+    <comp ref="J0">
+      <value>Conn_02x03_Top_Bottom</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical_SMD</footprint>
+      <datasheet>https://www.mouser.de/ProductDetail/Harwin/M20-8750342?qs=sGAEpiMZZMs%252bGHln7q6pmzdTeEJXjwtLW%2fX52fLqV3P2vr7qYw5FXQ%3d%3d</datasheet>
+      <libsource lib="Connector_Generic" part="Conn_02x03_Top_Bottom"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A98B497</tstamp>
+    </comp>
+    <comp ref="C0">
+      <value>100nF</value>
+      <footprint>Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.50mm_HandSolder</footprint>
+      <datasheet>https://www.mouser.de/ProductDetail/AVX/08054C104MA72A?qs=91QmY5a93xtEel77xoj3UQ%3d%3d</datasheet>
+      <libsource lib="Device" part="C"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A99124A</tstamp>
+    </comp>
+    <comp ref="LED11">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A9DE02E</tstamp>
+    </comp>
+    <comp ref="LED10">
+      <value>VSMY2850G</value>
+      <footprint>Ratcam:LED-GW_2.3x2.3mm_HandSoldering</footprint>
+      <libsource lib="Device" part="LED_ALT"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A9DE074</tstamp>
+    </comp>
+    <comp ref="R5">
+      <value>15</value>
+      <footprint>Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder</footprint>
+      <libsource lib="Device" part="R"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>5A9DE0C4</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="Device" part="C">
+      <description>Unpolarized capacitor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>C_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_02x03_Top_Bottom">
+      <description>Generic connector, double row, 02x03, top/bottom pin numbering scheme (row 1: 1...pins_per_row, row2: pins_per_row+1 ... num_pins), script generated (kicad-library-utils/schlib/autogen/connector/)</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>Connector*:*_2x??_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_02x03_Top_Bottom</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+        <pin num="4" name="Pin_4" type="passive"/>
+        <pin num="5" name="Pin_5" type="passive"/>
+        <pin num="6" name="Pin_6" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="LED_ALT">
+      <description>LED generic, alternativ symbol</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>LED*</fp>
+        <fp>LED_SMD:*</fp>
+        <fp>LED_THT:*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED_ALT</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="Q_NMOS_GSD">
+      <description>Transistor N-MOSFETwith substrate diode (general)</description>
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">Q</field>
+        <field name="Value">Q_NMOS_GSD</field>
+      </fields>
+      <pins>
+        <pin num="1" name="G" type="input"/>
+        <pin num="2" name="S" type="passive"/>
+        <pin num="3" name="D" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <description>Resistor</description>
+      <docs>~</docs>
+      <footprints>
+        <fp>R_*</fp>
+        <fp>R_*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+      </fields>
+      <pins>
+        <pin num="1" name="~" type="passive"/>
+        <pin num="2" name="~" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="RatcamLib" part="VEML7700">
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">VEML7700</field>
+      </fields>
+      <pins>
+        <pin num="1" name="SCL" type="input"/>
+        <pin num="2" name="VDD" type="input"/>
+        <pin num="3" name="GND" type="input"/>
+        <pin num="4" name="SDA" type="input"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="Connector_Generic">
+      <uri>/usr/share/kicad/library/Connector_Generic.lib</uri>
+    </library>
+    <library logical="Device">
+      <uri>/usr/share/kicad/library/Device.lib</uri>
+    </library>
+    <library logical="RatcamLib">
+      <uri>/home/saccardi/Desktop/ratcam-illuminator/RatcamLib.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Net-(LED1-Pad1)">
+      <node ref="LED11" pin="1"/>
+      <node ref="Q0" pin="3"/>
+      <node ref="LED9" pin="1"/>
+      <node ref="LED7" pin="1"/>
+      <node ref="LED3" pin="1"/>
+      <node ref="LED1" pin="1"/>
+      <node ref="LED5" pin="1"/>
+    </net>
+    <net code="2" name="Net-(LED10-Pad1)">
+      <node ref="LED10" pin="1"/>
+      <node ref="LED11" pin="2"/>
+    </net>
+    <net code="3" name="Net-(LED10-Pad2)">
+      <node ref="LED10" pin="2"/>
+      <node ref="R5" pin="2"/>
+    </net>
+    <net code="4" name="/TO_3V3">
+      <node ref="R_PU2" pin="1"/>
+      <node ref="U1" pin="2"/>
+      <node ref="R_PU1" pin="1"/>
+      <node ref="J0" pin="4"/>
+      <node ref="C0" pin="2"/>
+    </net>
+    <net code="5" name="/TO_SCL">
+      <node ref="U1" pin="1"/>
+      <node ref="R_PU1" pin="2"/>
+      <node ref="J0" pin="5"/>
+    </net>
+    <net code="6" name="/TO_SDA">
+      <node ref="R_PU2" pin="2"/>
+      <node ref="J0" pin="6"/>
+      <node ref="U1" pin="4"/>
+    </net>
+    <net code="7" name="/TO_GND">
+      <node ref="Q0" pin="2"/>
+      <node ref="U1" pin="3"/>
+      <node ref="C0" pin="1"/>
+      <node ref="J0" pin="3"/>
+    </net>
+    <net code="8" name="/TO_5V">
+      <node ref="J0" pin="1"/>
+      <node ref="R0" pin="1"/>
+      <node ref="R1" pin="1"/>
+      <node ref="R5" pin="1"/>
+      <node ref="R4" pin="1"/>
+      <node ref="R3" pin="1"/>
+      <node ref="R2" pin="1"/>
+    </net>
+    <net code="9" name="Net-(LED4-Pad2)">
+      <node ref="R2" pin="2"/>
+      <node ref="LED4" pin="2"/>
+    </net>
+    <net code="10" name="Net-(LED2-Pad2)">
+      <node ref="LED2" pin="2"/>
+      <node ref="R1" pin="2"/>
+    </net>
+    <net code="11" name="Net-(LED0-Pad1)">
+      <node ref="LED1" pin="2"/>
+      <node ref="LED0" pin="1"/>
+    </net>
+    <net code="12" name="Net-(LED0-Pad2)">
+      <node ref="LED0" pin="2"/>
+      <node ref="R0" pin="2"/>
+    </net>
+    <net code="13" name="Net-(LED4-Pad1)">
+      <node ref="LED4" pin="1"/>
+      <node ref="LED5" pin="2"/>
+    </net>
+    <net code="14" name="Net-(LED2-Pad1)">
+      <node ref="LED2" pin="1"/>
+      <node ref="LED3" pin="2"/>
+    </net>
+    <net code="15" name="Net-(LED8-Pad1)">
+      <node ref="LED8" pin="1"/>
+      <node ref="LED9" pin="2"/>
+    </net>
+    <net code="16" name="Net-(LED8-Pad2)">
+      <node ref="R4" pin="2"/>
+      <node ref="LED8" pin="2"/>
+    </net>
+    <net code="17" name="Net-(LED6-Pad1)">
+      <node ref="LED6" pin="1"/>
+      <node ref="LED7" pin="2"/>
+    </net>
+    <net code="18" name="Net-(LED6-Pad2)">
+      <node ref="R3" pin="2"/>
+      <node ref="LED6" pin="2"/>
+    </net>
+    <net code="19" name="/TO_PWM">
+      <node ref="Q0" pin="1"/>
+      <node ref="J0" pin="2"/>
+    </net>
+  </nets>
+</export>
