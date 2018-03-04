@@ -43,4 +43,9 @@
   (pad 2 smd rect (at -0.635 0) (size 0.7 2.6) (layers F.Cu F.Paste F.Mask))
   (pad 3 smd rect (at 0.635 0) (size 0.7 2.6) (layers F.Cu F.Paste F.Mask))
   (pad 4 smd rect (at 1.905 0) (size 0.7 2.6) (layers F.Cu F.Paste F.Mask))
+  (model /Users/spak/Development/ratcam-illuminator/Ratcam.pretty/VEML7700.wrl
+    (at (xyz 0 0.077 0))
+    (scale (xyz 0.03937 0.03937 0.03937))
+    (rotate (xyz 0 0 0))
+  )
 )
