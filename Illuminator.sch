@@ -143,7 +143,7 @@ U 1 1 59DF8798
 P 4800 2150
 F 0 "R0" V 4880 2150 50  0000 C CNN
 F 1 "15" V 4800 2150 50  0000 C CNN
-F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 2150 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4730 2150 50  0001 C CNN
 F 3 "" H 4800 2150 50  0001 C CNN
 	1    4800 2150
 	0    1    -1   0   
@@ -182,7 +182,7 @@ U 1 1 59F8E3CE
 P 4800 2550
 F 0 "R1" V 4880 2550 50  0000 C CNN
 F 1 "15" V 4800 2550 50  0000 C CNN
-F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 2550 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4730 2550 50  0001 C CNN
 F 3 "" H 4800 2550 50  0001 C CNN
 	1    4800 2550
 	0    1    -1   0   
@@ -193,7 +193,7 @@ U 1 1 59F8E404
 P 4800 2950
 F 0 "R2" V 4880 2950 50  0000 C CNN
 F 1 "15" V 4800 2950 50  0000 C CNN
-F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 2950 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4730 2950 50  0001 C CNN
 F 3 "" H 4800 2950 50  0001 C CNN
 	1    4800 2950
 	0    1    -1   0   
@@ -204,7 +204,7 @@ U 1 1 59F8E43B
 P 4800 3350
 F 0 "R3" V 4880 3350 50  0000 C CNN
 F 1 "15" V 4800 3350 50  0000 C CNN
-F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 3350 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4730 3350 50  0001 C CNN
 F 3 "" H 4800 3350 50  0001 C CNN
 	1    4800 3350
 	0    1    -1   0   
@@ -215,7 +215,7 @@ U 1 1 59F8E475
 P 4800 3750
 F 0 "R4" V 4880 3750 50  0000 C CNN
 F 1 "15" V 4800 3750 50  0000 C CNN
-F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 3750 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4730 3750 50  0001 C CNN
 F 3 "" H 4800 3750 50  0001 C CNN
 	1    4800 3750
 	0    1    -1   0   
@@ -237,7 +237,7 @@ U 1 1 5A989B02
 P 7450 4450
 F 0 "R_PU2" V 7530 4450 50  0000 C CNN
 F 1 "4.7KΩ" V 7350 4450 50  0000 C CNN
-F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 7380 4450 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 7380 4450 50  0001 C CNN
 F 3 "https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d" H 7450 4450 50  0001 C CNN
 	1    7450 4450
 	0    -1   -1   0   
@@ -248,7 +248,7 @@ U 1 1 5A989B84
 P 7450 4150
 F 0 "R_PU1" V 7530 4150 50  0000 C CNN
 F 1 "4.7KΩ" V 7350 4150 50  0000 C CNN
-F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 7380 4150 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 7380 4150 50  0001 C CNN
 F 3 "https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d" H 7450 4150 50  0001 C CNN
 	1    7450 4150
 	0    -1   -1   0   
@@ -446,7 +446,7 @@ U 1 1 5A9DE0C4
 P 4800 4150
 F 0 "R5" V 4880 4150 50  0000 C CNN
 F 1 "15" V 4800 4150 50  0000 C CNN
-F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 4150 50  0001 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 4730 4150 50  0001 C CNN
 F 3 "" H 4800 4150 50  0001 C CNN
 	1    4800 4150
 	0    1    -1   0   
