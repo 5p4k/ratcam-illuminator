@@ -1,5 +1,29 @@
 EESchema Schematic File Version 4
-LIBS:Illuminator-cache
+LIBS:power
+LIBS:device
+LIBS:linear
+LIBS:regul
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:RatcamLib
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -15,7 +39,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L Device:LED_ALT LED2
+L device:LED_ALT LED2
 U 1 1 59DF849E
 P 4300 2550
 F 0 "LED2" H 4300 2650 50  0000 C CNN
@@ -26,7 +50,7 @@ F 3 "" H 4300 2550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:LED_ALT LED1
+L device:LED_ALT LED1
 U 1 1 59DF8503
 P 3800 2150
 F 0 "LED1" H 3800 2250 50  0000 C CNN
@@ -37,7 +61,7 @@ F 3 "" H 3800 2150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:LED_ALT LED0
+L device:LED_ALT LED0
 U 1 1 59DF8544
 P 4300 2150
 F 0 "LED0" H 4300 2250 50  0000 C CNN
@@ -48,7 +72,7 @@ F 3 "https://www.mouser.de/ProductDetail/Vishay-Semiconductors/VSMY2850G?qs=%2fh
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:LED_ALT LED5
+L device:LED_ALT LED5
 U 1 1 59DF85BB
 P 3800 2950
 F 0 "LED5" H 3800 3050 50  0000 C CNN
@@ -59,7 +83,7 @@ F 3 "" H 3800 2950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:LED_ALT LED4
+L device:LED_ALT LED4
 U 1 1 59DF85C1
 P 4300 2950
 F 0 "LED4" H 4300 3050 50  0000 C CNN
@@ -70,7 +94,7 @@ F 3 "" H 4300 2950 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:LED_ALT LED3
+L device:LED_ALT LED3
 U 1 1 59DF85C7
 P 3800 2550
 F 0 "LED3" H 3800 2650 50  0000 C CNN
@@ -81,7 +105,7 @@ F 3 "" H 3800 2550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:LED_ALT LED8
+L device:LED_ALT LED8
 U 1 1 59DF861A
 P 4300 3750
 F 0 "LED8" H 4300 3850 50  0000 C CNN
@@ -92,7 +116,7 @@ F 3 "" H 4300 3750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:LED_ALT LED7
+L device:LED_ALT LED7
 U 1 1 59DF8620
 P 3800 3350
 F 0 "LED7" H 3800 3450 50  0000 C CNN
@@ -103,7 +127,7 @@ F 3 "" H 3800 3350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:LED_ALT LED6
+L device:LED_ALT LED6
 U 1 1 59DF8626
 P 4300 3350
 F 0 "LED6" H 4300 3450 50  0000 C CNN
@@ -114,23 +138,23 @@ F 3 "" H 4300 3350 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R0
+L device:R R0
 U 1 1 59DF8798
 P 4800 2150
 F 0 "R0" V 4880 2150 50  0000 C CNN
 F 1 "15" V 4800 2150 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder" V 4730 2150 50  0001 C CNN
+F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 2150 50  0001 C CNN
 F 3 "" H 4800 2150 50  0001 C CNN
 	1    4800 2150
 	0    1    -1   0   
 $EndComp
 $Comp
-L Device:Q_NMOS_GSD Q0
+L device:Q_NMOS_GSD Q0
 U 1 1 59DFF0EB
 P 3500 4700
 F 0 "Q0" H 3700 4750 50  0000 L CNN
 F 1 "DMG1012UW" H 3700 4650 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-323_SC-70_Handsoldering" H 3700 4800 50  0001 C CNN
+F 2 "TO_SOT_Packages_SMD:SOT-323_SC-70_Handsoldering" H 3700 4800 50  0001 C CNN
 F 3 "https://www.mouser.de/ProductDetail/Diodes-Incorporated/DMG1012UW-7?qs=sGAEpiMZZMs%252bPnt8BXTeXzFwSQCuF1XS" H 3500 4700 50  0001 C CNN
 	1    3500 4700
 	-1   0    0    -1  
@@ -142,7 +166,7 @@ TO_5V
 Text Label 5900 4700 2    60   ~ 0
 TO_PWM
 $Comp
-L Device:LED_ALT LED9
+L device:LED_ALT LED9
 U 1 1 59F8E30D
 P 3800 3750
 F 0 "LED9" H 3800 3850 50  0000 C CNN
@@ -153,45 +177,45 @@ F 3 "" H 3800 3750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R1
+L device:R R1
 U 1 1 59F8E3CE
 P 4800 2550
 F 0 "R1" V 4880 2550 50  0000 C CNN
 F 1 "15" V 4800 2550 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder" V 4730 2550 50  0001 C CNN
+F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 2550 50  0001 C CNN
 F 3 "" H 4800 2550 50  0001 C CNN
 	1    4800 2550
 	0    1    -1   0   
 $EndComp
 $Comp
-L Device:R R2
+L device:R R2
 U 1 1 59F8E404
 P 4800 2950
 F 0 "R2" V 4880 2950 50  0000 C CNN
 F 1 "15" V 4800 2950 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder" V 4730 2950 50  0001 C CNN
+F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 2950 50  0001 C CNN
 F 3 "" H 4800 2950 50  0001 C CNN
 	1    4800 2950
 	0    1    -1   0   
 $EndComp
 $Comp
-L Device:R R3
+L device:R R3
 U 1 1 59F8E43B
 P 4800 3350
 F 0 "R3" V 4880 3350 50  0000 C CNN
 F 1 "15" V 4800 3350 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder" V 4730 3350 50  0001 C CNN
+F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 3350 50  0001 C CNN
 F 3 "" H 4800 3350 50  0001 C CNN
 	1    4800 3350
 	0    1    -1   0   
 $EndComp
 $Comp
-L Device:R R4
+L device:R R4
 U 1 1 59F8E475
 P 4800 3750
 F 0 "R4" V 4880 3750 50  0000 C CNN
 F 1 "15" V 4800 3750 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder" V 4730 3750 50  0001 C CNN
+F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 3750 50  0001 C CNN
 F 3 "" H 4800 3750 50  0001 C CNN
 	1    4800 3750
 	0    1    -1   0   
@@ -208,45 +232,45 @@ F 3 "" H 6050 3150 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Device:R R_PU2
+L device:R R_PU2
 U 1 1 5A989B02
 P 7450 4450
 F 0 "R_PU2" V 7530 4450 50  0000 C CNN
 F 1 "4.7KΩ" V 7350 4450 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder" V 7380 4450 50  0001 C CNN
+F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 7380 4450 50  0001 C CNN
 F 3 "https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d" H 7450 4450 50  0001 C CNN
 	1    7450 4450
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Device:R R_PU1
+L device:R R_PU1
 U 1 1 5A989B84
 P 7450 4150
 F 0 "R_PU1" V 7530 4150 50  0000 C CNN
 F 1 "4.7KΩ" V 7350 4150 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder" V 7380 4150 50  0001 C CNN
+F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 7380 4150 50  0001 C CNN
 F 3 "https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d" H 7450 4150 50  0001 C CNN
 	1    7450 4150
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Connector_Generic:Conn_02x03_Top_Bottom J0
+L Connector:Conn_02x03_Top_Bottom J0
 U 1 1 5A98B497
 P 6250 4700
 F 0 "J0" H 6300 4900 50  0000 C CNN
 F 1 "Conn_02x03_Top_Bottom" H 6300 4500 50  0000 C CNN
-F 2 "Connector_PinHeader_2.54mm:PinHeader_2x03_P2.54mm_Vertical_SMD" H 6250 4700 50  0001 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x03_Pitch2.54mm_SMD" H 6250 4700 50  0001 C CNN
 F 3 "https://www.mouser.de/ProductDetail/Harwin/M20-8750342?qs=sGAEpiMZZMs%252bGHln7q6pmzdTeEJXjwtLW%2fX52fLqV3P2vr7qYw5FXQ%3d%3d" H 6250 4700 50  0001 C CNN
 	1    6250 4700
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:C C0
+L device:C C0
 U 1 1 5A99124A
 P 5650 4000
 F 0 "C0" V 5600 4050 50  0000 L CNN
 F 1 "100nF" V 5600 3700 50  0000 L CNN
-F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.50mm_HandSolder" H 5688 3850 50  0001 C CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 5688 3850 50  0001 C CNN
 F 3 "https://www.mouser.de/ProductDetail/AVX/08054C104MA72A?qs=91QmY5a93xtEel77xoj3UQ%3d%3d" H 5650 4000 50  0001 C CNN
 	1    5650 4000
 	0    -1   -1   0   
@@ -395,7 +419,7 @@ Wire Wire Line
 Wire Wire Line
 	5200 3350 5200 3750
 $Comp
-L Device:LED_ALT LED11
+L device:LED_ALT LED11
 U 1 1 5A9DE02E
 P 3800 4150
 F 0 "LED11" H 3800 4250 50  0000 C CNN
@@ -406,7 +430,7 @@ F 3 "" H 3800 4150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:LED_ALT LED10
+L device:LED_ALT LED10
 U 1 1 5A9DE074
 P 4300 4150
 F 0 "LED10" H 4300 4250 50  0000 C CNN
@@ -417,12 +441,12 @@ F 3 "" H 4300 4150 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Device:R R5
+L device:R R5
 U 1 1 5A9DE0C4
 P 4800 4150
 F 0 "R5" V 4880 4150 50  0000 C CNN
 F 1 "15" V 4800 4150 50  0000 C CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.50mm_HandSolder" V 4730 4150 50  0001 C CNN
+F 2 "Resistor_SMD:Resistors_SMD:R_0805_HandSoldering" V 4730 4150 50  0001 C CNN
 F 3 "" H 4800 4150 50  0001 C CNN
 	1    4800 4150
 	0    1    -1   0   
