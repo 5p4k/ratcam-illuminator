@@ -15,7 +15,7 @@ class dotdict(dict):
 
 OPT = dotdict(
     lines=dotdict(
-        n_lines=5,
+        n_lines=6,
         n_leds=2,
         led_orient=math.pi,
         res_orient=0.,
@@ -223,7 +223,7 @@ def orient_connector_and_mosfet_relative(conn, mosf):
     nets.intersection_update(set([pad.connected_to for pad in mosf.pads.values()]))
     # Make sure the two involved pads both face north or south
     for net in nets:
-        t1_pos, t2_pos = map(lambda t: t.position, net.terminals)
+        t1_pos, t2_pos = map(lambda t: t.position, filter(lambda t: t.component in [conn, mosf], net.terminals))
         if (t1_pos.y >= 0) != (t2_pos.y >= 0):
             # Rotate one
             mosf.orientation += math.pi
@@ -448,10 +448,10 @@ def main():
     # Add copper pours on the front face
     add_copper_pours(board)
     # Place smartly J0 and Q0
-    place_connector_and_mosfet(board)
+    # place_connector_and_mosfet(board)
     # Add the metal on B.Cu
-    route_connector_and_mosfet(board)
-    add_mosfet_copper_pours(board)
+    # route_connector_and_mosfet(board)
+    # add_mosfet_copper_pours(board)
     # Save
     ToPCB.apply(board)
 

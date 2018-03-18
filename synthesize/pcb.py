@@ -49,7 +49,7 @@ class FromPCB(object):
         end = trk.GetEnd()
         layer = trk.GetLayer()
         width = trk.GetWidth()
-        return cad.Track([start, end], cad.Layer(layer), width=width)
+        return cad.Track([start, end], cad.Layer(str(layer)), width=width)
 
     @staticmethod
     def _conv_via(via):
@@ -151,7 +151,8 @@ class ToPCB(object):
         if fill.fillet_radius is not None and fill.fillet_radius > 0.:
             area.SetCornerSmoothingType(pcb.ZONE_SETTINGS.SMOOTHING_FILLET)
             area.SetCornerRadius(int(fill.fillet_radius))
-        area.BuildFilledSolidAreasPolygons(pcb.GetBoard())
+        # area.BuildFilledSolidAreasPolygons(pcb.GetBoard())
+        area.FillSegments()
 
     @staticmethod
     def place_component(comp):
