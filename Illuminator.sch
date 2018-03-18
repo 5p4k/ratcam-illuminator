@@ -24,6 +24,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:RatcamLib
+LIBS:Illuminator-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -223,34 +224,34 @@ $EndComp
 $Comp
 L RatcamLib:VEML7700 U1
 U 1 1 5A9897A7
-P 6500 3300
-F 0 "U1" V 6500 3600 60  0000 C CNN
-F 1 "VEML7700" V 6650 3300 60  0000 C CNN
-F 2 "Ratcam:VEML7700" H 6050 3150 60  0001 C CNN
-F 3 "" H 6050 3150 60  0001 C CNN
-	1    6500 3300
+P 7600 2450
+F 0 "U1" V 7600 2750 60  0000 C CNN
+F 1 "VEML7700" V 7750 2450 60  0000 C CNN
+F 2 "Ratcam:VEML7700" H 7150 2300 60  0001 C CNN
+F 3 "" H 7150 2300 60  0001 C CNN
+	1    7600 2450
 	0    -1   -1   0   
 $EndComp
 $Comp
 L device:R R_PU2
 U 1 1 5A989B02
-P 7450 4450
-F 0 "R_PU2" V 7530 4450 50  0000 C CNN
-F 1 "4.7KΩ" V 7350 4450 50  0000 C CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" V 7380 4450 50  0001 C CNN
-F 3 "https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d" H 7450 4450 50  0001 C CNN
-	1    7450 4450
+P 8050 3950
+F 0 "R_PU2" V 8130 3950 50  0000 C CNN
+F 1 "4.7KΩ" V 7950 3950 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 7980 3950 50  0001 C CNN
+F 3 "https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d" H 8050 3950 50  0001 C CNN
+	1    8050 3950
 	0    -1   -1   0   
 $EndComp
 $Comp
 L device:R R_PU1
 U 1 1 5A989B84
-P 7450 4150
-F 0 "R_PU1" V 7530 4150 50  0000 C CNN
-F 1 "4.7KΩ" V 7350 4150 50  0000 C CNN
-F 2 "Resistors_SMD:R_0805_HandSoldering" V 7380 4150 50  0001 C CNN
-F 3 "https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d" H 7450 4150 50  0001 C CNN
-	1    7450 4150
+P 8050 3650
+F 0 "R_PU1" V 8130 3650 50  0000 C CNN
+F 1 "4.7KΩ" V 7950 3650 50  0000 C CNN
+F 2 "Resistors_SMD:R_0805_HandSoldering" V 7980 3650 50  0001 C CNN
+F 3 "https://www.mouser.de/ProductDetail/ROHM-Semiconductor/ESR10EZPJ472?qs=sGAEpiMZZMtlubZbdhIBIGrVcSH3vih4PAZqRcT1Y9A%3d" H 8050 3650 50  0001 C CNN
+	1    8050 3650
 	0    -1   -1   0   
 $EndComp
 $Comp
@@ -267,13 +268,13 @@ $EndComp
 $Comp
 L device:C C0
 U 1 1 5A99124A
-P 5650 4000
-F 0 "C0" V 5600 4050 50  0000 L CNN
-F 1 "100nF" V 5600 3700 50  0000 L CNN
-F 2 "Capacitors_SMD:C_0805_HandSoldering" H 5688 3850 50  0001 C CNN
-F 3 "https://www.mouser.de/ProductDetail/AVX/08054C104MA72A?qs=91QmY5a93xtEel77xoj3UQ%3d%3d" H 5650 4000 50  0001 C CNN
-	1    5650 4000
-	0    -1   -1   0   
+P 6850 3150
+F 0 "C0" H 6900 3250 50  0000 L CNN
+F 1 "100nF" H 6900 3050 50  0000 L CNN
+F 2 "Capacitors_SMD:C_0805_HandSoldering" H 6888 3000 50  0001 C CNN
+F 3 "https://www.mouser.de/ProductDetail/AVX/08054C104MA72A?qs=91QmY5a93xtEel77xoj3UQ%3d%3d" H 6850 3150 50  0001 C CNN
+	1    6850 3150
+	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	3700 4700 6050 4700
@@ -294,7 +295,7 @@ Wire Wire Line
 Wire Wire Line
 	3950 2550 4150 2550
 Wire Wire Line
-	5200 4600 6050 4600
+	5350 4600 6050 4600
 Wire Wire Line
 	4450 2150 4650 2150
 Wire Wire Line
@@ -306,7 +307,7 @@ Wire Wire Line
 Wire Wire Line
 	5200 2550 5200 2950
 Wire Wire Line
-	5200 2950 5200 3350
+	5200 2950 5200 3150
 Wire Wire Line
 	5200 2550 4950 2550
 Wire Wire Line
@@ -338,64 +339,7 @@ Wire Wire Line
 	3400 2950 3400 3350
 Connection ~ 3400 3350
 Wire Wire Line
-	7700 3800 6350 3800
-Wire Wire Line
-	6350 3800 6350 3700
-Wire Wire Line
-	7800 3700 6650 3700
-Connection ~ 5400 4800
-Wire Wire Line
-	5400 4800 6050 4800
-Wire Wire Line
-	5500 4000 5400 4000
-Connection ~ 5400 4000
-Wire Wire Line
-	5400 4000 5400 4800
-Wire Wire Line
-	7800 3700 7800 4450
-Wire Wire Line
-	7700 3800 7700 4150
-Wire Wire Line
-	6550 4800 7800 4800
-Wire Wire Line
-	6550 4700 7700 4700
-Wire Wire Line
 	6550 4600 7200 4600
-Wire Wire Line
-	7200 4600 7200 4450
-Wire Wire Line
-	7200 4000 6450 4000
-Wire Wire Line
-	6550 3700 6550 3900
-Wire Wire Line
-	6550 3900 5400 3900
-Wire Wire Line
-	5400 3900 5400 4000
-Wire Wire Line
-	7600 4150 7700 4150
-Connection ~ 7700 4150
-Wire Wire Line
-	7700 4150 7700 4700
-Wire Wire Line
-	7600 4450 7800 4450
-Connection ~ 7800 4450
-Wire Wire Line
-	7800 4450 7800 4800
-Wire Wire Line
-	7300 4150 7200 4150
-Connection ~ 7200 4150
-Wire Wire Line
-	7200 4150 7200 4000
-Wire Wire Line
-	7300 4450 7200 4450
-Connection ~ 7200 4450
-Wire Wire Line
-	7200 4450 7200 4150
-Wire Wire Line
-	6450 4000 5800 4000
-Connection ~ 6450 4000
-Wire Wire Line
-	6450 4000 6450 3700
 Text Label 6700 4600 0    60   ~ 0
 TO_3V3
 Text Label 6700 4700 0    60   ~ 0
@@ -404,10 +348,6 @@ Text Label 6700 4800 0    60   ~ 0
 TO_SDA
 Wire Wire Line
 	3400 4900 3400 5000
-Wire Wire Line
-	3400 5000 5400 5000
-Wire Wire Line
-	5400 4800 5400 5000
 Connection ~ 3400 3750
 Connection ~ 5200 3750
 Wire Wire Line
@@ -455,20 +395,181 @@ Wire Wire Line
 	3400 4150 3650 4150
 Connection ~ 3400 4150
 Wire Wire Line
-	3400 4150 3400 4500
-Wire Wire Line
 	3950 4150 4150 4150
 Wire Wire Line
 	4450 4150 4650 4150
 Wire Wire Line
 	4950 4150 5200 4150
-Connection ~ 5200 4150
-Wire Wire Line
-	5200 4150 5200 4600
 Text Notes 7350 7500 0    60   ~ 0
 Illuminator with environmental light sensor
 Text Notes 8150 7650 0    60   ~ 0
 Mar 2, 2018\n
 Text Notes 10600 7650 0    60   ~ 0
 2\n
+$Comp
+L power:+3.3V #PWR0101
+U 1 1 5AAEDCF7
+P 8400 3500
+F 0 "#PWR0101" H 8400 3350 50  0001 C CNN
+F 1 "+3.3V" H 8415 3673 50  0000 C CNN
+F 2 "" H 8400 3500 50  0001 C CNN
+F 3 "" H 8400 3500 50  0001 C CNN
+	1    8400 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0102
+U 1 1 5AAEDDEB
+P 5350 4600
+F 0 "#PWR0102" H 5350 4450 50  0001 C CNN
+F 1 "+5V" H 5365 4773 50  0000 C CNN
+F 2 "" H 5350 4600 50  0001 C CNN
+F 3 "" H 5350 4600 50  0001 C CNN
+	1    5350 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0103
+U 1 1 5AAEDFCC
+P 3400 5000
+F 0 "#PWR0103" H 3400 4750 50  0001 C CNN
+F 1 "GND" H 3405 4827 50  0000 C CNN
+F 2 "" H 3400 5000 50  0001 C CNN
+F 3 "" H 3400 5000 50  0001 C CNN
+	1    3400 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0104
+U 1 1 5AAEFB2A
+P 5550 3150
+F 0 "#PWR0104" H 5550 3000 50  0001 C CNN
+F 1 "+5V" H 5565 3323 50  0000 C CNN
+F 2 "" H 5550 3150 50  0001 C CNN
+F 3 "" H 5550 3150 50  0001 C CNN
+	1    5550 3150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5550 3150 5200 3150
+Connection ~ 5200 3150
+Wire Wire Line
+	5200 3150 5200 3350
+$Comp
+L power:GND #PWR0105
+U 1 1 5AAF4C40
+P 5350 4800
+F 0 "#PWR0105" H 5350 4550 50  0001 C CNN
+F 1 "GND" H 5355 4627 50  0000 C CNN
+F 2 "" H 5350 4800 50  0001 C CNN
+F 3 "" H 5350 4800 50  0001 C CNN
+	1    5350 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+3.3V #PWR0106
+U 1 1 5AB05614
+P 6450 3000
+F 0 "#PWR0106" H 6450 2850 50  0001 C CNN
+F 1 "+3.3V" H 6465 3173 50  0000 C CNN
+F 2 "" H 6450 3000 50  0001 C CNN
+F 3 "" H 6450 3000 50  0001 C CNN
+	1    6450 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0107
+U 1 1 5AB065B6
+P 6450 3300
+F 0 "#PWR0107" H 6450 3050 50  0001 C CNN
+F 1 "GND" H 6455 3127 50  0000 C CNN
+F 2 "" H 6450 3300 50  0001 C CNN
+F 3 "" H 6450 3300 50  0001 C CNN
+	1    6450 3300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7550 2850 7550 3000
+Wire Wire Line
+	7550 3000 6850 3000
+Wire Wire Line
+	7650 2850 7650 3300
+Wire Wire Line
+	7650 3300 6850 3300
+Wire Wire Line
+	7450 2850 7450 3650
+Wire Wire Line
+	8400 3500 8400 3650
+Wire Wire Line
+	8400 3650 8200 3650
+Wire Wire Line
+	8400 3650 8400 3950
+Wire Wire Line
+	8400 3950 8200 3950
+Connection ~ 8400 3650
+Wire Wire Line
+	7900 3650 7450 3650
+Connection ~ 7450 3650
+Wire Wire Line
+	7750 2850 7750 3950
+Wire Wire Line
+	7750 3950 7900 3950
+Wire Wire Line
+	5350 4800 6050 4800
+Wire Wire Line
+	6550 4700 7450 4700
+Wire Wire Line
+	7450 3650 7450 4700
+Wire Wire Line
+	7750 4800 7750 3950
+Wire Wire Line
+	6550 4800 7750 4800
+Connection ~ 7750 3950
+Wire Wire Line
+	6850 3000 6450 3000
+Connection ~ 6850 3000
+Wire Wire Line
+	6850 3300 6450 3300
+Connection ~ 6850 3300
+$Comp
+L power:+3.3V #PWR0108
+U 1 1 5AB40CC6
+P 7200 4600
+F 0 "#PWR0108" H 7200 4450 50  0001 C CNN
+F 1 "+3.3V" H 7215 4773 50  0000 C CNN
+F 2 "" H 7200 4600 50  0001 C CNN
+F 3 "" H 7200 4600 50  0001 C CNN
+	1    7200 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Test_Point TPGND1
+U 1 1 5AB49665
+P 2650 5000
+F 0 "TPGND1" H 2708 5120 50  0000 L CNN
+F 1 "Test_Point" H 2708 5029 50  0000 L CNN
+F 2 "Measurement_Points:Measurement_Point_Round-SMD-Pad_Small" H 2850 5000 50  0001 C CNN
+F 3 "~" H 2850 5000 50  0001 C CNN
+	1    2650 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Test_Point TPLED1
+U 1 1 5AB498D3
+P 2650 4500
+F 0 "TPLED1" H 2708 4620 50  0000 L CNN
+F 1 "Test_Point" H 2708 4529 50  0000 L CNN
+F 2 "Measurement_Points:Measurement_Point_Round-SMD-Pad_Small" H 2850 4500 50  0001 C CNN
+F 3 "~" H 2850 4500 50  0001 C CNN
+	1    2650 4500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2650 4500 3400 4500
+Wire Wire Line
+	2650 5000 3400 5000
+Connection ~ 3400 5000
+Connection ~ 3400 4500
+Wire Wire Line
+	3400 4150 3400 4500
 $EndSCHEMATC
