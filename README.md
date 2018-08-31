@@ -1,6 +1,8 @@
 Ratcam Illuminator
 ==================
 
+**Official repository: [https://git.mittelab.org/proj/ratcam-illuminator](https://git.mittelab.org/proj/ratcam-illuminator)**
+
 > Ratcam allows you to control your RaspberryPi camera through a Telegram bot, and alerts you when movement is detected, by sending photos and videos.
 
 This project includes schematics for the IR illuminator board.
